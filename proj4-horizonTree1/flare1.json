@@ -1,0 +1,62 @@
+{
+ "name": "All Resident",
+ "children": [
+  {
+   "name": "Healthy", "size": 1643
+   },
+  {
+   "name": "Unhealthy", 
+   "children": [
+    {
+     "name": "New Cases",
+     "children": [
+      {"name": "New Cholesterol", "size": 1119},
+      {
+        "name": "New BS/BP",
+            "children": [
+            {"name": "BP High Or Critically High", "size": 269},
+            {"name": "Sugar High Or Critically High", "size": 5},
+            {"name": "Others", "size": 966}
+            ],
+            "count": 999
+      }
+      ]
+    },
+    
+    {
+     "name": "Existing",
+     "children": [
+      {
+        "name": "Good Control",
+            "children": [
+            {"name": "Good Control Cholesterol", "size": 333},
+            {"name": "Good Control BS/BP", "size": 482},
+            {"name": "New Cases BS/BP",
+                "children": [
+                {"name": "BP High Or Critically High", "size": 22},
+                {"name": "BS High Or Critically High", "size": 0},
+                {"name": "Others", "size": 194}
+                ]
+            }
+            ]
+      },
+      {
+        "name": "Poor Control",
+            "children": [
+            {"name": "Poor Control Cholesterol", "size": 520},
+            {"name": "Poor Control BS/BP", "size": 819},
+            {"name": "New Cases BS/BP", 
+                "children": [
+                {"name": "BP High Or Critically High", "size": 92},
+                {"name": "BS High Or Critically High", "size": 1},
+                {"name": "Others", "size": 278}
+                ]
+            }
+            ]
+      }
+      ]
+    }
+    ]
+  }
+  ]
+}
