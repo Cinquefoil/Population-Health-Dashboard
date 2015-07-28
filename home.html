@@ -32,8 +32,10 @@
         <style>
             body {
                 padding-top: 20px;
+                padding-left: 10px;
                 background: white;
             }
+            
         </style>
         <!-- style for Heat-Box -->
         <style>
@@ -104,7 +106,15 @@
     <span id="reset-all">
             <strong>To Reset All Filters, click <a href="javascript:dc.filterAll();dc.redrawAll();">HERE</a></strong>
     </span> 
-
+<!--------   TESTING  ------>
+    <div class="row">
+        <div class="chart-wrapper" id="chart-dateMove-line">
+            <strong>Health Screening Dates</strong>
+            <a class="reset" href="javascript:dateBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+            <div class="clearfix"></div></br>
+        </div>
+    </div>
+<!--------   TESTING  ------>    
     <div class="row">
         <div class="chart-wrapper" id="chart-date-bar">
             <strong>Health Screening Dates</strong>
@@ -113,23 +123,23 @@
         </div>
     </div>
 
-    <ul>
+    <ul class="list-unstyled">
     <li data-row="2" data-col="1" data-sizex="5" data-sizey="5" style="padding-top:5px;">
-          <div class="chart-wrapper" id="divMap" style="background:white">
+          <div class="chart-wrapper" id="divMap" style="background:#f8f7f7">
         <div class="testing">
         Health and Habits
         </div>
           </div>
     </li>
     <li data-row="2" data-col="2" data-sizex="5" data-sizey="5" style="padding-top:5px;">
-      <div class="chart-wrapper" id="test">
+      <div class="chart-wrapper" id="test" style="background:#f8f7f7">
         <strong>Health and Habits</strong>
         <a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="2" data-col="3" data-sizex="5" data-sizey="5" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-event-row">
+      <div class="chart-wrapper" id="chart-event-row" style="background:#f8f7f7">
         <strong>Event Location</strong>
         <a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
@@ -137,21 +147,21 @@
     </li>
     
     <li data-row="3" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-gender-row">
+      <div class="chart-wrapper" id="chart-gender-row" style="background:#f8f7f7">
         <strong>Gender</strong>
         <a class="reset" href="javascript:genderRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="3" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-occupation-row">
+      <div class="chart-wrapper" id="chart-occupation-row" style="background:#f8f7f7">
         <strong>Occupation</strong>
         <a class="reset" href="javascript:occupationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="3" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-education-row">
+      <div class="chart-wrapper" id="chart-education-row" style="background:#f8f7f7">
         <strong>Education</strong>
         <a class="reset" href="javascript:educationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
@@ -159,21 +169,21 @@
     </li>
     
     <li data-row="4" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-age-row">
+      <div class="chart-wrapper" id="chart-age-row" style="background:#f8f7f7">
         <strong>Age</strong>
         <a class="reset" href="javascript:ageRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="4" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-race-row">
+      <div class="chart-wrapper" id="chart-race-row" style="background:#f8f7f7">
         <strong>Race</strong>
         <a class="reset" href="javascript:raceRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="4" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-bmi-row">
+      <div class="chart-wrapper" id="chart-bmi-row" style="background:#f8f7f7">
         <strong>BMI</strong>
         <a class="reset" href="javascript:bmiRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
@@ -181,7 +191,7 @@
     </li>
 
     <li data-row="5" data-col="1" data-sizex="15" data-sizey="7" style="padding-top:5px;">
-      <div class="chart-wrapper" id="mapLeaflet">
+      <div class="chart-wrapper" id="mapLeaflet" style="background:#f8f7f7">
         <div id="holder">
         <strong>Resident Distribution Map</strong>
             <div class="map"></div>
@@ -192,7 +202,7 @@
     <li data-row="6" data-col="1" data-sizex="15" data-sizey="5" style="padding-top:5px;">
         <div class="chart-wrapper">
             <h4>Resident Information</h4>
-          <table class='table table-hover' id='dc-table-graph'>
+          <table class='table table-hover' id='dc-table-graph' style="background:#f8f7f7">
             <thead>
               <tr class='header'>
                 <th>NRIC</th>
@@ -260,6 +270,9 @@ d3.csv("allDataWGeo1.csv", function(data){
     stratRingChart   = dc.pieChart("#chart-strat-pie"),
     eventRowChart  = dc.rowChart("#chart-event-row"),
     dateBarChart = dc.barChart("#chart-date-bar"),
+    ///////////Testing
+   // dateMoveLineChart = dc.lineChart("#chart-dateMove-line"),
+    ///////////Testing
     genderRowChart = dc.rowChart("#chart-gender-row"),
     ageRowChart = dc.rowChart("#chart-age-row"),
     raceRowChart = dc.rowChart("#chart-race-row"),
@@ -375,6 +388,7 @@ d3.csv("allDataWGeo1.csv", function(data){
         .group(dateGroup1)
         .gap(8)
         .x(d3.time.scale().domain([minDate,maxDate]));
+    dateBarChart.xAxis().tickFormat(d3.time.format("%b %y"));
     dateBarChart.elasticY(true)
         .elasticX(true)
         .yAxis()
