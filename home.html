@@ -127,7 +127,7 @@
     <li data-row="2" data-col="1" data-sizex="5" data-sizey="5" style="padding-top:5px;">
           <div class="chart-wrapper" id="divMap" style="background:#f8f7f7">
         <div class="testing">
-        Health and Habits
+        <strong>Health and Habits</strong>
         </div>
           </div>
     </li>
@@ -253,6 +253,9 @@ d3.csv("allDataWGeo1.csv", function(data){
         d.date = parseDate(d['Measurement.Att.Date']);
         monthString = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         d.yearMonth = d.year + " " + monthString[d.month];
+        //////////////////
+        d.month = d3.time.month(d.date);
+        ////////////////////
         
         if (d.OccupationType === null || d.OccupationType === ""){
             d.OccupationType = "Nil";
@@ -271,7 +274,7 @@ d3.csv("allDataWGeo1.csv", function(data){
     eventRowChart  = dc.rowChart("#chart-event-row"),
     dateBarChart = dc.barChart("#chart-date-bar"),
     ///////////Testing
-   // dateMoveLineChart = dc.lineChart("#chart-dateMove-line"),
+    moveChart = dc.barChart("#chart-dateMove-line"),
     ///////////Testing
     genderRowChart = dc.rowChart("#chart-gender-row"),
     ageRowChart = dc.rowChart("#chart-age-row"),
@@ -302,6 +305,17 @@ d3.csv("allDataWGeo1.csv", function(data){
     var dateGroup1 = dateDim1.group();
     var minDate = dateDim1.bottom(1)[0].date;
     var maxDate = dateDim1.top(1)[0].date;
+    
+    ///////////////////////
+    var monthDim = ndx.dimension(function(d) {return d.month});
+    var monthGroup = monthDim.group();
+    var minMonth = monthDim.bottom(1)[0].date;
+    var maxMonth = monthDim.top(1)[0].date;
+    var dateDim2 = ndx.dimension(function(d) {return d.date});
+    var dateGroup2 = dateDim2.group();
+    var minDate2 = dateDim2.bottom(1)[0].date;
+    var maxDate2 = dateDim2.top(1)[0].date;
+    ///////////////////////
     
     var scnZoneDim = ndx.dimension(function(d) {return d.scnZone});
     var scnZoneGroup = scnZoneDim.group();
@@ -381,21 +395,56 @@ d3.csv("allDataWGeo1.csv", function(data){
         .sortBy(function(d){ return d.NRIC; })
         .order(d3.ascending);
     
+///////////////////////////////////////
+    moveChart
+        //.renderArea(true)
+        .width(900)
+        .height(200)
+        .transitionDuration(1000)
+        .margins({top: 0, right: 50, bottom: 20, left: 40})
+        .dimension(dateDim1)
+        .group(dateGroup1)
+        //.mouseZoomable(true)
+        // Specify a range chart to link the brush extent of the range with the zoom focue of the current chart.
+        .rangeChart(dateBarChart)
+        .x(d3.time.scale().domain([minDate,maxDate]))
+        ////.x(d3.time.scale().domain([new Date(1985, 0, 1), new Date(2012, 11, 31)]))
+        //.round(d3.time.month.round)
+        //.xUnits(d3.time.months)
+        .xAxis().tickFormat(d3.time.format("%d%b%y"));
+    moveChart.elasticY(true)
+        .renderHorizontalGridLines(true)
+        .legend(dc.legend().x(800).y(10).itemHeight(13).gap(5))
+        .brushOn(false)
+        .xUnits(function(){return 100;})
+        // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
+        // legend
+        // The `.valueAccessor` will be used for the base layer
+        /*.group(indexAvgByMonthGroup, 'Monthly Index Average')
+        .valueAccessor(function (d) {
+            return d.value.avg;
+        })*/
+        
+/////////////////////////////
+    
     dateBarChart
         .width(900).height(50)
         .margins({top: 0, right: 50, bottom: 20, left: 40})
         .dimension(dateDim1)
         .group(dateGroup1)
         .gap(8)
-        .x(d3.time.scale().domain([minDate,maxDate]));
+        .x(d3.time.scale().domain([minMonth,maxMonth]))
+        //.round(d3.time.month.round)
+        //.alwaysUseRounding(true)
+        //.xUnits(d3.time.months);
     dateBarChart.xAxis().tickFormat(d3.time.format("%b %y"));
     dateBarChart.elasticY(true)
         .elasticX(true)
         .yAxis()
         .ticks(2);
-    dateBarChart.on("filtered", function(c, f){
+    /*dateBarChart.on("filtered", function(c, f){
 			updateGraph();
-		});
+		});*/
         
     stratRingChart  //Strat Pie Chart not used
         .width(250).height(250)
