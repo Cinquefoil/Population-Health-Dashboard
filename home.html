@@ -106,15 +106,13 @@
     <span id="reset-all">
             <strong>To Reset All Filters, click <a href="javascript:dc.filterAll();dc.redrawAll();">HERE</a></strong>
     </span> 
-<!--------   TESTING  ------>
     <div class="row">
-        <div class="chart-wrapper" id="chart-dateMove-line">
+        <div class="chart-wrapper" id="chart-dateMove-bar">
             <strong>Health Screening Dates</strong>
             <a class="reset" href="javascript:dateBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
             <div class="clearfix"></div></br>
         </div>
     </div>
-<!--------   TESTING  ------>    
     <div class="row">
         <div class="chart-wrapper" id="chart-date-bar">
             <strong>Health Screening Dates</strong>
@@ -253,9 +251,6 @@ d3.csv("allDataWGeo1.csv", function(data){
         d.date = parseDate(d['Measurement.Att.Date']);
         monthString = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         d.yearMonth = d.year + " " + monthString[d.month];
-        //////////////////
-        d.month = d3.time.month(d.date);
-        ////////////////////
         
         if (d.OccupationType === null || d.OccupationType === ""){
             d.OccupationType = "Nil";
@@ -273,9 +268,7 @@ d3.csv("allDataWGeo1.csv", function(data){
     stratRingChart   = dc.pieChart("#chart-strat-pie"),
     eventRowChart  = dc.rowChart("#chart-event-row"),
     dateBarChart = dc.barChart("#chart-date-bar"),
-    ///////////Testing
-    moveChart = dc.barChart("#chart-dateMove-line"),
-    ///////////Testing
+    moveChart = dc.barChart("#chart-dateMove-bar"),
     genderRowChart = dc.rowChart("#chart-gender-row"),
     ageRowChart = dc.rowChart("#chart-age-row"),
     raceRowChart = dc.rowChart("#chart-race-row"),
@@ -305,17 +298,39 @@ d3.csv("allDataWGeo1.csv", function(data){
     var dateGroup1 = dateDim1.group();
     var minDate = dateDim1.bottom(1)[0].date;
     var maxDate = dateDim1.top(1)[0].date;
-    
-    ///////////////////////
-    var monthDim = ndx.dimension(function(d) {return d.month});
-    var monthGroup = monthDim.group();
-    var minMonth = monthDim.bottom(1)[0].date;
-    var maxMonth = monthDim.top(1)[0].date;
-    var dateDim2 = ndx.dimension(function(d) {return d.date});
-    var dateGroup2 = dateDim2.group();
-    var minDate2 = dateDim2.bottom(1)[0].date;
-    var maxDate2 = dateDim2.top(1)[0].date;
-    ///////////////////////
+    /////////////////////////
+    var healthStatusGroup = dateDim1.group().reduce(
+        function (p, v) {
+            ++p.count;
+            if (v.healthResult === "Healthy/PosHabits"){
+                p.HP++;
+            }else if (v.healthResult === "Healthy/NegHabits"){
+                p.HN++;
+            }else if (v.healthResult === "Unhealthy/PosHabits"){
+                p.UP++;
+            }else {
+                p.UN++;
+            }
+            return p;
+        },
+        function (p, v) {
+            --p.count;
+            if (v.healthResult === "Healthy/PosHabits"){
+                p.HP--;
+            }else if (v.healthResult === "Healthy/NegHabits"){
+                p.HN--;
+            }else if (v.healthResult === "Unhealthy/PosHabits"){
+                p.UP--;
+            }else {
+                p.UN--;
+            }
+            return p;
+        },
+        function () {
+            return {count: 0, HP: 0, HN: 0, UP: 0, UN: 0};
+        }
+    );
+    ////////////////////////
     
     var scnZoneDim = ndx.dimension(function(d) {return d.scnZone});
     var scnZoneGroup = scnZoneDim.group();
@@ -372,9 +387,6 @@ d3.csv("allDataWGeo1.csv", function(data){
       .formatNumber(d3.format(",.0d"))
       .valueAccessor(function(d)
       {
-        //console.log(d);
-        //return d.value;
-        //return healthResultGroup.top(4)[1].value + healthResultGroup.top(4)[1].key
         return healthResultGroup.top(4)[1].value;
        })
       .group(healthResultGroup);
@@ -403,8 +415,7 @@ d3.csv("allDataWGeo1.csv", function(data){
         .transitionDuration(1000)
         .margins({top: 0, right: 50, bottom: 20, left: 40})
         .dimension(dateDim1)
-        .group(dateGroup1)
-        //.mouseZoomable(true)
+        .mouseZoomable(true)
         // Specify a range chart to link the brush extent of the range with the zoom focue of the current chart.
         .rangeChart(dateBarChart)
         .x(d3.time.scale().domain([minDate,maxDate]))
@@ -414,16 +425,38 @@ d3.csv("allDataWGeo1.csv", function(data){
         .xAxis().tickFormat(d3.time.format("%d%b%y"));
     moveChart.elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(800).y(10).itemHeight(13).gap(5))
+        .legend(dc.legend().x(750).y(0).itemHeight(13).gap(5))
         .brushOn(false)
         .xUnits(function(){return 100;})
         // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
         // legend
         // The `.valueAccessor` will be used for the base layer
-        /*.group(indexAvgByMonthGroup, 'Monthly Index Average')
+        .group(healthStatusGroup, 'HealthyPosHabits')
         .valueAccessor(function (d) {
-            return d.value.avg;
-        })*/
+            return d.value.HP;
+        })
+        // stack additional layers with `.stack`. The first paramenter is a new group.
+        // The second parameter is the series name. The third is a value accessor.
+        .stack(healthStatusGroup, 'HealthyNegHabits', function (d) {
+            return d.value.HN;
+        })
+        .stack(healthStatusGroup, 'UnhealthyPosHabits', function (d) {
+            return d.value.UP;
+        })
+        .stack(healthStatusGroup, 'UnhealthyNegHabits', function (d) {
+            return d.value.UN;
+        })
+        .title(function (d) {
+            //var value = d.value.UP;
+            return (
+                'Total: ' + d.value.count + '\n' +
+                'Unhealthy-NegHabits: ' + d.value.UN + '\n' + 
+                'Unhealthy-PosHabits: ' + d.value.UP + '\n' + 
+                'Healthy-NegHabits: ' + d.value.HN + '\n' + 
+                'Healthy-PosHabits: ' + d.value.HP 
+            );
+        })
+        
         
 /////////////////////////////
     
@@ -433,7 +466,7 @@ d3.csv("allDataWGeo1.csv", function(data){
         .dimension(dateDim1)
         .group(dateGroup1)
         .gap(8)
-        .x(d3.time.scale().domain([minMonth,maxMonth]))
+        .x(d3.time.scale().domain([minDate,maxDate]))
         //.round(d3.time.month.round)
         //.alwaysUseRounding(true)
         //.xUnits(d3.time.months);
