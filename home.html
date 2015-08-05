@@ -11,6 +11,7 @@
 
         <!-- Javascript -->
         <script src="js/d3.js"></script>
+        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         <script src="js/crossfilter.js"></script>
         <script src="js/dc.js"></script>
         <script src="js/leaflet.js"></script>
@@ -34,8 +35,7 @@
                 padding-top: 20px;
                 padding-left: 10px;
                 background: white;
-            }
-            
+            }     
         </style>
         <!-- style for Heat-Box -->
         <style>
@@ -45,19 +45,20 @@
           }
         </style>
         <!-- END style for Heat-Box -->
-        <!-- style for MoasicMap -->
-        <style>
-        .nodeTreeMap {
-          border: solid 1px white;
-          font: 12px sans-serif;
-          color: white;
-          line-height: 16px;
-          overflow: hidden;
-          position: absolute;
-          text-indent: 2px;
+        <!-- style for Map -->
+        <style type="text/css">
+        svg text {
+            fill: black;
+        }
+
+        #map{
+            width: 550px;
+            height: 400px;
+            margin: 0;
+            padding: 0;
         }
         </style>
-        <!-- END style for MoasicMap -->
+        <!-- END style for Map -->
         <!-- style for Stratification Number Display -->        
         <style>
         #tableNumDisplay1 td{
@@ -126,7 +127,7 @@
                             <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Individual Progress</a>
                         </li>
 						<li>
-                            <a href="analysis.html"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Analysis</a>
+                            <a href="analysis.html"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>Repeats Analysis</a>
                         </li>
 						<li>
                             <a href="#"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> File Upload</a>
@@ -227,21 +228,21 @@
     </li>-->
     
     <li data-row="4" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-gender-row" style="background:#fff8f8">
+      <div class="chart-wrapper" id="chart-gender-row" style="background:#f8f7f7">
         <strong>Gender</strong>
         <a class="reset" href="javascript:genderRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="6" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-occupation-row" style="background:#fff8f8">
+      <div class="chart-wrapper" id="chart-occupation-row" style="background:#f8f7f7">
         <strong>Occupation</strong>
         <a class="reset" href="javascript:occupationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="6" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-education-row" style="background:#fff8f8">
+      <div class="chart-wrapper" id="chart-education-row" style="background:#f8f7f7">
         <strong>Education</strong>
         <a class="reset" href="javascript:educationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
@@ -249,21 +250,21 @@
     </li>
     
     <li data-row="5" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-age-row" style="background:#fff8f8">
+      <div class="chart-wrapper" id="chart-age-row" style="background:#f8f7f7">
         <strong>Age</strong>
         <a class="reset" href="javascript:ageRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="3" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chart-race-row" style="background:#fff8f8">
+      <div class="chart-wrapper" id="chart-race-row" style="background:#f8f7f7">
         <strong>Race</strong>
         <a class="reset" href="javascript:raceRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="3" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-bmi-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-bmi-row" style="background:#f8f7f7">
         <strong>BMI</strong>
         <a class="reset" href="javascript:bmiRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
@@ -271,21 +272,21 @@
     </li>
     
     <li data-row="5" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-exercise-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-exercise-row" style="background:#f8f7f7">
         <strong>Exercise (hrs/week)</strong>
         <a class="reset" href="javascript:exerciseChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="4" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-sugar-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-sugar-row" style="background:#f8f7f7">
         <strong>Sugar</strong>
         <a class="reset" href="javascript:sugarRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="3" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-bp-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-bp-row" style="background:#f8f7f7">
         <strong>BP</strong>
         <a class="reset" href="javascript:bpRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
@@ -293,21 +294,21 @@
     </li>
     
     <li data-row="6" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-foot-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-foot-row" style="background:#f8f7f7">
         <strong>Diabetes Foot</strong>
         <a class="reset" href="javascript:footChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="5" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-living-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-living-row" style="background:#f8f7f7">
         <strong>Living With</strong>
         <a class="reset" href="javascript:livingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="4" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-smoking-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-smoking-row" style="background:#f8f7f7">
         <strong>Smoking</strong>
         <a class="reset" href="javascript:smokingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
@@ -315,33 +316,30 @@
     </li>
     
     <li data-row="7" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-backache-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-backache-row" style="background:#f8f7f7">
         <strong>Backache (Taxi)</strong>
         <a class="reset" href="javascript:backacheChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="7" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-lengthache-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-lengthache-row" style="background:#f8f7f7">
         <strong>Length of Backache (Taxi)</strong>
         <a class="reset" href="javascript:lengthacheRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
     <li data-row="7" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-      <div class="chart-wrapper" id="chart-sleep-row" style="background:#f9fff8">
+      <div class="chart-wrapper" id="chart-sleep-row" style="background:#f8f7f7">
         <strong>Length of Sleep (Taxi)</strong>
         <a class="reset" href="javascript:sleepRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div></br>
       </div>
     </li>
 
-    <li data-row="8" data-col="1" data-sizex="15" data-sizey="7" style="padding-top:5px;">
-      <div class="chart-wrapper" id="mapLeaflet" style="background:#f8f7f7">
-        <div id="holder">
+    <li data-row="8" data-col="1" data-sizex="10" data-sizey="6" style="padding-top:5px;">
+      <div class="chart-wrapper" id="map" style="background:#f8f7f7">
         <strong>Resident Distribution Map</strong>
-            <div class="map"></div>
-         </div>   
       </div>
     </li>
      
@@ -366,6 +364,187 @@
 
 <script type="text/javascript">
 
+/********************************************************
+*														*
+* 	Step0: Testing Google Map                          	*
+*														*
+********************************************************/
+var styledMap = new google.maps.StyledMapType(
+	[
+    {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 17
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 17
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "weight": 0.2
+            },
+            {
+                "lightness": 29
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 18
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 16
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 21
+            }
+        ]
+    },
+    {
+        "featureType": "all",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 16
+            }
+        ]
+    },
+    {
+        "featureType": "all",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 40
+            }
+        ]
+    },
+    {
+        "featureType": "all",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 19
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "weight": 1.2
+            },
+            {
+                "lightness": 17
+            }
+        ]
+    }
+	],
+	{name: "Styled Map"});
+
+
+var map = new google.maps.Map(d3.select("#map").node(), {
+	zoom: 11,
+	center: new google.maps.LatLng(1.370677, 103.811994),
+	mapTypeControlOptions:{
+		mapTypeId: [google.maps.MapTypeId.ROADMAP, 'map_style']
+	}
+	// map_style: styledMap
+});
 
 /********************************************************
 *														*
@@ -375,6 +554,34 @@
 
 var dataset;
 var parseDate = d3.time.format("%d/%m/%Y").parse;
+
+////////////////////////////////////////////////////////////Google Map
+var lngDim;
+var latDim;
+var projection;
+var padding;
+
+google.maps.event.addListener(map, "bounds_changed", function(){
+	var bounds = this.getBounds();
+	var northEast = bounds.getNorthEast();
+	var southWest = bounds.getSouthWest();
+
+	// console.log(southWest.lng() + " " + northEast.lng());
+
+	lngDim.filterRange([southWest.lng(), northEast.lng()]);
+	latDim.filterRange([southWest.lat(), northEast.lat()]);
+
+	dc.redrawAll();
+})
+
+map.mapTypes.set('map_style', styledMap);
+map.setMapTypeId('map_style');
+
+var colorDead = "#de2d26";
+// var colorAcci = "rgb(255, 184, 0)";
+var colorAcci = "rgb(255, 204, 0)";
+
+///////////////////////////////////////////////////////////////
 
 //////////////////
 var numDisplayHNHeight = 0;
@@ -407,6 +614,11 @@ d3.csv("allDataWGeo1.csv", function(data){
         if (d.OccupationType === null || d.OccupationType === ""){
             d.OccupationType = "Nil";
         }
+        
+         ////////////////////////////////////////////////     Google Map  
+        d.GoogleLng = +d.GoogleLng;
+		d.GoogleLat = +d.GoogleLat;
+ //////////////////////////////////////////// 
      
     });
     dataset = data;
@@ -416,8 +628,86 @@ d3.csv("allDataWGeo1.csv", function(data){
     * 	Step1: Create the dc.js chart objects & link to div	*
     *														*
     ********************************************************/
- 
-    stratRingChart   = dc.pieChart("#chart-strat-pie"),
+     //create map display GOOGLE MAP
+	var overlay = new google.maps.OverlayView();
+
+		overlay.onAdd = function() {
+		var layer = d3.select(this.getPanes().overlayLayer).append("div")
+				.attr("class", "stations");
+
+		// Draw each marker as a separate SVG element.
+		// We could use a single SVG, but what size would it have?
+		overlay.draw = function() {
+
+			// console.log(hourDim.top(Infinity));
+
+			projection = this.getProjection();
+			padding = 5;
+
+
+			var bindData = layer.selectAll("svg")
+				.data(dataset)
+				// .data(hourDim.top(Infinity))
+
+			var marker = bindData.each(transform)
+				.enter()
+				.append("svg")
+				.each(transform)
+				.attr({
+					"class": "marker",					
+				})
+				.style({
+					"width": "60px",
+					"height": "20px",
+					"position": "absolute"
+				});
+
+			
+
+			// // Add a circle.
+			marker.append("svg:circle")
+				.attr({
+					"r": 2,
+					"cx": padding,
+					"cy": padding,
+					"class": "datadot"
+				})
+				.style({
+					"fill": "none",
+					"stroke": function(d){
+						/*if(((+d["2-30"]) + (+d["死"]))){
+							return colorDead;
+						}*/
+						return colorAcci;
+					},
+					"stroke-width": function(d){
+						/*if(((+d["2-30"]) + (+d["死"]))){
+							return "5px";
+						}*/
+						// return "1.5px";
+						return "3px";
+					},
+					"position": "absolute",
+					"opacity": function(d){
+						 return 1;
+						/*if(((+d["2-30"]) + (+d["死"]))){
+							return 1;
+						}
+						return 0.3;*/
+					},
+				})
+
+			// console.log(map.getCenter());
+
+		}
+
+	};// overlay
+
+
+	// Bind our overlay to the map
+	overlay.setMap(map);
+////////////////////////////////////////////////////////////////////
+
     eventRowChart  = dc.rowChart("#chart-event-row"),
     dateBarChart = dc.barChart("#chart-date-bar"),
     moveChart = dc.barChart("#chart-dateMove-bar"),
@@ -587,6 +877,15 @@ d3.csv("allDataWGeo1.csv", function(data){
     
     var icDim = ndx.dimension(function(d){return d.NRIC;});
     
+    //////////////////////////////////////////// GOOGLE MAp
+        lngDim = ndx.dimension(function(d){
+		return d.GoogleLng;
+	});
+	latDim = ndx.dimension(function(d){
+		return d.GoogleLat;
+	});
+    /////////////////////////////////////////////
+    
     /********************************************************
     *														*
     * 	Step3a: Create Leaflet Visualisations				*
@@ -638,9 +937,6 @@ d3.csv("allDataWGeo1.csv", function(data){
         // Specify a range chart to link the brush extent of the range with the zoom focue of the current chart.
         .rangeChart(dateBarChart)
         .x(d3.time.scale().domain([minDate,maxDate]))
-        ////.x(d3.time.scale().domain([new Date(1985, 0, 1), new Date(2012, 11, 31)]))
-        //.round(d3.time.month.round)
-        //.xUnits(d3.time.months)
         .xAxis().tickFormat(d3.time.format("%d%b%y"));
     moveChart.elasticY(true)
         .renderHorizontalGridLines(true)
@@ -767,9 +1063,6 @@ d3.csv("allDataWGeo1.csv", function(data){
         .group(dateGroup1)
         .gap(8)
         .x(d3.time.scale().domain([minDate,maxDate]))
-        //.round(d3.time.month.round)
-        //.alwaysUseRounding(true)
-        //.xUnits(d3.time.months);
     dateBarChart.xAxis().tickFormat(d3.time.format("%b %y"));
     dateBarChart.elasticY(true)
         .elasticX(true)
@@ -778,19 +1071,7 @@ d3.csv("allDataWGeo1.csv", function(data){
     /*dateBarChart.on("filtered", function(c, f){
 			updateGraph();
 		});*/
-        
-    stratRingChart  //Strat Pie Chart not used
-        .width(250).height(250)
-        .transitionDuration(1500)
-		.dimension(healthResultDim)
-		.group(healthResultGroup)
-        .innerRadius(70)
-        .ordinalColors(["#ff7f0e","#1f77b4","#d62728","#2ca02c"])
-        .legend(dc.legend().x(67).y(85).itemHeight(13).gap(5))
-        .label(function(d) { return d.value; });;
-    stratRingChart.on("filtered", function(c, f){
-			updateGraph()});
-
+    
     eventRowChart
         .width(250).height(200)
         .dimension(scnZoneDim)
@@ -1008,64 +1289,7 @@ d3.csv("allDataWGeo1.csv", function(data){
     }));
     chart.on("filtered", function(c, f){
 			updateGraph()});
-    /*        
-    /////////MoasicMap START
-    var mosMargin = {top: 15, right: 10, bottom: 10, left: 10},
-    mosWidth = 300 - mosMargin.left - mosMargin.right,
-    mosHeight = 300 - mosMargin.top - mosMargin.bottom;
 
-    //var mosColor = d3.scale.category10();
-    var mosColor = d3.scale.ordinal()
-                .domain(["Healthy w Pos Habits","Unhealthy w Pos Habits","Healthy w Neg Habits","Unhealthy w Neg Habits"])
-                .range(['#1f77b4','#2ca02c','#ff7f0e','#d62728']);
-
-    var treemap = d3.layout.treemap()
-        .size([mosWidth, mosHeight])
-        .sticky(true)
-        .value(function(d) { return d.size; });
-
-    var divMap = d3.select("body").selectAll("div.testing").append("div")
-        .style("position", "relative")
-        .style("width", (mosWidth + mosMargin.left + mosMargin.right) + "px")
-        .style("height", (mosHeight + mosMargin.top + mosMargin.bottom) + "px")
-        .style("left", mosMargin.left + "px")
-        .style("top", mosMargin.top + "px");
-
-    var total_resident = 6743;
-    d3.json("flare2.json", function(error, root) {
-      if (error) throw error;
-
-      var nodeTreeMap = divMap.datum(root).selectAll(".nodeTreeMap")
-          .data(treemap.nodes)
-          .enter().append("div")
-          .attr("class", "nodeTreeMap")
-          .call(position)
-          //.style("background", function(d) { return d.children ? mosColor(d.name) : null; })
-          .style("background", function(d) { return mosColor(d.name) })
-          .text(function(d) { return d.children ? null : d.name + ", " + d.size + " (" + d3.round(d.size/total_resident*100) + "%)"; });
-
-      d3.selectAll("input").on("change", function change() {
-        var value = this.value === "count"
-            ? function() { return 1; }
-            : function(d) { return d.size; };
-
-        nodeTreeMap
-            .data(treemap.value(value).nodes)
-          .transition()
-            .duration(1500)
-            .call(position);
-      });
-    });
-
-    function position() {
-      this.style("left", function(d) { return d.x + "px"; })
-          .style("top", function(d) { return d.y + "px"; })
-          .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
-          .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
-    }
-   
-    ////////////MoasicMAP END
-    */
     dc.renderAll();
     
     function print_filter(filter){
@@ -1077,16 +1301,24 @@ d3.csv("allDataWGeo1.csv", function(data){
                 return f.length;
             }
 
+    function transform(d){
+
+        // console.log(d.GoogleLat + " " + GoogleLng);
+
+        d = new google.maps.LatLng(d.GoogleLat, d.GoogleLng);
+        d = projection.fromLatLngToDivPixel(d);
+
+        return d3.select(this)
+            .style("left", (d.x - padding) + "px")
+            .style("top", (d.y - padding) + "px");
+    }
+    
     function updateGraph(){
 
         d3.selectAll(".marker")
             .style("display", "none");
             //.style("display", "inline");
 
-        /*d3.selectAll(".marker")
-            .data(monthDim.top(Infinity))
-            .style("display", "inline");*/
-            
         d3.selectAll(".marker")
             .data(dateDim1.top(Infinity))
             .style("display", "inline");    
