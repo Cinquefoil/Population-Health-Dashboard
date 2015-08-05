@@ -11,49 +11,49 @@
 
         <!-- Javascript -->
         <script src="js/d3.js"></script>
-        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         <script src="js/crossfilter.js"></script>
         <script src="js/dc.js"></script>
         <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/sankey.js"> </script> 
+        <script src="js/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
         <link href="css/dc.css" rel="stylesheet" type="text/css"/>
 		<link href="css/styles.css" rel="stylesheet">
+        <link href="css/jquery.gridster.css" rel="stylesheet" />
 
         <!-- Custom CSS -->
         <style>
-
-        #chart {
-          height: 700px;
-        }
-
-        .node rect {
-          cursor: move;
-          fill-opacity: .9;
-          shape-rendering: crispEdges;
-        }
-
-        .node text {
-          pointer-events: none;
-          text-shadow: 0 1px 0 #fff;
-        }
-
-        .link {
-          fill: none;
-          stroke: #000;
-          stroke-opacity: .2;
-        }
-
-        .link:hover {
-          stroke-opacity: .5;
-        }
-
+            body {
+                padding-top: 20px;
+                padding-left: 10px;
+                background: white;
+            }     
         </style>
-        
+        <style>
+
+            .node rect {
+              cursor: move;
+              fill-opacity: .9;
+              shape-rendering: crispEdges;
+            }
+            .node text {
+              pointer-events: none;
+              text-shadow: 0 1px 0 #fff;
+            }
+            .link {
+              fill: none;
+              stroke: #000;
+              stroke-opacity: .2;
+            }
+            .link:hover {
+              stroke-opacity: .5;
+            }
+        </style>  
     </head>
+    
     <body>
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -81,7 +81,7 @@
                             <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Individual Progress</a>
                         </li>
 						<li class="active">
-                            <a href="analysis"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Analysis</a>
+                            <a href="analysis.html"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>Repeats Analysis</a>
                         </li>
 						<li>
                             <a href="#"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> File Upload</a>
@@ -95,21 +95,55 @@
             </div>
             <!-- /.container -->
         </nav>
-        
-    <div class="container" >
-    <div class="row">
-        <div class="col-md-12" >
-         <h3>Repeat Analysis</h3>   
-        </div>
-    </div>
-        
-    <div class="row">
-        <div class="col-md-12" id="chart"> 
-        <h4>Outcome of Intervention Programme</h4>   
-        </div>
-    </div>
 
-</div>
+<div class="container" >        
+<div class="gridster" ></br></br></br>
+    <div class="row">
+        <div class="col-md-12" id="chartH" style="background:#f8f7f7"> 
+        <h4>Flow Analysis of Intervention Programme - Health Stratification</h4>   
+        </div>
+    </div>
+    
+     <div class="row"></div>   
+     
+    <div class="row">
+        <div class="col-md-12" id="chartBP" style="background:#f8f7f7"> 
+        <h4>Flow Analysis of Intervention Programme - Blood Pressure</h4>   
+        </div>
+    </div>
+    
+    <div class="row"></div>
+    
+    <div class="row">
+        <div class="col-md-12" id="chartSugar" style="background:#f8f7f7"> 
+        <h4>Flow Analysis of Intervention Programme - Blood Sugar</h4>   
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12" id="chartBMI" style="background:#f8f7f7"> 
+        <h4>Flow Analysis of Intervention Programme - BMI</h4>   
+        </div>
+    </div>
+    <!--
+    <ul class="list-unstyled">
+    <li data-row="1" data-col="1" data-sizex="5" data-sizey="6" style="padding-top:5px;">
+      <div class="chart-wrapper" id="chartH" style="background:#f8f7f7">
+        <strong>Health and Habits1</strong>
+        <!--<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div></br>-->
+<!--      </div>
+    </li>
+    <li data-row="2" data-col="1" data-sizex="5" data-sizey="6" style="padding-top:5px;">
+      <div class="chart-wrapper" id="chartBP" style="background:#f8f7f7">
+        <strong>Health and Habits2</strong>
+      </div>
+    </li>
+    
+    </ul>-->
+</div> 
+</div>    
+    
 <script type="text/javascript">
 
 
@@ -122,7 +156,7 @@ var margin = {top: 0, right: 50, bottom: 20, left: 40},
     //width = 960 - margin.left - margin.right,
     //height = 500 - margin.top - margin.bottom;
     width = 900,
-    height=500
+    height= 500;
     //.width(900).height(50)
       //  .margins({top: 0, right: 50, bottom: 20, left: 40})
 
@@ -130,12 +164,38 @@ var formatNumber = d3.format(",.0f"),
     format = function(d) { return formatNumber(d) + " resident"; },
     color = d3.scale.category20();
 
-var svg = d3.select("#chart").append("svg")
+var svg = d3.select("#chartH").append("svg")
+    .attr("width", (width) + margin.left + margin.right)
+    .attr("height", (height) + margin.top + margin.bottom)
+    //.attr("width", 100)
+    //.attr("height", 300)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+var svgBP = d3.select("#chartBP").append("svg")
+    //.attr("width", 100)
+    //.attr("height", 300)
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+var svgSugar = d3.select("#chartSugar").append("svg")
+    //.attr("width", 100)
+    //.attr("height", 300)
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var svgBMI = d3.select("#chartBMI").append("svg")
+    //.attr("width", 100)
+    //.attr("height", 300)
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
 var sankey = d3.sankey()
     .nodeWidth(15)
     .nodePadding(10)
@@ -145,7 +205,10 @@ var path = sankey.link();
 
 //d3.json("energy1.json", function(energy) {
 d3.json("js/sankey.php",function(error, energy){
-
+if (error){
+    document.getElementById("chartH").innerHTML = "Error: No connection to Data Server, below is a snapshot of how the analysis will display" +
+    "<img src="+"images/errorSankeyImage.jpg"+" alt="+"ErrorImage" +"height="+"1007" +"width="+"516"+">";
+}
 var nodeMap = {};
     energy.nodes.forEach(function(x) { nodeMap[x.name] = x; });
     energy.links = energy.links.map(function(x) {
@@ -210,6 +273,219 @@ var nodeMap = {};
     link.attr("d", path);
   }
 });
+
+d3.json("js/sankeyBP.php",function(error, energy){
+
+var nodeMap = {};
+    energy.nodes.forEach(function(x) { nodeMap[x.name] = x; });
+    energy.links = energy.links.map(function(x) {
+      return {
+        source: nodeMap[x.source],
+        target: nodeMap[x.target],
+        value: x.value
+      };
+    });
+  sankey
+      .nodes(energy.nodes)
+      .links(energy.links)
+      .layout(32);
+
+  var link = svgBP.append("g").selectAll(".link")
+      .data(energy.links)
+    .enter().append("path")
+      .attr("class", "link")
+      .attr("d", path)
+      .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+      .sort(function(a, b) { return b.dy - a.dy; })
+      .on("dblclick", function(d){console.log("Value is " + d.value);});
+
+  link.append("title")
+      .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
+
+  var node = svgBP.append("g").selectAll(".node")
+      .data(energy.nodes)
+    .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      //d.source.name + " → " + d.target.name
+      .on("dblclick", function(d){console.log("Value is " + d.value);})
+    .call(d3.behavior.drag()
+      .origin(function(d) { return d; })
+      .on("dragstart", function() { this.parentNode.appendChild(this); })
+      .on("drag", dragmove)
+      );
+
+  node.append("rect")
+      .attr("height", function(d) { return d.dy; })
+      .attr("width", sankey.nodeWidth())
+      .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
+      .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
+    .append("title")
+      .text(function(d) { return d.name + "\n" + format(d.value); });
+
+  node.append("text")
+      .attr("x", -6)
+      .attr("y", function(d) { return d.dy / 2; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", "end")
+      .attr("transform", null)
+      .text(function(d) { return d.name; })
+    .filter(function(d) { return d.x < width / 2; })
+      .attr("x", 6 + sankey.nodeWidth())
+      .attr("text-anchor", "start");
+
+  function dragmove(d) {
+    d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
+    sankey.relayout();
+    link.attr("d", path);
+  }
+});
+
+d3.json("js/sankeySugar.php",function(error, energy){
+
+var nodeMap = {};
+    energy.nodes.forEach(function(x) { nodeMap[x.name] = x; });
+    energy.links = energy.links.map(function(x) {
+      return {
+        source: nodeMap[x.source],
+        target: nodeMap[x.target],
+        value: x.value
+      };
+    });
+  sankey
+      .nodes(energy.nodes)
+      .links(energy.links)
+      .layout(32);
+
+  var link = svgSugar.append("g").selectAll(".link")
+      .data(energy.links)
+    .enter().append("path")
+      .attr("class", "link")
+      .attr("d", path)
+      .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+      .sort(function(a, b) { return b.dy - a.dy; })
+      .on("dblclick", function(d){console.log("Value is " + d.value);});
+
+  link.append("title")
+      .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
+
+  var node = svgSugar.append("g").selectAll(".node")
+      .data(energy.nodes)
+    .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      //d.source.name + " → " + d.target.name
+      .on("dblclick", function(d){console.log("Value is " + d.value);})
+    .call(d3.behavior.drag()
+      .origin(function(d) { return d; })
+      .on("dragstart", function() { this.parentNode.appendChild(this); })
+      .on("drag", dragmove)
+      );
+
+  node.append("rect")
+      .attr("height", function(d) { return d.dy; })
+      .attr("width", sankey.nodeWidth())
+      .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
+      .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
+    .append("title")
+      .text(function(d) { return d.name + "\n" + format(d.value); });
+
+  node.append("text")
+      .attr("x", -6)
+      .attr("y", function(d) { return d.dy / 2; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", "end")
+      .attr("transform", null)
+      .text(function(d) { return d.name; })
+    .filter(function(d) { return d.x < width / 2; })
+      .attr("x", 6 + sankey.nodeWidth())
+      .attr("text-anchor", "start");
+
+  function dragmove(d) {
+    d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
+    sankey.relayout();
+    link.attr("d", path);
+  }
+});
+
+d3.json("js/sankeyBMI.php",function(error, energy){
+
+var nodeMap = {};
+    energy.nodes.forEach(function(x) { nodeMap[x.name] = x; });
+    energy.links = energy.links.map(function(x) {
+      return {
+        source: nodeMap[x.source],
+        target: nodeMap[x.target],
+        value: x.value
+      };
+    });
+  sankey
+      .nodes(energy.nodes)
+      .links(energy.links)
+      .layout(32);
+
+  var link = svgBMI.append("g").selectAll(".link")
+      .data(energy.links)
+    .enter().append("path")
+      .attr("class", "link")
+      .attr("d", path)
+      .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+      .sort(function(a, b) { return b.dy - a.dy; })
+      .on("dblclick", function(d){console.log("Value is " + d.value);});
+
+  link.append("title")
+      .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
+
+  var node = svgBMI.append("g").selectAll(".node")
+      .data(energy.nodes)
+    .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      //d.source.name + " → " + d.target.name
+      .on("dblclick", function(d){console.log("Value is " + d.value);})
+    .call(d3.behavior.drag()
+      .origin(function(d) { return d; })
+      .on("dragstart", function() { this.parentNode.appendChild(this); })
+      .on("drag", dragmove)
+      );
+
+  node.append("rect")
+      .attr("height", function(d) { return d.dy; })
+      .attr("width", sankey.nodeWidth())
+      .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
+      .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
+    .append("title")
+      .text(function(d) { return d.name + "\n" + format(d.value); });
+
+  node.append("text")
+      .attr("x", -6)
+      .attr("y", function(d) { return d.dy / 2; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", "end")
+      .attr("transform", null)
+      .text(function(d) { return d.name; })
+    .filter(function(d) { return d.x < width / 2; })
+      .attr("x", 6 + sankey.nodeWidth())
+      .attr("text-anchor", "start");
+
+  function dragmove(d) {
+    d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
+    sankey.relayout();
+    link.attr("d", path);
+  }
+});
+
+
+    $(function(){
+        var log = document.getElementById('log');
+        gridster = $(".gridster ul").gridster({
+        widget_base_dimensions: [55, 55],
+        widget_margins: [5, 5],
+        resize: {
+        enabled: false,
+        }
+        }).data('gridster');
+    });
 </script>
 
     </body>
