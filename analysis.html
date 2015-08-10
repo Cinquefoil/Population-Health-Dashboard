@@ -27,8 +27,8 @@
         <!-- Custom CSS -->
         <style>
             body {
-                padding-top: 20px;
-                padding-left: 10px;
+                padding-top: 10px;
+                padding-left: 30px;
                 background: white;
             }
             
@@ -37,7 +37,6 @@
 	    }
         </style>
         <style>
-
             .node rect {
               cursor: move;
               fill-opacity: .9;
@@ -102,53 +101,104 @@
             </div>
             <!-- /.container -->
         </nav>
-
-<div class="container" >        
-<div class="gridster" ></br></br></br>
-    <div class="row">
-        <div class="col-md-12" id="chartH" style="background:#f8f7f7"> 
-        <h4>Flow Analysis of Intervention Programme - Health Stratification</h4>   
+</br></br>
+<div class="row">
+<table align="center">
+<tr>
+    <td colspan="4">
+        <h3>Change In Health Risk Factors From Baseline For Intervention Group </h3>
+    </td>
+</tr>
+<tr bgcolor="#FF0000">
+    <td colspan="4">
+        <h3>Inputs for Date and Location will be selected from here </h3>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div id="chart-systolic-bar" style="background:#f8f7f7">
+        Systolic < 140 mm Hg
+        <a class="reset" href="javascript:systolicBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
+        </div>   
+    </td>
+    <td>
+        <div id="chart-diastolic-bar" style="background:#f8f7f7">
+        Diastolic < 90 mm Hg
+        <a class="reset" href="javascript:diastolicBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
         </div>
-    </div>
-    
-     <div class="row"></div>   
-     
-    <div class="row">
-        <div class="col-md-12" id="chartBP" style="background:#f8f7f7"> 
-        <h4>Flow Analysis of Intervention Programme - Blood Pressure</h4>   
+    </td>
+    <td>
+        <div id="chart-glucose-bar" style="background:#f8f7f7">
+        Glucose < 6.0 mmol/L
+        <a class="reset" href="javascript:glucoseBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
         </div>
-    </div>
-    
-    <div class="row"></div>
-    
-    <div class="row">
-        <div class="col-md-12" id="chartSugar" style="background:#f8f7f7"> 
-        <h4>Flow Analysis of Intervention Programme - Blood Sugar</h4>   
+    </td>
+    <td>
+        <div id="chart-bmi-bar" style="background:#f8f7f7">
+        BMI < 23
+        <a class="reset" href="javascript:bmiBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
         </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-12" id="chartBMI" style="background:#f8f7f7"> 
-        <h4>Flow Analysis of Intervention Programme - BMI</h4>   
+    </td>
+</tr>
+<tr>
+    <td>
+        <div id="chart-chol-bar" style="background:#f8f7f7">
+        Cholesterol < 5.18 mmol/L
+        <a class="reset" href="javascript:cholBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
         </div>
-    </div>
-    <!--
-    <ul class="list-unstyled">
-    <li data-row="1" data-col="1" data-sizex="5" data-sizey="6" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chartH" style="background:#f8f7f7">
-        <strong>Health and Habits1</strong>
-        <!--<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-        <div class="clearfix"></div></br>-->
-<!--      </div>
-    </li>
-    <li data-row="2" data-col="1" data-sizex="5" data-sizey="6" style="padding-top:5px;">
-      <div class="chart-wrapper" id="chartBP" style="background:#f8f7f7">
-        <strong>Health and Habits2</strong>
-      </div>
-    </li>
-    
-    </ul>-->
-</div> 
+    </td>
+    <td>
+        <div id="chart-hdl-bar" style="background:#f8f7f7">
+        HDL > 1.03 mmol/L
+        <a class="reset" href="javascript:hdlBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
+        </div>
+    </td>
+    <td>
+        <div id="chart-ldl-bar" style="background:#f8f7f7">
+        LDL < 3.37 mmol/L
+        <a class="reset" href="javascript:ldlBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
+        </div>
+    </td>
+    <td>
+        <div id="chart-trig-bar" style="background:#f8f7f7">
+        Triglycerides < 2.26 mmol/L
+        <a class="reset" href="javascript:trigBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="4">
+        <div id="chartH" style="background:#f8f7f7">
+        <h3>Flow Analysis of Intervention Programme - Health Stratification</h3>
+    </td>
+</tr>
+<tr>
+    <td colspan="4">
+        <div id="chartBP" style="background:#f8f7f7">
+        <h3>Flow Analysis of Intervention Programme - Blood Pressure</h3>
+    </td>
+</tr>
+<tr>
+    <td colspan="4">
+        <div id="chartSugar" style="background:#f8f7f7">
+        <h3>Flow Analysis of Intervention Programme - Blood Sugar</h3>
+    </td>
+</tr>
+<tr>
+    <td colspan="4">
+        <div id="chartBMI" style="background:#f8f7f7">
+        <h3>Flow Analysis of Intervention Programme - BMI</h3>
+    </td>
+</tr>
+</table>    
 </div>    
     
 <script type="text/javascript">
@@ -159,6 +209,7 @@
 * 	Step0: Load and parse data from csv file    		*
 *														*
 ********************************************************/
+///////////////////////Sankey code
 var margin = {top: 0, right: 50, bottom: 20, left: 40},
     //width = 960 - margin.left - margin.right,
     //height = 500 - margin.top - margin.bottom;
@@ -209,6 +260,204 @@ var sankey = d3.sankey()
     .size([width, height]);
 
 var path = sankey.link();
+
+////////////////////////End of Sankey Code
+var dataset;
+var parseDate = d3.time.format("%d/%m/%Y").parse;
+
+d3.json("js/trending.php",function(error, data){
+    if (error){
+        console.log("error in php");
+            }
+    
+    data.forEach(function(d){
+        d.M_Systolic_1st = +d.M_Systolic_1st;
+        d.M_Diastolic_1st = +d.M_Diastolic_1st;
+        d.L_Chol_f = +d.L_Chol_f;
+        d.L_Trig_f = +d.L_Trig_f;
+        d.L_HDL_f = +d.L_HDL_f;
+        d.L_LDL_f = +d.L_LDL_f;
+        d.L_Glucose_f = +d.L_Glucose_f;
+        d.f_BMI = +d.f_BMI;
+        
+        if(d.PastOrCurrent === "Past" && d.M_Systolic_1st < 140){
+            d.Systolic = "Baseline";
+        }else if(d.PastOrCurrent === "Current" && d.M_Systolic_1st < 140){
+            d.Systolic = "FollowUp";
+        }else{
+            d.Systolic = "NA";
+        }
+        
+        if(d.PastOrCurrent === "Past" && d.M_Diastolic_1st < 90){
+            d.Diastolic = "Baseline";
+        }else if(d.PastOrCurrent === "Current" && d.M_Diastolic_1st < 90){
+            d.Diastolic = "FollowUp";
+        }else{
+            d.Diastolic = "NA";
+        }
+        
+        if(d.PastOrCurrent === "Past" && d.L_Chol_f < 5.18){
+            d.Chol = "Baseline";
+        }else if(d.PastOrCurrent === "Current" && d.L_Chol_f < 5.18){
+            d.Chol = "FollowUp";
+        }else{
+            d.Chol = "NA";
+        }
+        
+        if(d.PastOrCurrent === "Past" && d.L_Trig_f < 2.26){
+            d.Trig = "Baseline";
+        }else if(d.PastOrCurrent === "Current" && d.L_Trig_f < 2.26){
+            d.Trig = "FollowUp";
+        }else{
+            d.Trig = "NA";
+        }
+        
+        if(d.PastOrCurrent === "Past" && d.L_HDL_f > 1.03){
+            d.HDL = "Baseline";
+        }else if(d.PastOrCurrent === "Current" && d.L_HDL_f > 1.03){
+            d.HDL = "FollowUp";
+        }else{
+            d.HDL = "NA";
+        }
+        
+        if(d.PastOrCurrent === "Past" && d.L_LDL_f < 3.37){
+            d.LDL = "Baseline";
+        }else if(d.PastOrCurrent === "Current" && d.L_LDL_f < 3.37){
+            d.LDL = "FollowUp";
+        }else{
+            d.LDL = "NA";
+        }
+        
+        if(d.PastOrCurrent === "Past" && d.L_Glucose_f < 6.0){
+            d.Glucose = "Baseline";
+        }else if(d.PastOrCurrent === "Current" && d.L_Glucose_f < 6.0){
+            d.Glucose = "FollowUp";
+        }else{
+            d.Glucose = "NA";
+        }
+  
+        if(d.PastOrCurrent === "Past" && d.f_BMI < 23){
+            d.BMI = "Baseline";
+        }else if(d.PastOrCurrent === "Current" && d.f_BMI < 23){
+            d.BMI = "FollowUp";
+        }else{
+            d.BMI = "NA";
+        }
+    });
+    
+    dataset = data;
+    
+    systolicBarChart = dc.barChart("#chart-systolic-bar");
+    diastolicBarChart = dc.barChart("#chart-diastolic-bar");
+    cholBarChart = dc.barChart("#chart-chol-bar");
+    trigBarChart = dc.barChart("#chart-trig-bar");
+    hdlBarChart = dc.barChart("#chart-hdl-bar");
+    ldlBarChart = dc.barChart("#chart-ldl-bar");
+    glucoseBarChart = dc.barChart("#chart-glucose-bar");
+    bmiBarChart = dc.barChart("#chart-bmi-bar");
+    
+    var ndx = crossfilter(dataset);
+    var all = ndx.groupAll();
+    
+    var trendSystolicDim = ndx.dimension(function(d) {return d.Systolic});
+    var trendSystolicGroup = trendSystolicDim.group();
+    
+    var trendDiastolicDim = ndx.dimension(function(d) {return d.Diastolic});
+    var trendDiastolicGroup = trendDiastolicDim.group();
+    
+    var trendCholDim = ndx.dimension(function(d) {return d.Chol});
+    var trendCholGroup = trendCholDim.group();
+    
+    var trendTrigDim = ndx.dimension(function(d) {return d.Trig});
+    var trendTrigGroup = trendTrigDim.group();
+    
+    var trendHDLDim = ndx.dimension(function(d) {return d.HDL});
+    var trendHDLGroup = trendHDLDim.group();
+    
+    var trendLDLDim = ndx.dimension(function(d) {return d.LDL});
+    var trendLDLGroup = trendLDLDim.group();
+    
+    var trendGlucoseDim = ndx.dimension(function(d) {return d.Glucose});
+    var trendGlucoseGroup = trendGlucoseDim.group();
+    
+    var trendBMIDim = ndx.dimension(function(d) {return d.BMI});
+    var trendBMIGroup = trendBMIDim.group();
+    
+    systolicBarChart
+        .width(220).height(200)
+        .margins({top: 40, right: 40, bottom: 40, left: 40})
+        .dimension(trendSystolicDim)
+        .group(trendSystolicGroup)
+        .x(d3.scale.ordinal().domain(["Baseline","FollowUp","NA"]))
+           // .range(["#FFFFFF","#FF0000","#FF3343"]))
+        .xUnits(dc.units.ordinal);
+                           
+    diastolicBarChart
+        .width(220).height(200)
+        .margins({top: 40, right: 40, bottom: 40, left: 40})
+        .dimension(trendDiastolicDim)
+        .group(trendDiastolicGroup)
+        .x(d3.scale.ordinal().domain(["Baseline","FollowUp","NA"]))
+           // .range(["#FFFFFF","#FF0000","#FF3343"]))
+        .xUnits(dc.units.ordinal);
+        
+    cholBarChart
+        .width(220).height(200)
+        .margins({top: 40, right: 40, bottom: 40, left: 40})
+        .dimension(trendCholDim)
+        .group(trendCholGroup)
+        .x(d3.scale.ordinal().domain(["Baseline","FollowUp","NA"]))
+           // .range(["#FFFFFF","#FF0000","#FF3343"]))
+        .xUnits(dc.units.ordinal);
+        
+    trigBarChart
+        .width(220).height(200)
+        .margins({top: 40, right: 40, bottom: 40, left: 40})
+        .dimension(trendTrigDim)
+        .group(trendTrigGroup)
+        .x(d3.scale.ordinal().domain(["Baseline","FollowUp","NA"]))
+           // .range(["#FFFFFF","#FF0000","#FF3343"]))
+        .xUnits(dc.units.ordinal);
+        
+    hdlBarChart
+        .width(220).height(200)
+        .margins({top: 40, right: 40, bottom: 40, left: 40})
+        .dimension(trendHDLDim)
+        .group(trendHDLGroup)
+        .x(d3.scale.ordinal().domain(["Baseline","FollowUp","NA"]))
+           // .range(["#FFFFFF","#FF0000","#FF3343"]))
+        .xUnits(dc.units.ordinal);
+        
+    ldlBarChart
+        .width(220).height(200)
+        .margins({top: 40, right: 40, bottom: 40, left: 40})
+        .dimension(trendLDLDim)
+        .group(trendLDLGroup)
+        .x(d3.scale.ordinal().domain(["Baseline","FollowUp","NA"]))
+           // .range(["#FFFFFF","#FF0000","#FF3343"]))
+        .xUnits(dc.units.ordinal);
+        
+    glucoseBarChart
+        .width(220).height(200)
+        .margins({top: 40, right: 40, bottom: 40, left: 40})
+        .dimension(trendGlucoseDim)
+        .group(trendGlucoseGroup)
+        .x(d3.scale.ordinal().domain(["Baseline","FollowUp","NA"]))
+           // .range(["#FFFFFF","#FF0000","#FF3343"]))
+        .xUnits(dc.units.ordinal);
+        
+    bmiBarChart
+        .width(220).height(200)
+        .margins({top: 40, right: 40, bottom: 40, left: 40})
+        .dimension(trendBMIDim)
+        .group(trendBMIGroup)
+        .x(d3.scale.ordinal().domain(["Baseline","FollowUp","NA"]))
+           // .range(["#FFFFFF","#FF0000","#FF3343"]))
+        .xUnits(dc.units.ordinal);
+       
+    dc.renderAll();
+    
+});
 
 //d3.json("energy1.json", function(energy) {
 d3.json("js/sankey.php",function(error, energy){
@@ -482,6 +731,14 @@ var nodeMap = {};
   }
 });
 
+    function print_filter(filter){
+                var f=eval(filter);
+                if (typeof(f.length) != "undefined") {}else{}
+                if (typeof(f.top) != "undefined") {f=f.top(Infinity);}else{}
+                if (typeof(f.dimension) != "undefined") {f=f.dimension(function(d) { return "";}).top(Infinity);}else{}
+                console.log(filter+"("+f.length+") = "+JSON.stringify(f).replace("[","[\n\t").replace(/}\,/g,"},\n\t").replace("]","\n]"));
+                return f.length;
+            }
 
     $(function(){
         var log = document.getElementById('log');
