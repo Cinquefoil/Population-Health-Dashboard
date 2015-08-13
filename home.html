@@ -14,17 +14,17 @@
         <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         <script src="js/crossfilter.js"></script>
         <script src="js/dc.js"></script>
-        <script src="js/leaflet.js"></script>
+       <!-- <script src="js/leaflet.js"></script>
         <script src="js/leaflet.markercluster.js"></script>
-        <script src="js/dc.leaflet.js"></script>
+        <script src="js/dc.leaflet.js"></script>-->
         <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="css/leaflet.css" rel="stylesheet"/>
-        <link href="css/leaflet.markercluster.css" rel="stylesheet"/>
+        <!--<link href="css/leaflet.css" rel="stylesheet"/>
+        <link href="css/leaflet.markercluster.css" rel="stylesheet"/>-->
         <link href="css/dc.css" rel="stylesheet"/>
 		<link href="css/styles.css" rel="stylesheet">
         <link href="css/jquery.gridster.css" rel="stylesheet" />
@@ -38,8 +38,8 @@
             }
             
             #bs-example-navbar-collapse-1 ul li a:hover {
-		border-bottom:2px #FFF solid;
-	    }
+                border-bottom:2px #FFF solid;
+            }
         </style>
         <!-- style for Heat-Box -->
         <style>
@@ -116,31 +116,31 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-					<a class='navbar-brand' href='#'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>
+                    <!-- <a class='navbar-brand' href='#'><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>-->
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="home.html" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Screening Result</a>
+                            <a href="home.html" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-th-large" style="padding:0px" aria-hidden="true"></span> Screening Result</a>
                         </li>
                         <li>
-                            <a href="proj4-horizonTree1/index.html"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
+                            <a href="classificationTry1.html"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
                         </li>
 						<li>
-                            <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Individual Progress</a>
+                            <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Patient Journey</a>
                         </li>
 						<li>
                             <a href="analysis.html"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repeat Analysis</a>
                         </li>
-                        			<li>
+                        <li>
                             <a href="#"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Geospatial Intelligence</a>
                         </li>
 						<li>
-                            <a href="#"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> File Upload</a>
+                            <a href="#"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Data Processing</a>
                         </li>
 						<li>
-                            <a href="#">Logout</a>
+                            <!-- <a href="#">Logout</a>-->
                         </li>
                     </ul>
                 </div>
@@ -898,7 +898,7 @@ d3.csv("allDataWGeo1.csv", function(data){
     * 	Step3a: Create Leaflet Visualisations				*
     *														*
     ********************************************************/
-
+/*
     var groupname = "marker-select";
 	var facilities = ndx.dimension(function(d) { return d.Geo; });
 	var facilitiesGroup = facilities.group().reduceCount();
@@ -912,7 +912,7 @@ d3.csv("allDataWGeo1.csv", function(data){
       .zoom(7)
       .cluster(true);
 
-    dc.renderAll(groupname);  
+    dc.renderAll(groupname);  */
     /********************************************************
     *														*
     * 	Step4: Create the Visualisations					*

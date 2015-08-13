@@ -33,8 +33,8 @@
             }
             
             #bs-example-navbar-collapse-1 ul li a:hover {
-		border-bottom:2px #FFF solid;
-	    }
+                border-bottom:2px #FFF solid;
+            }
         </style>
         <style>
             .node rect {
@@ -69,7 +69,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-					<a class='navbar-brand' href='#'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>
+					<!-- <a class='navbar-brand' href='#'><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>-->
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -78,22 +78,22 @@
                             <a href="home.html"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Screening Result</a>
                         </li>
                         <li>
-                            <a href="proj4-horizonTree1/index.html"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
+                            <a href="classificationTry1.html"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
                         </li>
 						<li>
-                            <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Individual Progress</a>
+                            <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Patient Journey</a>
                         </li>
 						<li>
                             <a href="analysis.html" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repeat Analysis</a>
                         </li>
-                        			<li>
+                        <li>
                             <a href="#"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Geospatial Intelligence</a>
                         </li>
 						<li>
-                            <a href="#"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> File Upload</a>
+                            <a href="#"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Data Processing</a>
                         </li>
 						<li>
-                            <a href="#">Logout</a>
+                            <!-- <a href="#">Logout</a> -->
                         </li>
                     </ul>
                 </div>
@@ -104,23 +104,24 @@
 </br></br>
 <div class="row">
 <table align="center">
-<tr>
-    <td colspan="4">
-        <h3>Change In Health Risk Factors From Baseline For Intervention Group </h3>
-    </td>
-</tr>
 <tr bgcolor="#FF0000">
     <td colspan="4">
         <h3>Inputs for Date and Location will be selected from here </h3>
     </td>
 </tr>
 <tr>
+    <td colspan="4">
+        <h3>Change In Health Risk Factors From Baseline For Intervention Group </h3>
+    </td>
+</tr>
+
+<tr>
     <td>
-        <div id="chart-systolic-bar" style="background:#f8f7f7">
-        Systolic < 140 mm Hg
-        <a class="reset" href="javascript:systolicBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div id="chart-bmi-bar" style="background:#f8f7f7">
+        BMI < 23
+        <a class="reset" href="javascript:bmiBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div>
-        </div>   
+        </div>
     </td>
     <td>
         <div id="chart-diastolic-bar" style="background:#f8f7f7">
@@ -130,19 +131,20 @@
         </div>
     </td>
     <td>
+        <div id="chart-systolic-bar" style="background:#f8f7f7">
+        Systolic < 140 mm Hg
+        <a class="reset" href="javascript:systolicBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
+        </div>   
+    </td>
+    <td>
         <div id="chart-glucose-bar" style="background:#f8f7f7">
         Glucose < 6.0 mmol/L
         <a class="reset" href="javascript:glucoseBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div>
         </div>
     </td>
-    <td>
-        <div id="chart-bmi-bar" style="background:#f8f7f7">
-        BMI < 23
-        <a class="reset" href="javascript:bmiBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-        <div class="clearfix"></div>
-        </div>
-    </td>
+
 </tr>
 <tr>
     <td>
