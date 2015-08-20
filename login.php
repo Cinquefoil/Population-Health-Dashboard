@@ -7,19 +7,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$inputUsername = $_POST['username'];
 	$inputPassword = $_POST['password'];
 	
-	$sql = "SELECT * FROM account WHERE username = '$inputUsername' and password = '$inputPassword'";
-	
-	$result = $mysqli->query($sql);
-	if ($mysqli->errno){
-		echo $mysqli->error;
+	if($inputUsername == null || $inputPassword == null){
+		$error = "Please enter username and password.";
 	}
-	
-	$row = $result->fetch_row();
-	
-	if($row == null){
-		$error = "Your username or password is invalid.";
+	else if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $inputUsername) || preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $inputPassword)){
+		$error = "No special character is allowed.";
 	}
 	else{
+		$sql = "SELECT * FROM account WHERE username = '$inputUsername' and password = '$inputPassword'";
+	
+		$result = $mysqli->query($sql);
+		if ($mysqli->errno){
+			echo $mysqli->error;
+		}
+		
+		$row = $result->fetch_row();
+		
 		$retrievedUsername = $row[0];
 		$retrievedPassword = $row[1];
 		$access = $row[2];
