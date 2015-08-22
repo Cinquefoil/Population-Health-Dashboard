@@ -1,5 +1,7 @@
 # Population Health Dashboard Changelogs
 
+<b>22-08-2015:</b> test
+
 <b>09-08-2015:</b> All tabs - changed background color for currently selected tab, added a new tab "Geospatial Intelligence", renamed "Repeats Analysis" to "Repeat Analysis"
 
 <b>05-07-2015:</b> Repeat Analysis tab - updated to include additional health indicators, Screening Result tab - added Google Map
@@ -19,3 +21,4 @@
 <b>07-06-2015:</b> Replaced template with prototype, added nginx.conf
 
 <b>28-05-2015:</b> created gh-pages branch
+
