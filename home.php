@@ -25,6 +25,8 @@ include_once "checkAccess.php";
         <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/modernizr.custom.js"></script>
+		<script src="js/classie.js"></script>
 
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
@@ -33,6 +35,7 @@ include_once "checkAccess.php";
         <link href="css/dc.css" rel="stylesheet"/>
 		<link href="css/styles.css" rel="stylesheet">
         <link href="css/jquery.gridster.css" rel="stylesheet" />
+		<link href="css/slideMenus.css" rel="stylesheet" />
 
         <!-- Custom CSS -->
         <style>
@@ -158,39 +161,134 @@ include_once "checkAccess.php";
             </div>
             <!-- /.container -->
         </nav>
-        
-		<div class="gridster" ></br></br>
-			<span id="reset-all">
-				<strong>To Reset All Filters, click <a href="javascript:dc.filterAll();dc.redrawAll();">HERE</a></strong>
-			</span> 
-			<div class="row">
-				<div class="chart-wrapper" id="chart-dateMove-bar" style="background:#f8f7f7">
-					<strong>Health Screening Dates (Zoom In View)</strong>
-					<a class="reset" href="javascript:dateBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-					<div class="clearfix"></div></br>
+		
+		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+			<h3>Demographics</h3>
+			<a href="#">Celery seakale</a>
+			<a href="#">Dulse daikon</a>
+			<a href="#">Zucchini garlic</a>
+			<a href="#">Catsear azuki bean</a>
+			<a href="#">Dandelion bunya</a>
+			<a href="#">Rutabaga</a>
+		</nav>
+		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="width:310px">
+			<h3>Resident Information</h3>
+			<div class="chart-wrapper">
+				<table class='table table-hover' id='dc-table-graph' style="background:#f8f7f7">
+					<thead>
+						<tr class='header'>
+							<th>NRIC</th>
+							<th>Zone</th>
+							<th>Health Status</th>
+							<th>Current Habits</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</nav>
+		<nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top" id="cbp-spmenu-s3" style="background-color:white">
+			<div style="text-align:center;background-color:#f8f7f7">
+				<span id="reset-all">
+					<strong>To Reset All Filters, click <span onclick="javascript:dc.filterAll();dc.redrawAll();" style="cursor:pointer;color:#0000EE">HERE</span></strong>
+				</span>
+				
+				<br />
+				
+				<strong>Health Screening Dates (Select a date range to zoom-in)</strong>
+				<br />
+				<div class="chart-wrapper" id="chart-date-bar" style="background:#f8f7f7;float:none">
+				</div>
+				
+				<strong>Selected Date Range (Zoom-in View)</strong>
+				<br />
+				<div class="chart-wrapper" id="chart-dateMove-bar" style="background:#f8f7f7;float:none">
+				</div>
+				
+				<div class="clearfix"></div>				
+			</div>
+			<div align="center" style="background-color:white">
+				<div class="slideContainer">
+					<div class="slideMain">
+						<section>
+							<table>
+								<tr>
+									<td>
+										<button id="showLeft">Show/Hide Left Menu</button>
+									</td>
+									<td>
+										<button id="showTop">Show/Hide Top Menu</button>
+									</td>
+									<td>
+										<button id="showRight">Show/Hide Right Menu</button>
+									</td>
+								</tr>
+							</table>
+						</section>
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="chart-wrapper" id="chart-date-bar" style="background:#f8f7f7">
-					<strong>Health Screening Dates (Select a time range to zoom in)</strong>
-					<a class="reset" href="javascript:dateBarChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-					<div class="clearfix"></div></br>
-				</div>
-			</div>
+		</nav>
+		
+		<!-- SlideMenus JavaScript Function -->
+		<script>
+			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+				menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+				menuTop = document.getElementById( 'cbp-spmenu-s3' ),
+				showLeft = document.getElementById( 'showLeft' ),
+				showRight = document.getElementById( 'showRight' ),
+				showTop = document.getElementById( 'showTop' ),
+				body = document.body;
+
+			showLeft.onclick = function() {
+			classie.toggle( this, 'active' );
+			classie.toggle( menuLeft, 'cbp-spmenu-open' );
+			disableOther( 'showLeft' );
+			};
+			showRight.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( menuRight, 'cbp-spmenu-open' );
+				disableOther( 'showRight' );
+			};
+			showTop.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( menuTop, 'cbp-spmenu-open' );
+				disableOther( 'showTop' );
+			};
 			
+			window.onload = function() {
+				$('#showTop').click();
+			};
+
+			function disableOther( button ) {
+				if( button !== 'showLeft' ) {
+					classie.toggle( showLeft, 'disabled' );
+				}
+				if( button !== 'showRight' ) {
+					classie.toggle( showRight, 'disabled' );
+				}
+				if( button !== 'showTop' ) {
+					classie.toggle( showTop, 'disabled' );
+				}
+			}
+		</script>
+			
+		<div class="gridster">
+		
+			</br></br></br></br>
+		
 			<ul class="list-unstyled">
 				<li data-row="1" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">
 					<div class="chart-wrapper" id="test" style="background:#f8f7f7">
 						<strong>Health and Habits</strong>
 						<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
 				<li data-row="1" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">
 					<div class="chart-wrapper" id="chart-event-row" style="background:#f8f7f7">
 						<strong>Event Location</strong>
 						<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
 				<li data-row="1" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
@@ -242,133 +340,120 @@ include_once "checkAccess.php";
 						</div>
 					</div>
 				</li>-->
-				<li data-row="4" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
+				<li data-row="1" data-col="4" data-sizex="5" data-sizey="4" style="padding-top:5px;">
 					<div class="chart-wrapper" id="chart-gender-row" style="background:#f8f7f7">
 						<strong>Gender</strong>
 						<a class="reset" href="javascript:genderRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
-				<li data-row="6" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">
+				<li data-row="2" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">
 					<div class="chart-wrapper" id="chart-occupation-row" style="background:#f8f7f7">
 						<strong>Occupation</strong>
 						<a class="reset" href="javascript:occupationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
-				<li data-row="6" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
+				<li data-row="2" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">
 					<div class="chart-wrapper" id="chart-education-row" style="background:#f8f7f7">
 						<strong>Education</strong>
 						<a class="reset" href="javascript:educationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
-				<li data-row="5" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
+				<li data-row="2" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
 					<div class="chart-wrapper" id="chart-age-row" style="background:#f8f7f7">
 						<strong>Age</strong>
 						<a class="reset" href="javascript:ageRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
-				<li data-row="3" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
+				<li data-row="2" data-col="4" data-sizex="5" data-sizey="4" style="padding-top:5px;">
 					<div class="chart-wrapper" id="chart-race-row" style="background:#f8f7f7">
 						<strong>Race</strong>
 						<a class="reset" href="javascript:raceRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
 				<li data-row="3" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
 					<div class="chart-wrapper" id="chart-bmi-row" style="background:#f8f7f7">
 						<strong>BMI</strong>
 						<a class="reset" href="javascript:bmiRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
-					</div>
-				</li>
-				<li data-row="5" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-exercise-row" style="background:#f8f7f7">
-						<strong>Exercise (hrs/week)</strong>
-						<a class="reset" href="javascript:exerciseChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
-					</div>
-				</li>
-				<li data-row="4" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-sugar-row" style="background:#f8f7f7">
-						<strong>Sugar</strong>
-						<a class="reset" href="javascript:sugarRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
 				<li data-row="3" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
+					<div class="chart-wrapper" id="chart-exercise-row" style="background:#f8f7f7">
+						<strong>Exercise (hrs/week)</strong>
+						<a class="reset" href="javascript:exerciseChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+						<div class="clearfix"></div>
+					</div>
+				</li>
+				<li data-row="3" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
+					<div class="chart-wrapper" id="chart-sugar-row" style="background:#f8f7f7">
+						<strong>Sugar</strong>
+						<a class="reset" href="javascript:sugarRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+						<div class="clearfix"></div>
+					</div>
+				</li>
+				<li data-row="3" data-col="4" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
 					<div class="chart-wrapper" id="chart-bp-row" style="background:#f8f7f7">
 						<strong>BP</strong>
 						<a class="reset" href="javascript:bpRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
-				<li data-row="6" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
+				<li data-row="4" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
 					<div class="chart-wrapper" id="chart-foot-row" style="background:#f8f7f7">
 						<strong>Diabetes Foot</strong>
 						<a class="reset" href="javascript:footChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
-					</div>
-				</li>
-				<li data-row="5" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-living-row" style="background:#f8f7f7">
-						<strong>Living With</strong>
-						<a class="reset" href="javascript:livingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
 				<li data-row="4" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
+					<div class="chart-wrapper" id="chart-living-row" style="background:#f8f7f7">
+						<strong>Living With</strong>
+						<a class="reset" href="javascript:livingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+						<div class="clearfix"></div>
+					</div>
+				</li>
+				<li data-row="4" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
 					<div class="chart-wrapper" id="chart-smoking-row" style="background:#f8f7f7">
 						<strong>Smoking</strong>
 						<a class="reset" href="javascript:smokingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
-				<li data-row="7" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
+				<li data-row="4" data-col="4" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
 					<div class="chart-wrapper" id="chart-backache-row" style="background:#f8f7f7">
 						<strong>Backache (Taxi)</strong>
 						<a class="reset" href="javascript:backacheChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div></br>
+						<div class="clearfix"></div>
 					</div>
 				</li>
-				<li data-row="7" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
+				<li data-row="5" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
 					<div class="chart-wrapper" id="chart-lengthache-row" style="background:#f8f7f7">
-					<strong>Length of Backache (Taxi)</strong>
-					<a class="reset" href="javascript:lengthacheRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-					<div class="clearfix"></div></br>
-				  </div>
+						<strong>Length of Backache (Taxi)</strong>
+						<a class="reset" href="javascript:lengthacheRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+						<div class="clearfix"></div>
+					</div>
 				</li>
-				<li data-row="7" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-				  <div class="chart-wrapper" id="chart-sleep-row" style="background:#f8f7f7">
-					<strong>Length of Sleep (Taxi)</strong>
-					<a class="reset" href="javascript:sleepRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-					<div class="clearfix"></div></br>
-				  </div>
+				<li data-row="5" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
+					<div class="chart-wrapper" id="chart-sleep-row" style="background:#f8f7f7">
+						<strong>Length of Sleep (Taxi)</strong>
+						<a class="reset" href="javascript:sleepRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+						<div class="clearfix"></div>
+					</div>
 				</li>
-				<li data-row="8" data-col="1" data-sizex="10" data-sizey="6" style="padding-top:5px;">
-				  <div class="chart-wrapper" id="map" style="background:#f8f7f7">
-					<strong>Resident Distribution Map</strong>
-				  </div>
-				</li>
-				<li data-row="9" data-col="1" data-sizex="15" data-sizey="5" style="padding-top:5px;">
-					<div class="chart-wrapper">
-						<h4>Resident Information (display for testing purpose)</h4>
-					  <table class='table table-hover' id='dc-table-graph' style="background:#f8f7f7">
-						<thead>
-						  <tr class='header'>
-							<th>NRIC</th>
-							<th>Zone</th>
-							<th>Health Status</th>
-							<th>Current Habits</th>
-						  </tr>
-						</thead>
-					  </table>
+				<li data-row="6" data-col="1" data-sizex="10" data-sizey="6" style="padding-top:5px;">
+					<div class="chart-wrapper" id="map" style="background:#f8f7f7">
+						<strong>Resident Distribution Map</strong>
 					</div>
 				</li>
 			</ul>
 		</div>
+		
+		<br /><br />
 
 		<script type="text/javascript">
 			/********************************************************
@@ -1345,7 +1430,7 @@ include_once "checkAccess.php";
 				$(function(){
 					var log = document.getElementById('log');
 					gridster = $(".gridster ul").gridster({
-					widget_base_dimensions: [55, 55],
+					widget_base_dimensions: [44, 50],
 					widget_margins: [5, 5],
 					resize: {
 					enabled: false,
