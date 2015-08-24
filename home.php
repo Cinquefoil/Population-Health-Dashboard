@@ -14,19 +14,34 @@ include_once "checkAccess.php";
 
         <title>Screening Result</title>
 
-        <!-- Javascript -->
+        <!-- JavaScript -->
+		<script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/d3.js"></script>
-        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         <script src="js/crossfilter.js"></script>
         <script src="js/dc.js"></script>
+		<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 		<!-- <script src="js/leaflet.js"></script>
         <script src="js/leaflet.markercluster.js"></script>
         <script src="js/dc.leaflet.js"></script>-->
-        <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/modernizr.custom.js"></script>
 		<script src="js/classie.js"></script>
+		<script src="js/jquery.sortable.js"></script>
+		<script>
+			$(function() {
+				$('.sortable').sortable();
+				$('.connected').sortable({
+					connectWith: '.connected'
+				});
+			});
+		</script>
+		<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+		<script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$('.scroll-pane').jScrollPane();
+			});
+		</script>
 
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
@@ -36,6 +51,7 @@ include_once "checkAccess.php";
 		<link href="css/styles.css" rel="stylesheet">
         <link href="css/jquery.gridster.css" rel="stylesheet" />
 		<link href="css/slideMenus.css" rel="stylesheet" />
+		<link href="css/jquery.jscrollpane.css" rel="stylesheet" />
 
         <!-- Custom CSS -->
         <style>
@@ -51,10 +67,10 @@ include_once "checkAccess.php";
         </style>
         <!-- style for Heat-Box -->
         <style>
-          .heat-box {
-            stroke: #E6E6E6;
-            stroke-width: 2px;
-          }
+			.heat-box {
+				stroke: #E6E6E6;
+				stroke-width: 2px;
+			}
         </style>
         <!-- END style for Heat-Box -->
         <!-- style for Map -->
@@ -162,18 +178,10 @@ include_once "checkAccess.php";
             <!-- /.container -->
         </nav>
 		
-		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-			<h3>Demographics</h3>
-			<a href="#">Celery seakale</a>
-			<a href="#">Dulse daikon</a>
-			<a href="#">Zucchini garlic</a>
-			<a href="#">Catsear azuki bean</a>
-			<a href="#">Dandelion bunya</a>
-			<a href="#">Rutabaga</a>
-		</nav>
+		<!-- Right Slide Menu -->
 		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="width:310px">
 			<h3>Resident Information</h3>
-			<div class="chart-wrapper">
+			<div class="chart-wrapper" style="width:100%;height:450px;overflow:auto;font-size:13px">
 				<table class='table table-hover' id='dc-table-graph' style="background:#f8f7f7">
 					<thead>
 						<tr class='header'>
@@ -186,6 +194,8 @@ include_once "checkAccess.php";
 				</table>
 			</div>
 		</nav>
+		
+		<!-- Top Slide Menu -->
 		<nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top" id="cbp-spmenu-s3" style="background-color:white">
 			<div style="text-align:center;background-color:#f8f7f7">
 				<span id="reset-all">
@@ -229,8 +239,201 @@ include_once "checkAccess.php";
 			</div>
 		</nav>
 		
-		<!-- SlideMenus JavaScript Function -->
-		<script>
+		<section id="connected">
+			<!-- Left Slide Menu -->
+			<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+				<h3>Demographics</h3>
+				<div style="width:100%;height:450px;overflow:auto;font-size:13px">
+					<ul class="list-unstyled connected list sortable grid">
+						<li>  
+							<div class="chart-wrapper" id="chart-bmi-row" style="background:#f8f7f7;margin:5px">
+								<strong>BMI</strong>
+								<a class="reset" href="javascript:bmiRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>  
+							<div class="chart-wrapper" id="chart-sugar-row" style="background:#f8f7f7;margin:5px">
+								<strong>Sugar</strong>
+								<a class="reset" href="javascript:sugarRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>  
+							<div class="chart-wrapper" id="chart-bp-row" style="background:#f8f7f7;margin:5px">
+								<strong>BP</strong>
+								<a class="reset" href="javascript:bpRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>
+							<div class="chart-wrapper" id="chart-occupation-row" style="background:#f8f7f7;margin:5px">
+								<strong>Occupation</strong>
+								<a class="reset" href="javascript:occupationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>  
+							<div class="chart-wrapper" id="chart-exercise-row" style="background:#f8f7f7;margin:5px">
+								<strong>Exercise (hrs/week)</strong>
+								<a class="reset" href="javascript:exerciseChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>  
+							<div class="chart-wrapper" id="chart-foot-row" style="background:#f8f7f7;margin:5px">
+								<strong>Diabetes Foot</strong>
+								<a class="reset" href="javascript:footChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>  
+							<div class="chart-wrapper" id="chart-living-row" style="background:#f8f7f7;margin:5px">
+								<strong>Living With</strong>
+								<a class="reset" href="javascript:livingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>  
+							<div class="chart-wrapper" id="chart-smoking-row" style="background:#f8f7f7;margin:5px">
+								<strong>Smoking</strong>
+								<a class="reset" href="javascript:smokingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>  
+							<div class="chart-wrapper" id="chart-backache-row" style="background:#f8f7f7;margin:5px">
+								<strong>Backache (Taxi)</strong>
+								<a class="reset" href="javascript:backacheChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>  
+							<div class="chart-wrapper" id="chart-lengthache-row" style="background:#f8f7f7;margin:5px">
+								<strong>Length of Backache (Taxi)</strong>
+								<a class="reset" href="javascript:lengthacheRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+						<li>  
+							<div class="chart-wrapper" id="chart-sleep-row" style="background:#f8f7f7;margin:5px">
+								<strong>Length of Sleep (Taxi)</strong>
+								<a class="reset" href="javascript:sleepRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+				
+			<div align="center">
+				</br></br>
+			
+				<ul class="list-unstyled connected list no2 sortable grid" style="padding:41px 0px 10px 30px">
+					<li>
+						<div class="chart-wrapper" id="test" style="background:#f8f7f7;margin:5px">
+							<strong>Health and Habits</strong>
+							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+					<li>
+						<div class="chart-wrapper" id="chart-event-row" style="background:#f8f7f7;margin:5px">
+							<strong>Event Location</strong>
+							<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+					<!--<li>
+						<div class="chart-wrapper" id="divMap" style="background:#f8f7f7">
+							<div id="stractNum">
+								<strong>Health and Habits</strong>
+								<table id="tableNumDisplay">
+									<tr>
+										<td>
+											PosHabits
+										</td>
+										<td valign="bottom">
+											<div id="numboxHP"></div>
+										</td>
+										<td valign="bottom">
+											<div id="numboxUP"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											NegHabits
+										</td>
+										<td valign="top">
+											<div id="numboxHN"></div>
+										</td>
+										<td valign="top">
+											<div id="numboxUN"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											
+										</td>
+										<td align="center">
+											Healthy
+										</td>
+										<td align="center">
+											Unhealthy
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</li>-->
+				<!--<li data-row="2" data-col="1" data-sizex="5" data-sizey="5" style="padding-top:5px;">
+						<div class="chart-wrapper" id="divMap" style="background:#f8f7f7">
+							<div class="testing">
+								<strong>Health and Habits</strong>
+							</div>
+						</div>
+					</li>-->
+					<li>
+						<div class="chart-wrapper" id="map" style="background:#f8f7f7;margin:5px 0px 5px 0px;height:235px;width:360px">
+							<strong>Resident Distribution Map</strong>
+						</div>
+					</li>
+					<li>
+						<div class="chart-wrapper" id="chart-gender-row" style="background:#f8f7f7;margin:5px">
+							<strong>Gender</strong>
+							<a class="reset" href="javascript:genderRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+					<li>
+						<div class="chart-wrapper" id="chart-age-row" style="background:#f8f7f7;margin:5px">
+							<strong>Age</strong>
+							<a class="reset" href="javascript:ageRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+					<li>
+						<div class="chart-wrapper" id="chart-race-row" style="background:#f8f7f7;margin:5px">
+							<strong>Race</strong>
+							<a class="reset" href="javascript:raceRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+					<li>
+						<div class="chart-wrapper" id="chart-education-row" style="background:#f8f7f7;margin:5px">
+							<strong>Education</strong>
+							<a class="reset" href="javascript:educationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section>
+		
+		<br /><br />
+		
+		<!-- SlideMenu JavaScript Function -->
+		<script type="text/javascript">
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 				menuRight = document.getElementById( 'cbp-spmenu-s2' ),
 				menuTop = document.getElementById( 'cbp-spmenu-s3' ),
@@ -271,189 +474,6 @@ include_once "checkAccess.php";
 				}
 			}
 		</script>
-			
-		<div class="gridster">
-		
-			</br></br></br></br>
-		
-			<ul class="list-unstyled">
-				<li data-row="1" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-					<div class="chart-wrapper" id="test" style="background:#f8f7f7">
-						<strong>Health and Habits</strong>
-						<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="1" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-					<div class="chart-wrapper" id="chart-event-row" style="background:#f8f7f7">
-						<strong>Event Location</strong>
-						<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="1" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-					<div class="chart-wrapper" id="divMap" style="background:#f8f7f7">
-						<div id="stractNum">
-							<strong>Health and Habits</strong>
-							<table id="tableNumDisplay">
-								<tr>
-									<td>
-										PosHabits
-									</td>
-									<td valign="bottom">
-										<div id="numboxHP"></div>
-									</td>
-									<td valign="bottom">
-										<div id="numboxUP"></div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										NegHabits
-									</td>
-									<td valign="top">
-										<div id="numboxHN"></div>
-									</td>
-									<td valign="top">
-										<div id="numboxUN"></div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										
-									</td>
-									<td align="center">
-										Healthy
-									</td>
-									<td align="center">
-										Unhealthy
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-				</li>
-			<!--<li data-row="2" data-col="1" data-sizex="5" data-sizey="5" style="padding-top:5px;">
-					<div class="chart-wrapper" id="divMap" style="background:#f8f7f7">
-						<div class="testing">
-							<strong>Health and Habits</strong>
-						</div>
-					</div>
-				</li>-->
-				<li data-row="1" data-col="4" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-					<div class="chart-wrapper" id="chart-gender-row" style="background:#f8f7f7">
-						<strong>Gender</strong>
-						<a class="reset" href="javascript:genderRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="2" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-					<div class="chart-wrapper" id="chart-occupation-row" style="background:#f8f7f7">
-						<strong>Occupation</strong>
-						<a class="reset" href="javascript:occupationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="2" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-					<div class="chart-wrapper" id="chart-education-row" style="background:#f8f7f7">
-						<strong>Education</strong>
-						<a class="reset" href="javascript:educationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="2" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-					<div class="chart-wrapper" id="chart-age-row" style="background:#f8f7f7">
-						<strong>Age</strong>
-						<a class="reset" href="javascript:ageRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="2" data-col="4" data-sizex="5" data-sizey="4" style="padding-top:5px;">
-					<div class="chart-wrapper" id="chart-race-row" style="background:#f8f7f7">
-						<strong>Race</strong>
-						<a class="reset" href="javascript:raceRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="3" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-bmi-row" style="background:#f8f7f7">
-						<strong>BMI</strong>
-						<a class="reset" href="javascript:bmiRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="3" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-exercise-row" style="background:#f8f7f7">
-						<strong>Exercise (hrs/week)</strong>
-						<a class="reset" href="javascript:exerciseChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="3" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-sugar-row" style="background:#f8f7f7">
-						<strong>Sugar</strong>
-						<a class="reset" href="javascript:sugarRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="3" data-col="4" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-bp-row" style="background:#f8f7f7">
-						<strong>BP</strong>
-						<a class="reset" href="javascript:bpRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="4" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-foot-row" style="background:#f8f7f7">
-						<strong>Diabetes Foot</strong>
-						<a class="reset" href="javascript:footChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="4" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-living-row" style="background:#f8f7f7">
-						<strong>Living With</strong>
-						<a class="reset" href="javascript:livingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="4" data-col="3" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-smoking-row" style="background:#f8f7f7">
-						<strong>Smoking</strong>
-						<a class="reset" href="javascript:smokingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="4" data-col="4" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-backache-row" style="background:#f8f7f7">
-						<strong>Backache (Taxi)</strong>
-						<a class="reset" href="javascript:backacheChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="5" data-col="1" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-lengthache-row" style="background:#f8f7f7">
-						<strong>Length of Backache (Taxi)</strong>
-						<a class="reset" href="javascript:lengthacheRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="5" data-col="2" data-sizex="5" data-sizey="4" style="padding-top:5px;">  
-					<div class="chart-wrapper" id="chart-sleep-row" style="background:#f8f7f7">
-						<strong>Length of Sleep (Taxi)</strong>
-						<a class="reset" href="javascript:sleepRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li data-row="6" data-col="1" data-sizex="10" data-sizey="6" style="padding-top:5px;">
-					<div class="chart-wrapper" id="map" style="background:#f8f7f7">
-						<strong>Resident Distribution Map</strong>
-					</div>
-				</li>
-			</ul>
-		</div>
-		
-		<br /><br />
 
 		<script type="text/javascript">
 			/********************************************************
@@ -1340,7 +1360,7 @@ include_once "checkAccess.php";
 						updateGraph()});
 				
 				chart
-				.width(90 * 2 + 80)
+				.width(90 * 2 + 70)
 				.height(90 * 2 + 20)
 				.margins({top: 0, right: 50, bottom: 20, left: 50})
 				.dimension(runDim)
