@@ -144,7 +144,7 @@ include_once "checkAccess.php";
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav" style="font-size:12px">
+                    <ul class="nav navbar-nav" style="font-size:11px">
                         <li>
                             <a href="home.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-th-large" style="padding:0px" aria-hidden="true"></span> Screening Result</a>
                         </li>
@@ -181,7 +181,7 @@ include_once "checkAccess.php";
 		<!-- Right Slide Menu -->
 		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="width:310px">
 			<h3>Resident Information</h3>
-			<div class="chart-wrapper" style="width:100%;height:450px;overflow:auto;font-size:13px">
+			<div class="chart-wrapper" style="width:100%;height:76%;overflow:auto;font-size:13px">
 				<table class='table table-hover' id='dc-table-graph' style="background:#f8f7f7">
 					<thead>
 						<tr class='header'>
@@ -243,7 +243,7 @@ include_once "checkAccess.php";
 			<!-- Left Slide Menu -->
 			<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
 				<h3>Demographics</h3>
-				<div style="width:100%;height:450px;overflow:auto;font-size:13px">
+				<div style="width:100%;height:76%;overflow:auto;font-size:13px">
 					<ul class="list-unstyled connected list sortable grid">
 						<li>  
 							<div class="chart-wrapper" id="chart-bmi-row" style="background:#f8f7f7;margin:5px">

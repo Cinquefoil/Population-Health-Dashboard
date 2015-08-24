@@ -85,7 +85,7 @@ include_once "checkAccess.php";
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav" style="font-size:12px">
+					<ul class="nav navbar-nav" style="font-size:11px">
 						<li>
 							<a href="home.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Screening Result</a>
 						</li>
