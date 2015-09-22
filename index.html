@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="css/tagsort.css" rel="stylesheet" type="text/css"></link>
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/tagsort.js"></script>
+		<script>
+			$(function(){
+				$('div.tags-container').tagSort({selector:'.item', tagWrapper:'span', displaySelector: '.item-tags', displaySeperator: ' / ', inclusive: true, fadeTime:0});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="tags-container row"></div>
+			
+			<div data-item-tags="All"></div>
+			
+			<div class="item col-md-3" data-item-id="1" data-item-tags="All, Health">
+				<div class="wrapper">
+					<h2 class="icon-chevron-right">Health</h2>
+				</div>
+			</div>
+			<div class="item col-md-3" data-item-id="1" data-item-tags="All, Facebook">
+				<div class="wrapper">
+					<h2>Facebook</h2>
+				</div>
+			</div>
+			<div class="item col-md-3" data-item-id="2" data-item-tags="All, Twitter">
+				<div class="wrapper">
+					<h2>Twitter</h2>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function(){
+				jQuery('div.tags-container span:contains("Health")').addClass('tagsort-active');
+				jQuery('div.tags-container span:contains("Health")').click();
+				jQuery('div.tags-container span:contains("Health")').click();
+			});
+		</script>
+	</body>
+</html>

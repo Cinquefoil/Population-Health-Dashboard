@@ -1,24 +1,7 @@
-# Population Health Dashboard Changelogs
+# Population Health Dashboard
 
-<b>22-08-2015:</b> test
+Firstly, to automate and visually present the stratification of patient population with chronic diseases in the northern part of Singapore. Users of the system will be able to interact with the dash board to drill down into specific strata of each patient group of interest.
 
-<b>09-08-2015:</b> All tabs - changed background color for currently selected tab, added a new tab "Geospatial Intelligence", renamed "Repeats Analysis" to "Repeat Analysis"
+Secondly, to monitor each individual in the high-risk target groups in a personalized event sequential view to track his historical/current health status, and based on which recommend him a suitable follow-up programmes (e.g. home visit, tele-consult and intervention program, etc). Additionally, the application will also be able to keep track of each individual’s participation in the follow-up programme(s).
 
-<b>05-07-2015:</b> Repeat Analysis tab - updated to include additional health indicators, Screening Result tab - added Google Map
-
-<b>04-07-2015:</b> Analysis tab - updated hyperlinks to Screening Result and Health Classification tab
-
-<b>03-08-2015:</b> Screening Result tab - added 9 more survey dimensions
-
-<b>31-07-2015:</b> Added source date to generate moasic map for Screening Result tab, improved timeline in Screening Result tab to show stratification result
-
-<b>29-07-2015:</b> Added zoom-in date bar chart
-
-<b>28-07-2015:</b> Minor UI update for Screening Result tab
-
-<b>27-07-2015:</b> Updated 2 versions of home.html, uploaded Health Classification tab ver 1, uploaded SQL statements to populate testing database, uploaded analysis.html, uploaded sample csv files for testing, uploaded required CSS and JS
-
-<b>07-06-2015:</b> Replaced template with prototype, added nginx.conf
-
-<b>28-05-2015:</b> created gh-pages branch
-
+Lastly, an interactive map will offer information on the distribution of population according to the acuity of their health screening results, in order to facilitate the client in planning for future events. This includes, filtering features on the map to highlight concentration of high risk groups, success rate of intervention programme, and distribution of various patient profiles like age, races, genders, occupations, etc.

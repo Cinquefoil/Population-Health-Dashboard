@@ -44,20 +44,6 @@ include_once "checkAccess.php";
 				$('div.tags-container').tagSort({selector:'.item', tagWrapper:'span', displaySelector: '.item-tags', displaySeperator: ' / ', inclusive: true, fadeTime:0});
 			});
 		</script>
-		<script type="text/javascript" src="js/moment.js"></script>
-		<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-		<script>
-			$(document).ready(function(){
-				jQuery('div.tags-container span:contains("Health")').addClass('tagsort-active');
-				jQuery('div.tags-container span:contains("Event Location")').addClass('tagsort-active');
-				jQuery('div.tags-container span:contains("Gender")').addClass('tagsort-active');
-				jQuery('div.tags-container span:contains("Age")').addClass('tagsort-active');
-				jQuery('div.tags-container span:contains("Race")').addClass('tagsort-active');
-				jQuery('div.tags-container span:contains("Education")').addClass('tagsort-active');
-				jQuery('div.tags-container span:contains("Health")').click();
-				jQuery('div.tags-container span:contains("Health")').click();
-			});
-		</script>
 
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
@@ -66,7 +52,6 @@ include_once "checkAccess.php";
 		<link href="css/slideMenus.css" rel="stylesheet" />
 		<link href="css/jquery.jscrollpane.css" rel="stylesheet" />
 		<link href="css/tagsort.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
         <!-- Custom CSS -->
         <style>
@@ -79,25 +64,6 @@ include_once "checkAccess.php";
             #bs-example-navbar-collapse-1 ul li a:hover {
                 border-bottom:2px #FFF solid;
             }
-			
-			#footer {
-				position: fixed;
-				bottom: 0;
-				width: 100%;
-				background-color: #f8f7f7;
-				padding: 0px 10px 0px 10px;
-				border-top-style:solid;
-				border-top-color:#cccccc;
-				border-top-width:2px;
-			}
-			
-			.gradientBoxesWithOuterShadows { 
-				border-style: outset;
-				border-radius: 20px;
-				-moz-border-radius: 10px;
-				box-shadow: 2px 2px 2px #cccccc;
-				-moz-box-shadow: 2px 2px 2px #cccccc;
-			}
         </style>
     </head>
     
@@ -113,10 +79,11 @@ include_once "checkAccess.php";
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    <!-- <a class='navbar-brand' href='#'><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>-->
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav" style="font-size:12px">
+                    <ul class="nav navbar-nav" style="font-size:11px">
                         <li>
                             <a href="home.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-th-large" style="padding:0px" aria-hidden="true"></span> Screening Result</a>
                         </li>
@@ -152,16 +119,11 @@ include_once "checkAccess.php";
 		
 		<!-- Right Slide Menu -->
 		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="width:310px">
-			<h3 style="text-align:center;font-size:20px;padding:10px">Resident Information</h3>
-			
-			<div id="dc-data-count">
-				<span class="filter-count" style="font-weight:bold"></span> residents selected out of <span class="total-count" style="font-weight:bold"></span> records
-			</div>
-			
-			<div class="chart-wrapper" style="width:100%;height:78%;overflow:auto;font-size:12px">
-				<table class="table table-hover" id="dc-table-graph" style="background:#f8f7f7">
+			<h3>Resident Information</h3>
+			<div class="chart-wrapper" style="width:100%;height:76%;overflow:auto;font-size:13px">
+				<table class='table table-hover' id='dc-table-graph' style="background:#f8f7f7">
 					<thead>
-						<tr class="header">
+						<tr class='header'>
 							<th>NRIC</th>
 							<th>Zone</th>
 							<th>Health Status</th>
@@ -173,63 +135,31 @@ include_once "checkAccess.php";
 		</nav>
 		
 		<!-- Top Slide Menu -->
-		<nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top" id="cbp-spmenu-s3" style="background-color:#f8f7f7;padding: 0px 10px 0px 20px;height:372px;border-bottom-style:solid;border-bottom-color:#cccccc;border-bottom-width:2px">
-			<div align="center">
-				<table>
-					<tr>
-						<td>
-							<div style="text-align:center">
-							<div class="chart-wrapper" id="chart-date-bar" style="background:#f8f7f7">
-								<strong>Health Screening Dates</strong>
-								<div class="clearfix"></div>
-							</div>	
-							
-							<br />
-							<div class="chart-wrapper" id="chart-dateMove-bar" style="background:#f8f7f7">
-								<strong>Zoom-in View of Selected Date Range</strong>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-						</td>
-						<td>
-							<div>
-								<b><u>Date Inputs</u></b>
-								</br>
-								
-								Start & End Date
-								<br />
-								<input type="text" id="daterange" onchange="byDateRange(this.value);"/>
-								
-								</br><br />
-								
-								<input id="byYearRadio" type="radio" name="period" onclick="toggleInput();"> By Year <input id ="byYear" type="text" size="2" onchange="byYear(this.value);" disabled="true"/>
-								<br />
-								<input type="radio" name="period" onclick="lastWeek();" disabled="true"> Last Week
-								<br />
-								<input type="radio" name="period" onclick="lastMonth();" disabled="true"/> Last Month
-								<br />
-								<input type="radio" name="period" onclick="lastYear();"/> Last Year
-								<br />
-								<input type="radio" name="period" onclick="allDates();" checked="checked"/> All Dates
-								<br />
-								(<span id="DisplayStartDate"></span> - <span id="DisplayEndDate"></span>)
-							</div>
-						</td>
-					</tr>
-				</table>
-			</div>
+		<nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top" id="cbp-spmenu-s3" style="background-color:white">
+			<div style="text-align:center;background-color:#f8f7f7">
+				<span id="reset-all">
+					<strong>To Reset All Filters, click <span onclick="javascript:dc.filterAll();dc.redrawAll();" style="cursor:pointer;color:#0000EE">HERE</span></strong>
+				</span>
 				
+				<br />
+				
+				<strong>Health Screening Dates (Select a date range to zoom-in)</strong>
+				<br />
+				<div class="chart-wrapper" id="chart-date-bar" style="background:#f8f7f7;float:none">
+				</div>
+				
+				<strong>Selected Date Range (Zoom-in View)</strong>
+				<br />
+				<div class="chart-wrapper" id="chart-dateMove-bar" style="background:#f8f7f7;float:none">
+				</div>
+				
+				<div class="clearfix"></div>				
+			</div>
+			
 			<table>
 				<tr>
-					<td>
-						<div class="slideMain">
-							<section>
-								<button id="showTop" style="height:50px;width:90px">&#9650; Show & Hide Date Selector</button>
-							</section>
-						</div>
-					</td>
-					<td style="vertical-align:top;padding:8px 0px 0px 5px">
-						<b>Charts:</b>
+					<td style="vertical-align:top;padding:10px 0px 0px 5px">
+						<b>Select Charts:</b>
 					</td>
 					<td>
 						<div class="container" style="width:800px">
@@ -239,10 +169,23 @@ include_once "checkAccess.php";
 						</div>
 					</td>
 					<td>
-						<div class="slideMain">
-							<section>
-								<button id="showRight" style="height:50px;width:90px">Show & Hide Resident List &#9654;</button>
-							</section>
+						<div>
+							<div>
+								<div class="slideMain">
+									<section>
+										<table>
+											<tr>
+												<td>
+													<button id="showTop" style="width:90px">Show Date Selector</button>
+												</td>
+												<td>
+													<button id="showRight" style="width:90px">Show Resident List</button>
+												</td>
+											</tr>
+										</table>
+									</section>
+								</div>
+							</div>
 						</div>
 					</td>
 				</tr>
@@ -255,181 +198,139 @@ include_once "checkAccess.php";
 			
 				<ul class="list-unstyled connected list no2 sortable grid" style="padding:41px 0px 10px 30px">
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="test" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Health and Habits">
+						<div class="chart-wrapper item col-md-1" id="test" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Health and Habits">
 							<strong>Health and Habits</strong>
-							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<br />
 						</div>
 					</li>
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-event-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Event Location">
+						<div class="chart-wrapper item col-md-1" id="chart-event-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Event Location">
 							<strong>Event Location</strong>
-							<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-gender-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Gender">
+						<div class="chart-wrapper item col-md-1" id="chart-gender-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Gender">
 							<strong>Gender</strong>
-							<a class="reset" href="javascript:genderRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:genderRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-age-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Age">
+						<div class="chart-wrapper item col-md-1" id="chart-age-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Age">
 							<strong>Age</strong>
-							<a class="reset" href="javascript:ageRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:ageRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-race-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Race">
+						<div class="chart-wrapper item col-md-1" id="chart-race-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Race">
 							<strong>Race</strong>
-							<a class="reset" href="javascript:raceRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:raceRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-education-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Education">
+						<div class="chart-wrapper item col-md-1" id="chart-education-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Education">
 							<strong>Education</strong>
-							<a class="reset" href="javascript:educationRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:educationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-bmi-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, BMI">
+						<div class="chart-wrapper item col-md-1" id="chart-bmi-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, BMI">
 							<strong>BMI</strong>
-							<a class="reset" href="javascript:bmiRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:bmiRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-sugar-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Sugar">
+						<div class="chart-wrapper item col-md-1" id="chart-sugar-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Sugar">
 							<strong>Sugar</strong>
-							<a class="reset" href="javascript:sugarRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:sugarRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-bp-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, BP">
+						<div class="chart-wrapper item col-md-1" id="chart-bp-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, BP">
 							<strong>BP</strong>
-							<a class="reset" href="javascript:bpRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:bpRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-occupation-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Occupation">
+						<div class="chart-wrapper item col-md-1" id="chart-occupation-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Occupation">
 							<strong>Occupation</strong>
-							<a class="reset" href="javascript:occupationRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:occupationRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-exercise-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Exercise">
+						<div class="chart-wrapper item col-md-1" id="chart-exercise-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Exercise">
 							<strong>Exercise (hrs/week)</strong>
-							<a class="reset" href="javascript:exerciseChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:exerciseChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-foot-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Diabetes Foot">
+						<div class="chart-wrapper item col-md-1" id="chart-foot-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Diabetes Foot">
 							<strong>Diabetes Foot</strong>
-							<a class="reset" href="javascript:footChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:footChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-living-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Living With">
+						<div class="chart-wrapper item col-md-1" id="chart-living-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Living With">
 							<strong>Living With</strong>
-							<a class="reset" href="javascript:livingRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:livingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-smoking-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Smoking">
+						<div class="chart-wrapper item col-md-1" id="chart-smoking-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Smoking">
 							<strong>Smoking</strong>
-							<a class="reset" href="javascript:smokingRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:smokingRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-backache-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Backache">
+						<div class="chart-wrapper item col-md-1" id="chart-backache-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Backache">
 							<strong>Backache (Taxi)</strong>
-							<a class="reset" href="javascript:backacheChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:backacheChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-lengthache-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Length of Backache">
+						<div class="chart-wrapper item col-md-1" id="chart-lengthache-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Length of Backache">
 							<strong>Length of Backache (Taxi)</strong>
-							<a class="reset" href="javascript:lengthacheRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:lengthacheRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 					<li>  
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-sleep-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Length of Sleep">
+						<div class="chart-wrapper item col-md-1" id="chart-sleep-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Length of Sleep">
 							<strong>Length of Sleep (Taxi)</strong>
-							<a class="reset" href="javascript:sleepRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<a class="reset" href="javascript:sleepRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 							<div class="clearfix"></div>
-							<span style="font-size:12px">
-								Current Filters: <span class='filter'></span>
-							</span>
 						</div>
 					</li>
 				</ul>
 			</div>
 			
-			<div id="footer">
-				<span id="reset-all">
-					<span onclick="javascript:dc.filterAll();dc.redrawAll();" style="cursor:pointer;font-size:14px;font-weight:bold;color:#1a7bbf">Reset All Filters</span>
-				</span>
-			</div>
+			<script>
+				$(document).ready(function(){
+					jQuery('div.tags-container span:contains("Health")').addClass('tagsort-active');
+					jQuery('div.tags-container span:contains("Event Location")').addClass('tagsort-active');
+					jQuery('div.tags-container span:contains("Gender")').addClass('tagsort-active');
+					jQuery('div.tags-container span:contains("Age")').addClass('tagsort-active');
+					jQuery('div.tags-container span:contains("Race")').addClass('tagsort-active');
+					jQuery('div.tags-container span:contains("Education")').addClass('tagsort-active');
+					jQuery('div.tags-container span:contains("Health")').click();
+					jQuery('div.tags-container span:contains("Health")').click();
+				});
+			</script>
 		</section>
 		
 		<br /><br />
@@ -454,7 +355,7 @@ include_once "checkAccess.php";
 			};
 			
 			window.onload = function() {
-				//$('#showTop').click();
+				$('#showTop').click();
 			};
 
 			function disableOther( button ) {
@@ -533,7 +434,6 @@ include_once "checkAccess.php";
 				lengthacheRowChart = dc.rowChart("#chart-lengthache-row");
 				sleepRowChart = dc.rowChart("#chart-sleep-row");
 				
-				var dataCount = dc.dataCount("#dc-data-count");
 				var dataTable = dc.dataTable("#dc-table-graph");
 
 				/********************************************************
@@ -554,13 +454,6 @@ include_once "checkAccess.php";
 				var dateGroup1 = dateDim1.group();
 				var minDate = dateDim1.bottom(1)[0].date;
 				var maxDate = dateDim1.top(1)[0].date;
-				
-				var minDateMonth = parseInt(minDate.getMonth())+1;
-				var maxDateMonth = parseInt(maxDate.getMonth())+1;
-				
-				document.getElementById('DisplayStartDate').innerHTML = minDate.getDate() + "/" + minDateMonth + "/" + minDate.getFullYear();
-				document.getElementById('DisplayEndDate').innerHTML = maxDate.getDate() + "/" + maxDateMonth + "/" + maxDate.getFullYear();
-				
 				var healthStatusGroup = dateDim1.group().reduce(
 					function (p, v) {
 						++p.count;
@@ -652,13 +545,11 @@ include_once "checkAccess.php";
 				* 	Step4: Create the Visualisations					*
 				*														*
 				********************************************************/
-				dataCount.dimension(ndx).group(all)
-				
 				dataTable.width(960).height(800)
 					.dimension(icDim)
-					.group(function(d) { return "";
+					.group(function(d) { return "List of all residents based on filters"
 					 })
-					.size(10000)	// number of rows to return
+					.size(1000)	// number of rows to return
 					.columns([
 					  function(d) { return d.NRIC; },
 					  function(d) { return d.Zone; },
@@ -684,7 +575,7 @@ include_once "checkAccess.php";
 				/*dateBarChart.on("filtered", function(c, f){
 						updateGraph();
 					});*/
-				
+					
 				moveChart
 					//.renderArea(true)
 					.width(900)
@@ -952,117 +843,6 @@ include_once "checkAccess.php";
 						return "red";
 					});
 				}
-			});
-		</script>
-		<script>
-			function byDateRange(dateSelected) {
-				var twoDates = dateSelected.split("-");
-				
-				var startDate = twoDates[0].split("/");
-				startDate.reverse();
-				
-				var endDate = twoDates[1].split("/");
-				endDate.reverse();
-				
-				dateBarChart.filter(dc.filters.RangedFilter(new Date(startDate), new Date(endDate)));
-				dc.redrawAll();
-			}
-			function toggleInput(){
-				if(document.getElementById("byYearRadio").checked == true){
-					document.getElementById('byYear').disabled = false;
-				}
-				else{
-					document.getElementById('byYear').disabled = true;
-				}
-			}
-			function byYear(yearSelected){
-				dateBarChart.filter(dc.filters.RangedFilter(new Date(yearSelected,0,1), new Date(yearSelected,11,30)));
-				dc.redrawAll();
-			}
-			function lastWeek() {
-				toggleInput();
-				var now = moment(new Date());
-				var mon = moment().startOf('week').subtract('days', 6)
-				var startMoment = mon.format("YYYY-MM-DD");
-				var endMoment = mon.add('days', 6).format("YYYY-MM-DD");
-				
-				var startDate = startMoment.split("-");
-				var endDate = endMoment.split("-");
-				
-				dateBarChart.filter(dc.filters.RangedFilter(new Date(startDate), new Date(endDate)));
-				dc.redrawAll();
-			}
-			function lastMonth() {
-				toggleInput();
-				var firstOfMonth = moment().startOf("month").subtract('months', 1);
-				var endOfMonth = moment().endOf("month").subtract('months', 1);
-				var startMoment = firstOfMonth.format("YYYY-MM-DD");
-				var endMoment = endOfMonth.format("YYYY-MM-DD");
-				
-				var startDate = startMoment.split("-");
-				var endDate = endMoment.split("-");
-				
-				dateBarChart.filter(dc.filters.RangedFilter(new Date(startDate), new Date(endDate)));
-				dc.redrawAll();
-			}
-			function lastYear() {
-				toggleInput();
-				var firstOfYear = moment().startOf("year").subtract('years', 1);
-				var endOfYear = moment().endOf("year").subtract('years', 1);
-				var startMoment = firstOfYear.format("YYYY-MM-DD");
-				var endMoment = endOfYear.format("YYYY-MM-DD");
-				
-				var startDate = startMoment.split("-");
-				var endDate = endMoment.split("-");
-				
-				dateBarChart.filter(dc.filters.RangedFilter(new Date(startDate), new Date(endDate)));
-				dc.redrawAll();
-			}
-			function allDates() {
-				toggleInput();
-				dateBarChart.filterAll();
-				dc.redrawAll();
-			}
-		</script>
-		<script type="text/javascript">
-			$(function() {
-				$("#daterange").daterangepicker({
-					"autoApply": true,
-					"showDropdowns": true,
-					"locale": {
-						"format": "DD/MM/YYYY",
-						"separator": " - ",
-						"daysOfWeek": [
-							"Su",
-							"Mo",
-							"Tu",
-							"We",
-							"Th",
-							"Fr",
-							"Sa"
-						],
-						"monthNames": [
-							"Jan",
-							"Feb",
-							"Mar",
-							"Apr",
-							"May",
-							"Jun",
-							"Jul",
-							"Aug",
-							"Sep",
-							"Oct",
-							"Nov",
-							"Dec"
-						],
-						"firstDay": 1
-					},
-					"startDate": "1/9/2013",
-					"endDate": "15/1/2015",
-					"minDate": "1/9/2013",
-					"maxDate": "15/1/2015",
-					"opens": "left",
-				});
 			});
 		</script>
 	</body>
