@@ -24,6 +24,9 @@ include_once "checkAccess.php";
 		<script src="js/modernizr.custom.js"></script>
 		<script src="js/classie.js"></script>
 		<script src="js/jquery.sortable.js"></script>
+        
+        <script src="js/d3.parsets.js"></script>
+        <script src="js/highlight.min.js"></script>
 		<script>
 			$(function() {
 				$('.sortable').sortable();
@@ -71,7 +74,6 @@ include_once "checkAccess.php";
 		<link href="css/jquery.jscrollpane.css" rel="stylesheet" />
 		<link href="css/tagsort.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
         <!-- Custom CSS -->
         <style>
             body {
@@ -102,6 +104,63 @@ include_once "checkAccess.php";
 				box-shadow: 2px 2px 2px #cccccc;
 				-moz-box-shadow: 2px 2px 2px #cccccc;
 			}
+            
+            .y-axis-label{
+                font: 12px sans-serif;
+            }
+            
+            .x-axis-label{
+                font: 11px sans-serif;
+            }
+            
+            #chart-bmi-bar1 g.stack._0 > rect.bar,
+            #chart-diastolic-bar1 g.stack._0 > rect.bar,
+            #chart-systolic-bar1 g.stack._0 > rect.bar,
+            #chart-glucose-bar1 g.stack._0 > rect.bar,
+            #chart-chol-bar1 g.stack._0 > rect.bar,
+            #chart-hdl-bar1 g.stack._0 > rect.bar,
+            #chart-ldl-bar1 g.stack._0 > rect.bar,
+            #chart-trig-bar1 g.stack._0 > rect.bar{
+                stroke: none;
+                fill: red;
+            }
+            
+            #chart-bmi-bar1 g.stack._1 > rect.bar,
+            #chart-diastolic-bar1 g.stack._1 > rect.bar,
+            #chart-systolic-bar1 g.stack._1 > rect.bar,
+            #chart-glucose-bar1 g.stack._1 > rect.bar,
+            #chart-chol-bar1 g.stack._1 > rect.bar,
+            #chart-hdl-bar1 g.stack._1 > rect.bar,
+            #chart-ldl-bar1 g.stack._1 > rect.bar,
+            #chart-trig-bar1 g.stack._1 > rect.bar{
+                stroke: none;
+                fill: blue;
+            }
+            
+            #chart-bmi-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1),
+            #chart-diastolic-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1),
+            #chart-systolic-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1),
+            #chart-glucose-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1),
+            #chart-chol-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1),
+            #chart-hdl-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1),
+            #chart-ldl-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1),
+            #chart-trig-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1){
+                stroke: none;
+                fill: red;
+            }
+            
+            #chart-bmi-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1),
+            #chart-diastolic-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1),
+            #chart-systolic-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1),
+            #chart-glucose-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1),
+            #chart-chol-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1),
+            #chart-hdl-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1),
+            #chart-ldl-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1),
+            #chart-trig-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1){
+                stroke: none;
+                fill: blue;
+            }
+            
         </style>
         <!--///////////////-->Style for Scankey
                 <style>
@@ -123,6 +182,43 @@ include_once "checkAccess.php";
               stroke-opacity: .5;
             }
         </style> 
+        <!--///////////////-->END Style
+        <!--///////////////-->Style for ParallelSet
+         <style>
+            .dimension { cursor: ns-resize; }
+            .category { cursor: ew-resize; }
+            .dimension tspan.name { font-size: 1.5em; fill: #333; font-weight: bold; }
+            .dimension tspan.sort { fill: #000; cursor: pointer; opacity: 0; }
+            .dimension tspan.sort:hover { fill: #333; }
+            .dimension:hover tspan.name { fill: #000; }
+            .dimension:hover tspan.sort { opacity: 1; }
+            .dimension line { stroke: #000; }
+            .dimension rect { stroke: none; fill-opacity: 0; }
+            .dimension > rect, .category-background { fill: #fff; }
+            .dimension > rect { display: none; }
+            .category:hover rect { fill-opacity: .3; }
+            .dimension:hover > rect { fill-opacity: .3; }
+            .ribbon path { stroke-opacity: 0; fill-opacity: .5; }
+            .ribbon path.active { fill-opacity: .9; }
+            .ribbon-mouse path { fill-opacity: 0; }
+
+            .category-0 { fill: #1f77b4; stroke: #1f77b4; }
+            .category-1 { fill: #ff7f0e; stroke: #ff7f0e; }
+            .category-2 { fill: #2ca02c; stroke: #2ca02c; }
+            .category-3 { fill: #d62728; stroke: #d62728; }
+            .category-4 { fill: #9467bd; stroke: #9467bd; }
+            .category-5 { fill: #8c564b; stroke: #8c564b; }
+            .category-6 { fill: #e377c2; stroke: #e377c2; }
+            .category-7 { fill: #7f7f7f; stroke: #7f7f7f; }
+            .category-8 { fill: #bcbd22; stroke: #bcbd22; }
+            .category-9 { fill: #17becf; stroke: #17becf; }
+
+            .tooltipPS {
+              background-color: rgba(242, 242, 242, .6);
+              position: absolute;
+              padding: 5px;
+            }
+            </style> 
         <!--///////////////-->END Style
     </head>
     
@@ -352,14 +448,13 @@ include_once "checkAccess.php";
 						</div>
 					</li>
 					<li>
-                        <div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chartH" style="background:#f8f7f7;margin:5px;width:1000px" data-item-id="1" data-item-tags="All, Flow Analysis">
+                        <div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="vis" style="background:#f8f7f7;margin:5px;width:1000px" data-item-id="1" data-item-tags="All, Flow Analysis">
 							
-							<strong>Flow Analysis of Intervention Programme</strong>
-							<br />
-							<button onclick="changeSankeyToStrat()">Analysis Stratification</button>
+							<strong><H2>Health Screening Data</H2></strong>
+							<!--<button onclick="changeSankeyToStrat()">Analysis Stratification</button>
                             <button onclick="changeSankeyToBP()">Analysis BP</button>
                             <button onclick="changeSankeyToBS()">Analysis BS</button>
-                            <button onclick="changeSankeyToBMI()">Analysis BMI</button>
+                            <button onclick="changeSankeyToBMI()">Analysis BMI</button>-->
 						</div>
                     </li>
 				</ul>
@@ -441,23 +536,39 @@ d3.json(("js/trending.php"),function(error, data){
         d.L_Glucose_f = +d.L_Glucose_f;
         d.f_BMI = +d.f_BMI;
         
-        /////////////////Testing for new Trends Analysis
+        /////////////////New Trends Analysis
         if (numIndex % 2 == 0){
             d.PastOrCurrent = "FirstVisit";
-            numIndex = 1;        
+            numIndex = 1;
         }else{
             d.PastOrCurrent = "LastVisit";
             numIndex = 0;
         }
         
+        if (d.NurseAction == "Y" || d.NurseAction == "Teleconsult"){
+            d.Intervention = "Yes";     
+        }else {
+            d.Intervention = "No";
+        }
+        
         if (d.PastOrCurrent == "FirstVisit" && (d.NurseAction == "Y" || d.NurseAction == "Teleconsult")){
-            d.visitInterv = "W_InterV_Before";       
+            d.visitInterv = "wFirst";       
         }else if (d.PastOrCurrent == "FirstVisit" && (d.NurseAction !== "Y" && d.NurseAction !== "Teleconsult")){
-            d.visitInterv = "WO_InterV_Before";
+            d.visitInterv = "woFirst";
         }else if (d.PastOrCurrent == "LastVisit" && (d.NurseAction == "Y" || d.NurseAction == "Teleconsult")){
-            d.visitInterv = "W_InterV_After";
+            d.visitInterv = "wLast";
         }else if (d.PastOrCurrent == "LastVisit" && (d.NurseAction !== "Y" && d.NurseAction !== "Teleconsult")){
-            d.visitInterv = "WO_InterV_After";
+            d.visitInterv = "woLast";
+        }
+        
+        if (d.Healthy === "Healthy" && d.Habits === "Positive Habits"){
+            d.healthResult = "Healthy/PosHabits";
+        } else if (d.Healthy === "Healthy" && d.Habits === "Negative Habits"){
+            d.healthResult = "Healthy/NegHabits";
+        } else if (d.Healthy === "Unhealthy" && d.Habits === "Positive Habits"){
+            d.healthResult = "Unhealthy/PosHabits";
+        } else {
+            d.healthResult = "Unhealthy/NegHabits";
         }
         /////////////////////END TESTING
      });
@@ -612,9 +723,7 @@ d3.json(("js/trending.php"),function(error, data){
 		}
     );
     ///////////////////END TEsting 
-    
 
-     
     dateBarChart
         .width(800).height(190)
         .margins({top: 0, right: 50, bottom: 20, left: 40})
@@ -646,69 +755,14 @@ d3.json(("js/trending.php"),function(error, data){
         
         //window.location.href = "http://localhost/PDashboard/js/sankeyFiltered.php?minDate=" + sendMinDate + "&maxDate=" + sendMaxDate;
 
-        if (document.getElementById("chartBP")) {
-            //document.getElementById("chartBP").innerHTML = "";
-            //document.getElementById("chartBP").setAttribute("id", "chartH");
-            reLoadSankey(filteredSankeyJson,"#chartBP");
-        }else if (document.getElementById("chartSugar")) {
-            //document.getElementById("chartSugar").innerHTML = "";
-            //document.getElementById("chartSugar").setAttribute("id", "chartSugar");
-            reLoadSankey(filteredSankeyJson,"#chartSugar");
-        }else if (document.getElementById("chartBMI")) {
-            //document.getElementById("chartBMI").innerHTML = "";
-            //document.getElementById("chartBMI").setAttribute("id", "chartBMI");
-            reLoadSankey(filteredSankeyJson,"#chartBMI");
-        }else if (document.getElementById("chartH")) {
-            console.log("I am inside chartH");
-            document.getElementById("chartH").innerHTML = "";
-            document.getElementById("chartH").setAttribute("id", "chartH");
-            //reLoadSankey(filteredSankeyJson,"#chartH");
-            //reLoadSankey("js/sankey.php","#chartH");
-            //reLoadSankey("js/sankeyFiltered.php?minDate="+minFilteredDate+"&maxDate="+maxFilteredDate,"#chartH");
-            reLoadSankey(window.location.href,"#chartH");
-        }
-        else {
-            console.log("why am I here");
-        }
-       // reLoadSankey("js/sankey.php","#chartH");
-                
-        //reLoadSankey(phpFile,chart)
-        //timeVar = dateBarChart.x(d3.time.scale().domain(d3.extent(data, function(d) { return d.month; })))
-        //startDate = f[0];
-        //endDate = f[1];
-        
-        //var tryDim = ndx.dimension(function(d) {return d.date});
-        //print_filter(tryDim);
-        /*
-width = screen.width;
-height = screen.height;
-
-if (width > 0 && height >0) {
-    window.location.href = "http://localhost/main.php?width=" + width + "&height=" + height;
-} else 
-    exit();
-
-<?php
-echo "<h1>Screen Resolution:</h1>";
-echo "Width  : ".$_GET['width']."<br>";
-echo "Height : ".$_GET['height']."<br>";
-?>
-
-        */
-        ////Fri Sep 12 2014 22:48:00 GMT+0800 (Malay Peninsula Standard Time)
-        ////2014-03-09
-        ////var parseDate = d3.time.format("%Y-%m-%d").parse;
-        ////d.date = parseDate(d['Measurement.Att.Date']);
-        //console.log("Start Date is " + f[0] + " and end date is " + f[1]);
-        //console.log("What is c " + c + " and what is f : " + f);
-        //console.log(f[0]);
-        //console.log(f[1]);
-       // console.log(startDate);
+        var filteredDim = ndx.dimension(function(d) {return d.NRIC});
+        var allRes = filteredDim.top(Infinity);
+        updateParallelSet(allRes);
     });
     ///////END Testing code
     
     eventRowChart
-        .width(200).height(100)
+        .width(200).height(200)
         .dimension(scnZoneDim)
         .group(scnZoneGroup)
         .elasticX(true)
@@ -716,10 +770,9 @@ echo "Height : ".$_GET['height']."<br>";
         .ordinalColors(["#aec7e8"])
         .xAxis().ticks(4);
     eventRowChart.on("filtered", function(c, f){
-	//		updateGraph()
-        //console.log(f);
-
-        console.log(startDate);
+        var filteredDim = ndx.dimension(function(d) {return d.NRIC});
+        var allRes = filteredDim.top(Infinity);
+        updateParallelSet(allRes);
     });
     
     dataTable.width(960).height(800)
@@ -741,25 +794,20 @@ echo "Height : ".$_GET['height']."<br>";
     ////////////////////Testing for Trend Analysis
     systolicBarChart1
         .width(250)
-        .height(300)
+        .height(200)
         .transitionDuration(1000)
-        .margins({top: 40, right: 50, bottom: 90, left: 40})
+        .gap(15)
+        .margins({top: 40, right: 50, bottom: 30, left: 40})
         .dimension(trendBMIDim1)
     systolicBarChart1.elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(100).y(0).itemHeight(13).gap(5))
-        // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
-        // legend
-        // The `.valueAccessor` will be used for the base layer
-        
+        .legend(dc.legend().x(80).y(0).itemHeight(13).gap(5))
         .group(trendBMIGroup1, 'Unhealthy (Systolic > 140)')
-        .x(d3.scale.ordinal().domain(["W_InterV_Before","W_InterV_After","WO_InterV_Before","WO_InterV_After"]))
+        .x(d3.scale.ordinal().domain(["wFirst","wLast","woFirst","woLast"]))
         .xUnits(dc.units.ordinal)
         .valueAccessor(function (d) {
             return d.value.NH_Systolic;
         })
-        // stack additional layers with `.stack`. The first paramenter is a new group.
-        // The second parameter is the series name. The third is a value accessor.
         .stack(trendBMIGroup1, 'Healthy (Systolic < 140)', function (d) {
             return d.value.H_Systolic;
         })
@@ -770,33 +818,43 @@ echo "Height : ".$_GET['height']."<br>";
                 'Unhealthy (Systolic > 140): ' + d.value.NH_Systolic 
             );
         })
+        .xAxisLabel("W Intervention   W/O Intervention")
+        .yAxisLabel("Number of Resident")
     systolicBarChart1.on('renderlet.a',(function(chart){
             chart.selectAll("g.x text")
-            .attr('dx', '-50')
-            .attr('dy', '-7')
-            .attr('transform', "rotate(-75)");}));
+            .attr('dx', '0')
+            .attr('dy', '3')
+            .attr('transform', "rotate(0)")
+            .append("text")
+    }));
+    systolicBarChart1.on('renderlet', function(chart) {
+        var extra_data = [{x: chart.x().range()[2], y: chart.y()(0)}, 
+                          {x: chart.x().range()[2], y: chart.y()(400)}];
+        var line = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate('linear');
+        var path = chart.select('g.chart-body').selectAll('path.extra').data([extra_data]);
+        path.enter().append('path').attr('class', 'extra').attr('stroke', 'green').style("stroke-dasharray", ("3, 3"));
+        path.attr('d', line);
+    });
             
     diastolicBarChart1
         .width(250)
-        .height(300)
+        .height(200)
         .transitionDuration(1000)
-        .margins({top: 40, right: 50, bottom: 90, left: 40})
+        .gap(15)
+        .margins({top: 40, right: 50, bottom: 30, left: 40})
         .dimension(trendBMIDim1)
     diastolicBarChart1.elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(100).y(0).itemHeight(13).gap(5))
-        // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
-        // legend
-        // The `.valueAccessor` will be used for the base layer
-        
+        .legend(dc.legend().x(80).y(0).itemHeight(13).gap(5))       
         .group(trendBMIGroup1, 'Unhealthy (Diastolic > 90)')
-        .x(d3.scale.ordinal().domain(["W_InterV_Before","W_InterV_After","WO_InterV_Before","WO_InterV_After"]))
+        .x(d3.scale.ordinal().domain(["wFirst","wLast","woFirst","woLast"]))
         .xUnits(dc.units.ordinal)
         .valueAccessor(function (d) {
             return d.value.NH_Diastolic;
         })
-        // stack additional layers with `.stack`. The first paramenter is a new group.
-        // The second parameter is the series name. The third is a value accessor.
         .stack(trendBMIGroup1, 'Healthy (Diastolic < 90)', function (d) {
             return d.value.H_Diastolic;
         })
@@ -807,27 +865,43 @@ echo "Height : ".$_GET['height']."<br>";
                 'Unhealthy ((Diastolic > 90): ' + d.value.NH_Diastolic 
             );
         })
+        .xAxisLabel("W Intervention   W/O Intervention")
+        .yAxisLabel("Number of Resident")
     diastolicBarChart1.on('renderlet.a',(function(chart){
             chart.selectAll("g.x text")
-            .attr('dx', '-50')
-            .attr('dy', '-7')
-            .attr('transform', "rotate(-75)");}));
+            .attr('dx', '0')
+            .attr('dy', '3')
+            .attr('transform', "rotate(0)")
+            .append("text")
+    }));
+    diastolicBarChart1.on('renderlet', function(chart) {
+        var extra_data = [{x: chart.x().range()[2], y: chart.y()(0)}, 
+                          {x: chart.x().range()[2], y: chart.y()(400)}];
+        var line = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate('linear');
+        var path = chart.select('g.chart-body').selectAll('path.extra').data([extra_data]);
+        path.enter().append('path').attr('class', 'extra').attr('stroke', 'green').style("stroke-dasharray", ("3, 3"));
+        path.attr('d', line);
+    });
             
     cholBarChart1
         .width(250)
-        .height(300)
+        .height(200)
         .transitionDuration(1000)
-        .margins({top: 40, right: 50, bottom: 90, left: 40})
+        .gap(15)
+        .margins({top: 40, right: 50, bottom: 30, left: 40})
         .dimension(trendBMIDim1)
     cholBarChart1.elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(100).y(0).itemHeight(13).gap(5))
+        .legend(dc.legend().x(80).y(0).itemHeight(13).gap(5))
         // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
         // legend
         // The `.valueAccessor` will be used for the base layer
         
         .group(trendBMIGroup1, 'Unhealthy (Chol > 5.18)')
-        .x(d3.scale.ordinal().domain(["W_InterV_Before","W_InterV_After","WO_InterV_Before","WO_InterV_After"]))
+        .x(d3.scale.ordinal().domain(["wFirst","wLast","woFirst","woLast"]))
         .xUnits(dc.units.ordinal)
         .valueAccessor(function (d) {
             return d.value.NH_Chol;
@@ -844,33 +918,43 @@ echo "Height : ".$_GET['height']."<br>";
                 'Unhealthy (Chol > 5.18): ' + d.value.NH_Chol 
             );
         })
+        .xAxisLabel("W Intervention   W/O Intervention")
+        .yAxisLabel("Number of Resident")
     cholBarChart1.on('renderlet.a',(function(chart){
             chart.selectAll("g.x text")
-            .attr('dx', '-50')
-            .attr('dy', '-7')
-            .attr('transform', "rotate(-75)");}));
+            .attr('dx', '0')
+            .attr('dy', '3')
+            .attr('transform', "rotate(0)")
+            .append("text")
+    }));
+    cholBarChart1.on('renderlet', function(chart) {
+        var extra_data = [{x: chart.x().range()[2], y: chart.y()(0)}, 
+                          {x: chart.x().range()[2], y: chart.y()(400)}];
+        var line = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate('linear');
+        var path = chart.select('g.chart-body').selectAll('path.extra').data([extra_data]);
+        path.enter().append('path').attr('class', 'extra').attr('stroke', 'green').style("stroke-dasharray", ("3, 3"));
+        path.attr('d', line);
+    });
             
     trigBarChart1
         .width(250)
-        .height(300)
+        .height(200)
         .transitionDuration(1000)
-        .margins({top: 40, right: 50, bottom: 90, left: 40})
+        .gap(15)
+        .margins({top: 40, right: 50, bottom: 30, left: 40})
         .dimension(trendBMIDim1)
     trigBarChart1.elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(100).y(0).itemHeight(13).gap(5))
-        // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
-        // legend
-        // The `.valueAccessor` will be used for the base layer
-        
+        .legend(dc.legend().x(80).y(0).itemHeight(13).gap(5))        
         .group(trendBMIGroup1, 'Unhealthy (Trig > 2.26)')
-        .x(d3.scale.ordinal().domain(["W_InterV_Before","W_InterV_After","WO_InterV_Before","WO_InterV_After"]))
+        .x(d3.scale.ordinal().domain(["wFirst","wLast","woFirst","woLast"]))
         .xUnits(dc.units.ordinal)
         .valueAccessor(function (d) {
             return d.value.NH_Trig;
         })
-        // stack additional layers with `.stack`. The first paramenter is a new group.
-        // The second parameter is the series name. The third is a value accessor.
         .stack(trendBMIGroup1, 'Healthy (Trig < 2.26)', function (d) {
             return d.value.H_Trig;
         })
@@ -881,33 +965,43 @@ echo "Height : ".$_GET['height']."<br>";
                 'Unhealthy (Trig > 2.26): ' + d.value.NH_Trig 
             );
         })
+        .xAxisLabel("W Intervention   W/O Intervention")
+        .yAxisLabel("Number of Resident")
     trigBarChart1.on('renderlet.a',(function(chart){
             chart.selectAll("g.x text")
-            .attr('dx', '-50')
-            .attr('dy', '-7')
-            .attr('transform', "rotate(-75)");}));
+            .attr('dx', '0')
+            .attr('dy', '3')
+            .attr('transform', "rotate(0)")
+            .append("text")
+    }));
+    trigBarChart1.on('renderlet', function(chart) {
+        var extra_data = [{x: chart.x().range()[2], y: chart.y()(0)}, 
+                          {x: chart.x().range()[2], y: chart.y()(400)}];
+        var line = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate('linear');
+        var path = chart.select('g.chart-body').selectAll('path.extra').data([extra_data]);
+        path.enter().append('path').attr('class', 'extra').attr('stroke', 'green').style("stroke-dasharray", ("3, 3"));
+        path.attr('d', line);
+    });
             
     hdlBarChart1
         .width(250)
-        .height(300)
+        .height(200)
         .transitionDuration(1000)
-        .margins({top: 40, right: 50, bottom: 90, left: 40})
+        .gap(15)
+        .margins({top: 40, right: 50, bottom: 30, left: 40})
         .dimension(trendBMIDim1)
     hdlBarChart1.elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(100).y(0).itemHeight(13).gap(5))
-        // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
-        // legend
-        // The `.valueAccessor` will be used for the base layer
-        
+        .legend(dc.legend().x(80).y(0).itemHeight(13).gap(5))
         .group(trendBMIGroup1, 'Unhealthy (HDL < 1.03)')
-        .x(d3.scale.ordinal().domain(["W_InterV_Before","W_InterV_After","WO_InterV_Before","WO_InterV_After"]))
+        .x(d3.scale.ordinal().domain(["wFirst","wLast","woFirst","woLast"]))
         .xUnits(dc.units.ordinal)
         .valueAccessor(function (d) {
             return d.value.NH_HDL;
         })
-        // stack additional layers with `.stack`. The first paramenter is a new group.
-        // The second parameter is the series name. The third is a value accessor.
         .stack(trendBMIGroup1, 'Healthy (HDL > 1.03)', function (d) {
             return d.value.H_HDL;
         })
@@ -918,33 +1012,43 @@ echo "Height : ".$_GET['height']."<br>";
                 'Unhealthy (HDL < 1.03): ' + d.value.NH_HDL 
             );
         })
+        .xAxisLabel("W Intervention   W/O Intervention")
+        .yAxisLabel("Number of Resident")
     hdlBarChart1.on('renderlet.a',(function(chart){
             chart.selectAll("g.x text")
-            .attr('dx', '-50')
-            .attr('dy', '-7')
-            .attr('transform', "rotate(-75)");}));
+            .attr('dx', '0')
+            .attr('dy', '3')
+            .attr('transform', "rotate(0)")
+            .append("text")
+    }));
+    hdlBarChart1.on('renderlet', function(chart) {
+        var extra_data = [{x: chart.x().range()[2], y: chart.y()(0)}, 
+                          {x: chart.x().range()[2], y: chart.y()(400)}];
+        var line = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate('linear');
+        var path = chart.select('g.chart-body').selectAll('path.extra').data([extra_data]);
+        path.enter().append('path').attr('class', 'extra').attr('stroke', 'green').style("stroke-dasharray", ("3, 3"));
+        path.attr('d', line);
+    });
             
     ldlBarChart1
         .width(250)
-        .height(300)
+        .height(200)
         .transitionDuration(1000)
-        .margins({top: 40, right: 50, bottom: 90, left: 40})
+        .gap(15)
+        .margins({top: 40, right: 50, bottom: 30, left: 40})
         .dimension(trendBMIDim1)
     ldlBarChart1.elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(100).y(0).itemHeight(13).gap(5))
-        // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
-        // legend
-        // The `.valueAccessor` will be used for the base layer
-        
+        .legend(dc.legend().x(80).y(0).itemHeight(13).gap(5))
         .group(trendBMIGroup1, 'Unhealthy (LDL > 3.37)')
-        .x(d3.scale.ordinal().domain(["W_InterV_Before","W_InterV_After","WO_InterV_Before","WO_InterV_After"]))
+        .x(d3.scale.ordinal().domain(["wFirst","wLast","woFirst","woLast"]))
         .xUnits(dc.units.ordinal)
         .valueAccessor(function (d) {
             return d.value.NH_LDL;
         })
-        // stack additional layers with `.stack`. The first paramenter is a new group.
-        // The second parameter is the series name. The third is a value accessor.
         .stack(trendBMIGroup1, 'Healthy (LDL < 3.37)', function (d) {
             return d.value.H_LDL;
         })
@@ -955,33 +1059,43 @@ echo "Height : ".$_GET['height']."<br>";
                 'Unhealthy (LDL > 3.37): ' + d.value.NH_LDL 
             );
         })
+        .xAxisLabel("W Intervention   W/O Intervention")
+        .yAxisLabel("Number of Resident")
     ldlBarChart1.on('renderlet.a',(function(chart){
             chart.selectAll("g.x text")
-            .attr('dx', '-50')
-            .attr('dy', '-7')
-            .attr('transform', "rotate(-75)");}));
+            .attr('dx', '0')
+            .attr('dy', '3')
+            .attr('transform', "rotate(0)")
+            .append("text")
+    }));
+    ldlBarChart1.on('renderlet', function(chart) {
+        var extra_data = [{x: chart.x().range()[2], y: chart.y()(0)}, 
+                          {x: chart.x().range()[2], y: chart.y()(400)}];
+        var line = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate('linear');
+        var path = chart.select('g.chart-body').selectAll('path.extra').data([extra_data]);
+        path.enter().append('path').attr('class', 'extra').attr('stroke', 'green').style("stroke-dasharray", ("3, 3"));
+        path.attr('d', line);
+    });
             
     glucoseBarChart1
         .width(250)
-        .height(300)
+        .height(200)
         .transitionDuration(1000)
-        .margins({top: 40, right: 50, bottom: 90, left: 40})
+        .gap(15)
+        .margins({top: 40, right: 50, bottom: 30, left: 40})
         .dimension(trendBMIDim1)
     glucoseBarChart1.elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(100).y(0).itemHeight(13).gap(5))
-        // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
-        // legend
-        // The `.valueAccessor` will be used for the base layer
-        
+        .legend(dc.legend().x(80).y(0).itemHeight(13).gap(5))
         .group(trendBMIGroup1, 'Unhealthy (Glucose > 6.0)')
-        .x(d3.scale.ordinal().domain(["W_InterV_Before","W_InterV_After","WO_InterV_Before","WO_InterV_After"]))
+        .x(d3.scale.ordinal().domain(["wFirst","wLast","woFirst","woLast"]))
         .xUnits(dc.units.ordinal)
         .valueAccessor(function (d) {
             return d.value.NH_Glucose;
         })
-        // stack additional layers with `.stack`. The first paramenter is a new group.
-        // The second parameter is the series name. The third is a value accessor.
         .stack(trendBMIGroup1, 'Healthy (Glucose < 6.0)', function (d) {
             return d.value.H_Glucose;
         })
@@ -992,41 +1106,43 @@ echo "Height : ".$_GET['height']."<br>";
                 'Unhealthy (Glucose > 6.0): ' + d.value.NH_Glucose 
             );
         })
+        .xAxisLabel("W Intervention   W/O Intervention")
+        .yAxisLabel("Number of Resident")
     glucoseBarChart1.on('renderlet.a',(function(chart){
             chart.selectAll("g.x text")
-            .attr('dx', '-50')
-            .attr('dy', '-7')
-            .attr('transform', "rotate(-75)");}));  
+            .attr('dx', '0')
+            .attr('dy', '3')
+            .attr('transform', "rotate(0)")
+            .append("text")
+    }));
+    glucoseBarChart1.on('renderlet', function(chart) {
+        var extra_data = [{x: chart.x().range()[2], y: chart.y()(0)}, 
+                          {x: chart.x().range()[2], y: chart.y()(400)}];
+        var line = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate('linear');
+        var path = chart.select('g.chart-body').selectAll('path.extra').data([extra_data]);
+        path.enter().append('path').attr('class', 'extra').attr('stroke', 'green').style("stroke-dasharray", ("3, 3"));
+        path.attr('d', line);
+    });  
     
     bmiBarChart1
-        //.renderArea(true)
         .width(250)
-        .height(300)
+        .height(200)
         .transitionDuration(1000)
-        .margins({top: 40, right: 50, bottom: 90, left: 40})
+        .gap(15)
+        .margins({top: 40, right: 50, bottom: 30, left: 40})
         .dimension(trendBMIDim1)
-        ////.mouseZoomable(true)
-        // Specify a range chart to link the brush extent of the range with the zoom focue of the current chart.
-        ////.rangeChart(dateBarChart)
-        ////.x(d3.time.scale().domain([minDate,maxDate]))
-        ////.xAxis().tickFormat(d3.time.format("%d%b%y"));
     bmiBarChart1.elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(100).y(0).itemHeight(13).gap(5))
-        //.brushOn(false)
-        //.xUnits(function(){return 100;})
-        // Add the base layer of the stack with group. The second parameter specifies a series name for use in the
-        // legend
-        // The `.valueAccessor` will be used for the base layer
-        
+        .legend(dc.legend().x(80).y(0).itemHeight(13).gap(5))  
         .group(trendBMIGroup1, 'Unhealthy (BMI > 23)')
-        .x(d3.scale.ordinal().domain(["W_InterV_Before","W_InterV_After","WO_InterV_Before","WO_InterV_After"]))
+        .x(d3.scale.ordinal().domain(["wFirst","wLast","woFirst","woLast"]))
         .xUnits(dc.units.ordinal)
         .valueAccessor(function (d) {
             return d.value.NH_BMI;
         })
-        // stack additional layers with `.stack`. The first paramenter is a new group.
-        // The second parameter is the series name. The third is a value accessor.
         .stack(trendBMIGroup1, 'Healthy (BMI < 23)', function (d) {
             return d.value.H_BMI;
         })
@@ -1037,19 +1153,29 @@ echo "Height : ".$_GET['height']."<br>";
                 'Unhealthy (BMI > 23): ' + d.value.NH_BMI 
             );
         })
-        //chart.on("renderlet.<renderletKey>", renderletFunction
-        bmiBarChart1.on('renderlet.a',(function(chart){
+        .xAxisLabel("W Intervention   W/O Intervention")
+        .yAxisLabel("Number of Resident")
+    bmiBarChart1.on('renderlet.a',(function(chart){
             chart.selectAll("g.x text")
-            .attr('dx', '-50')
-            .attr('dy', '-7')
-            .attr('transform', "rotate(-75)");}));
-        //.renderlet(function (chart) {chart.selectAll("g.x text").attr('dx', '-30').attr(
-  //'dy', '-7').attr('transform', "rotate(-90)");});
-				
-    ////////////////////End TESTing
-    dc.renderAll();
-    
-});
+            .attr('dx', '0')
+            .attr('dy', '3')
+            .attr('transform', "rotate(0)")
+            .append("text")
+    }));
+    bmiBarChart1.on('renderlet', function(chart) {
+        var extra_data = [{x: chart.x().range()[2], y: chart.y()(0)}, 
+                          {x: chart.x().range()[2], y: chart.y()(400)}];
+        var line = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate('linear');
+        var path = chart.select('g.chart-body').selectAll('path.extra').data([extra_data]);
+        path.enter().append('path').attr('class', 'extra').attr('stroke', 'green').style("stroke-dasharray", ("3, 3"));
+        path.attr('d', line);
+    });
+
+    dc.renderAll();  
+}); //END OF d3.json(("js/trending.php"),function(error, data
 
     function print_filter(filter){
         var f=eval(filter);
@@ -1059,245 +1185,295 @@ echo "Height : ".$_GET['height']."<br>";
         console.log(filter+"("+f.length+") = "+JSON.stringify(f).replace("[","[\n\t").replace(/}\,/g,"},\n\t").replace("]","\n]"));
         return f.length;
     }
+  
 
-    $(function(){
-        var log = document.getElementById('log');
-        gridster = $(".gridster ul").gridster({
-        widget_base_dimensions: [55, 55],
-        widget_margins: [5, 5],
-        resize: {
-        enabled: false,
+var chart = d3.parsets()
+    //.dimensions(["scnZone", "Intervention", "Gender.Full.Text", "Race.Full.Text", "NurseAction", "healthResult"]);
+    .dimensions(["scnZone", "Intervention", "NurseAction", "healthResult"]);
+
+var vis = d3.select("#vis").append("svg")
+    .attr("width", chart.width())
+    .attr("height", chart.height());
+
+var partition = d3.layout.partition()
+    .sort(null)
+    .size([chart.width(), chart.height() * 5 / 4])
+    .children(function(d) { return d.children ? d3.values(d.children) : null; })
+    .value(function(d) { return d.count; });
+
+var ice = false;
+
+function curves() {
+  var t = vis.transition().duration(500);
+  if (ice) {
+    t.delay(1000);
+    icicle();
+  }
+  t.call(chart.tension(this.checked ? .5 : 1));
+}
+
+//updateParallelSet(dataset);
+
+//d3.csv("allDataWGeo1.csv", function(error, csv) {
+d3.json(("js/trending.php"),function(error, csv){
+  vis.datum(csv).call(chart);
+
+  window.icicle = function() {
+    var newIce = this.checked,
+        tension = chart.tension();
+    if (newIce === ice) return;
+    if (ice = newIce) {
+      var dimensions = [];
+      vis.selectAll("g.dimension")
+         .each(function(d) { dimensions.push(d); });
+      dimensions.sort(function(a, b) { return a.y - b.y; });
+      var root = d3.parsets.tree({children: {}}, csv, dimensions.map(function(d) { return d.name; }), function() { return 1; }),
+          nodes = partition(root),
+          nodesByPath = {};
+      nodes.forEach(function(d) {
+        var path = d.data.name,
+            p = d;
+        while ((p = p.parent) && p.data.name) {
+          path = p.data.name + "\0" + path;
         }
-        }).data('gridster');
-    });
-    
-    function changeSankeyToStrat(){
-        
-        if (document.getElementById("chartBP")) {
-            document.getElementById("chartBP").innerHTML = "";
-            document.getElementById("chartBP").setAttribute("id", "chartH");
-            //reLoadSankey("js/sankey.php","#chartH");
-        }else if (document.getElementById("chartSugar")) {
-            document.getElementById("chartSugar").innerHTML = "";
-            document.getElementById("chartSugar").setAttribute("id", "chartH");
-            //reLoadSankey("js/sankey.php","#chartH");
-        }else if (document.getElementById("chartBMI")) {
-            document.getElementById("chartBMI").innerHTML = "";
-            document.getElementById("chartBMI").setAttribute("id", "chartH");
-            //reLoadSankey("js/sankey.php","#chartH");
-        }
-        else {
-            console.log("why am I here");
-        }
-        reLoadSankey("js/sankey.php","#chartH");
+        if (path) nodesByPath[path] = d;
+      });
+      var data = [];
+      vis.on("mousedown.icicle", stopClick, true)
+        .select(".ribbon").selectAll("path")
+          .each(function(d) {
+            var node = nodesByPath[d.path],
+                s = d.source,
+                t = d.target;
+            s.node.x0 = t.node.x0 = 0;
+            s.x0 = t.x0 = node.x;
+            s.dx0 = s.dx;
+            t.dx0 = t.dx;
+            s.dx = t.dx = node.dx;
+            data.push(d);
+          });
+      iceTransition(vis.selectAll("path"))
+          .attr("d", function(d) {
+            var s = d.source,
+                t = d.target;
+            return ribbonPath(s, t, tension);
+          })
+          .style("stroke-opacity", 1);
+      iceTransition(vis.selectAll("text.icicle")
+          .data(data)
+        .enter().append("text")
+          .attr("class", "icicle")
+          .attr("text-anchor", "middle")
+          .attr("dy", ".3em")
+          .attr("transform", function(d) {
+            return "translate(" + [d.source.x0 + d.source.dx / 2, d.source.dimension.y0 + d.target.dimension.y0 >> 1] + ")rotate(90)";
+          })
+          .text(function(d) { return d.source.dx > 15 ? d.node.name : null; })
+          .style("opacity", 1e-6))
+          .style("opacity", 1);
+      iceTransition(vis.selectAll("g.dimension rect, g.category")
+          .style("opacity", 1))
+          .style("opacity", 1e-6)
+          .each("end", function() { d3.select(this).attr("visibility", "hidden"); });
+      iceTransition(vis.selectAll("text.dimension"))
+          .attr("transform", "translate(0,-5)");
+      vis.selectAll("tspan.sort").style("visibility", "hidden");
+    } else {
+      vis.on("mousedown.icicle", null)
+        .select(".ribbon").selectAll("path")
+          .each(function(d) {
+            var s = d.source,
+                t = d.target;
+            s.node.x0 = s.node.x;
+            s.x0 = s.x;
+            s.dx = s.dx0;
+            t.node.x0 = t.node.x;
+            t.x0 = t.x;
+            t.dx = t.dx0;
+          });
+      iceTransition(vis.selectAll("path"))
+          .attr("d", function(d) {
+            var s = d.source,
+                t = d.target;
+            return ribbonPath(s, t, tension);
+          })
+          .style("stroke-opacity", null);
+      iceTransition(vis.selectAll("text.icicle"))
+          .style("opacity", 1e-6).remove();
+      iceTransition(vis.selectAll("g.dimension rect, g.category")
+          .attr("visibility", null)
+          .style("opacity", 1e-6))
+          .style("opacity", 1);
+      iceTransition(vis.selectAll("text.dimension"))
+          .attr("transform", "translate(0,-25)");
+      vis.selectAll("tspan.sort").style("visibility", null);
     }
-    
-    function changeSankeyToBP(){
-        if (document.getElementById("chartH")) {
-            document.getElementById("chartH").innerHTML = "";
-            document.getElementById("chartH").setAttribute("id", "chartBP");
-        }else if (document.getElementById("chartSugar")) {
-            document.getElementById("chartSugar").innerHTML = "";
-            document.getElementById("chartSugar").setAttribute("id", "chartBP");
-        }else if (document.getElementById("chartBMI")) {
-            document.getElementById("chartBMI").innerHTML = "";
-            document.getElementById("chartBMI").setAttribute("id", "chartBP");
+  };
+  d3.select("#icicle")
+      .on("change", icicle)
+      .each(icicle);
+});
+
+////////////////// FUNCTION for updateParallelSet
+function updateParallelSet(data){
+  vis.datum(data).call(chart);
+
+  window.icicle = function() {
+    var newIce = this.checked,
+        tension = chart.tension();
+    if (newIce === ice) return;
+    if (ice = newIce) {
+      var dimensions = [];
+      vis.selectAll("g.dimension")
+         .each(function(d) { dimensions.push(d); });
+      dimensions.sort(function(a, b) { return a.y - b.y; });
+      var root = d3.parsets.tree({children: {}}, data, dimensions.map(function(d) { return d.name; }), function() { return 1; }),
+          nodes = partition(root),
+          nodesByPath = {};
+      nodes.forEach(function(d) {
+        var path = d.data.name,
+            p = d;
+        while ((p = p.parent) && p.data.name) {
+          path = p.data.name + "\0" + path;
         }
-        else {
-            console.log("why am I here");
-        }
-        reLoadSankey("js/sankeyBP.php","#chartBP");
+        if (path) nodesByPath[path] = d;
+      });
+      var data = [];
+      vis.on("mousedown.icicle", stopClick, true)
+        .select(".ribbon").selectAll("path")
+          .each(function(d) {
+            var node = nodesByPath[d.path],
+                s = d.source,
+                t = d.target;
+            s.node.x0 = t.node.x0 = 0;
+            s.x0 = t.x0 = node.x;
+            s.dx0 = s.dx;
+            t.dx0 = t.dx;
+            s.dx = t.dx = node.dx;
+            data.push(d);
+          });
+      iceTransition(vis.selectAll("path"))
+          .attr("d", function(d) {
+            var s = d.source,
+                t = d.target;
+            return ribbonPath(s, t, tension);
+          })
+          .style("stroke-opacity", 1);
+      iceTransition(vis.selectAll("text.icicle")
+          .data(data)
+        .enter().append("text")
+          .attr("class", "icicle")
+          .attr("text-anchor", "middle")
+          .attr("dy", ".3em")
+          .attr("transform", function(d) {
+            return "translate(" + [d.source.x0 + d.source.dx / 2, d.source.dimension.y0 + d.target.dimension.y0 >> 1] + ")rotate(90)";
+          })
+          .text(function(d) { return d.source.dx > 15 ? d.node.name : null; })
+          .style("opacity", 1e-6))
+          .style("opacity", 1);
+      iceTransition(vis.selectAll("g.dimension rect, g.category")
+          .style("opacity", 1))
+          .style("opacity", 1e-6)
+          .each("end", function() { d3.select(this).attr("visibility", "hidden"); });
+      iceTransition(vis.selectAll("text.dimension"))
+          .attr("transform", "translate(0,-5)");
+      vis.selectAll("tspan.sort").style("visibility", "hidden");
+    } else {
+      vis.on("mousedown.icicle", null)
+        .select(".ribbon").selectAll("path")
+          .each(function(d) {
+            var s = d.source,
+                t = d.target;
+            s.node.x0 = s.node.x;
+            s.x0 = s.x;
+            s.dx = s.dx0;
+            t.node.x0 = t.node.x;
+            t.x0 = t.x;
+            t.dx = t.dx0;
+          });
+      iceTransition(vis.selectAll("path"))
+          .attr("d", function(d) {
+            var s = d.source,
+                t = d.target;
+            return ribbonPath(s, t, tension);
+          })
+          .style("stroke-opacity", null);
+      iceTransition(vis.selectAll("text.icicle"))
+          .style("opacity", 1e-6).remove();
+      iceTransition(vis.selectAll("g.dimension rect, g.category")
+          .attr("visibility", null)
+          .style("opacity", 1e-6))
+          .style("opacity", 1);
+      iceTransition(vis.selectAll("text.dimension"))
+          .attr("transform", "translate(0,-25)");
+      vis.selectAll("tspan.sort").style("visibility", null);
     }
+  };
+  d3.select("#icicle")
+      .on("change", icicle)
+      .each(icicle);
+}//////////////////////END OF updateParallelSet(data)
 
-    function changeSankeyToBS(){
-        if (document.getElementById("chartH")) {
-            document.getElementById("chartH").innerHTML = "";
-            document.getElementById("chartH").setAttribute("id", "chartSugar");
-            //reLoadSankey("js/sankeySugar.php","#chartSugar");
-        }else if (document.getElementById("chartBP")) {
-            document.getElementById("chartBP").innerHTML = "";
-            document.getElementById("chartBP").setAttribute("id", "chartSugar");
-            //reLoadSankey("js/sankeySugar.php","#chartSugar");
-        }else if (document.getElementById("chartBMI")) {
-            document.getElementById("chartBMI").innerHTML = "";
-            document.getElementById("chartBMI").setAttribute("id", "chartSugar");
-            //reLoadSankey("js/sankeySugar.php","#chartSugar");
-        }
-        else {
-            console.log("why am I here");
-        }
-        reLoadSankey("js/sankeySugar.php","#chartSugar");
+
+function iceTransition(g) {
+  return g.transition().duration(1000);
+}
+
+function ribbonPath(s, t, tension) {
+  var sx = s.node.x0 + s.x0,
+      tx = t.node.x0 + t.x0,
+      sy = s.dimension.y0,
+      ty = t.dimension.y0;
+  return (tension === 1 ? [
+      "M", [sx, sy],
+      "L", [tx, ty],
+      "h", t.dx,
+      "L", [sx + s.dx, sy],
+      "Z"]
+   : ["M", [sx, sy],
+      "C", [sx, m0 = tension * sy + (1 - tension) * ty], " ",
+           [tx, m1 = tension * ty + (1 - tension) * sy], " ", [tx, ty],
+      "h", t.dx,
+      "C", [tx + t.dx, m1], " ", [sx + s.dx, m0], " ", [sx + s.dx, sy],
+      "Z"]).join("");
+}
+
+function stopClick() { d3.event.stopPropagation(); }
+
+// Given a text function and width function, truncates the text if necessary to
+// fit within the given width.
+function truncateText(text, width) {
+  return function(d, i) {
+    var t = this.textContent = text(d, i),
+        w = width(d, i);
+    if (this.getComputedTextLength() < w) return t;
+    this.textContent = "…" + t;
+    var lo = 0,
+        hi = t.length + 1,
+        x;
+    while (lo < hi) {
+      var mid = lo + hi >> 1;
+      if ((x = this.getSubStringLength(0, mid)) < w) lo = mid + 1;
+      else hi = mid;
     }
-    
-    function changeSankeyToBMI(){
-        if (document.getElementById("chartH")) {
-            document.getElementById("chartH").innerHTML = "";
-            document.getElementById("chartH").setAttribute("id", "chartBMI");
-            //reLoadSankey("js/sankeyBMI.php","#chartBMI");
-        }else if (document.getElementById("chartSugar")) {
-            document.getElementById("chartSugar").innerHTML = "";
-            document.getElementById("chartSugar").setAttribute("id", "chartBMI");
-            //reLoadSankey("js/sankeyBMI.php","#chartBMI");
-        }else if (document.getElementById("chartBP")) {
-            document.getElementById("chartBP").innerHTML = "";
-            document.getElementById("chartBP").setAttribute("id", "chartBMI");
-            //reLoadSankey("js/sankeyBMI.php","#chartBMI");
-        }
-        else {
-            console.log("why am I here");
-        }
-        reLoadSankey("js/sankeyBMI.php","#chartBMI");
-    }
-    
-    function convertJSONtoSankeyJSON(plainJSON){
-        d3.json(plainJSON, function(error,data){
-            //set up graph in same style as original example but empty
-            graph = {"nodes" : [], "links" : []};
-            
-                data.forEach(function (d) {
-                  graph.nodes.push({ "name": d.source });
-                  graph.nodes.push({ "name": d.target });
-                  graph.links.push({ "source": d.source,
-                                     "target": d.target,
-                                     "value": +d.value });
-                });
-                
-                // return only the distinct / unique nodes
-                 graph.nodes = d3.keys(d3.nest()
-                   .key(function (d) { return d.name; })
-                   .map(graph.nodes));
+    return lo > 1 ? t.substr(0, lo - 2) + "…" : "";
+  };
+}
 
-                 // loop through each link replacing the text with its index from node
-                 graph.links.forEach(function (d, i) {
-                   graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
-                   graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
-                 });
-
-                 //now loop through each nodes to make nodes an array of objects
-                 // rather than an array of strings
-                 graph.nodes.forEach(function (d, i) {
-                   graph.nodes[i] = { "name": d };
-                 });
-        });
-    }
-    
-    function reLoadSankey(phpFile,chart){
-
-    ///////////////////////Sankey code
-        var margin = {top: 0, right: 50, bottom: 20, left: 40},
-            //width = 960 - margin.left - margin.right,
-            //height = 500 - margin.top - margin.bottom;
-            width = 900,
-            height= 500;
-            //.width(900).height(50)
-              //  .margins({top: 0, right: 50, bottom: 20, left: 40})
-
-        var formatNumber = d3.format(",.0f"),
-            format = function(d) { return formatNumber(d) + " resident"; },
-            color = d3.scale.category20();
-            
-        var svg = d3.select(chart).append("svg")
-            .attr("width", (width) + margin.left + margin.right)
-            .attr("height", (height) + margin.top + margin.bottom)
-            //.attr("width", 100)
-            //.attr("height", 300)
-          .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var sankey = d3.sankey()
-            .nodeWidth(15)
-            .nodePadding(10)
-            .size([width, height]);
-
-        var path = sankey.link();
-
-        ////////////////////////End of Sankey Code
-        
-        /*
-width = screen.width;
-height = screen.height;
-
-if (width > 0 && height >0) {
-    window.location.href = "http://localhost/main.php?width=" + width + "&height=" + height;
-} else 
-    exit();
-        */
-        console.log("I am here");
-        console.log(startDate);
-        console.log(endDate);
-        console.log("I am here2");
-        //d3.json("js/sankeyBP.php",function(error, energy){
-        d3.json(phpFile,function(error, energy){
-        
-        var nodeMap = {};
-            energy.nodes.forEach(function(x) { nodeMap[x.name] = x; });
-            energy.links = energy.links.map(function(x) {
-              return {
-                source: nodeMap[x.source],
-                target: nodeMap[x.target],
-                value: x.value
-              };
-            });
-          sankey
-              .nodes(energy.nodes)
-              .links(energy.links)
-              .layout(32);
-
-          var link = svg.append("g").selectAll(".link")
-              .data(energy.links)
-            .enter().append("path")
-              .attr("class", "link")
-              .attr("d", path)
-              .style("stroke-width", function(d) { return Math.max(1, d.dy); })
-              .sort(function(a, b) { return b.dy - a.dy; })
-              .on("dblclick", function(d){console.log("Value is " + d.value);});
-
-          link.append("title")
-              .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
-
-          var node = svg.append("g").selectAll(".node")
-              .data(energy.nodes)
-            .enter().append("g")
-              .attr("class", "node")
-              .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-              //d.source.name + " → " + d.target.name
-              .on("dblclick", function(d){console.log("Value is " + d.value);})
-            .call(d3.behavior.drag()
-              .origin(function(d) { return d; })
-              .on("dragstart", function() { this.parentNode.appendChild(this); })
-              .on("drag", dragmove)
-              );
-
-          node.append("rect")
-              .attr("height", function(d) { return d.dy; })
-              .attr("width", sankey.nodeWidth())
-              .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
-              .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
-            .append("title")
-              .text(function(d) { return d.name + "\n" + format(d.value); });
-
-          node.append("text")
-              .attr("x", -6)
-              .attr("y", function(d) { return d.dy / 2; })
-              .attr("dy", ".35em")
-              .attr("text-anchor", "end")
-              .attr("transform", null)
-              .text(function(d) { return d.name; })
-            .filter(function(d) { return d.x < width / 2; })
-              .attr("x", 6 + sankey.nodeWidth())
-              .attr("text-anchor", "start");
-
-          function dragmove(d) {
-            d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
-            sankey.relayout();
-            link.attr("d", path);
-          }
-        });
-    }
-    
+d3.select("#file").on("change", function() {
+  var file = this.files[0],
+      reader = new FileReader;
+  reader.onloadend = function() {
+    var csv = d3.csv.parse(reader.result);
+    vis.datum(csv).call(chart
+        .value(csv[0].hasOwnProperty("Number") ? function(d) { return +d.Number; } : 1)
+        .dimensions(function(d) { return d3.keys(d[0]).filter(function(d) { return d !== "Number"; }).sort(); }));
+  };
+  reader.readAsText(file);
+});
 </script>
-        <script src="js/sankeyCode.js"></script>
-        <script src="js/sankeyMain.js"></script>
+       <!-- <script src="js/sankeyCode.js"></script>
+        <script src="js/sankeyMain.js"></script>-->
 		<script>
 			function byDateRange(dateSelected) {
 				var twoDates = dateSelected.split("-");
