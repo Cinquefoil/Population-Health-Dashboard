@@ -50,9 +50,10 @@ include_once "checkAccess.php";
 			$(document).ready(function(){
 				jQuery('div.tags-container span:contains("Health")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Event Location")').addClass('tagsort-active');
+                jQuery('div.tags-container span:contains("Nurse Action")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("New Cases")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Existing")').addClass('tagsort-active');
-				jQuery('div.tags-container span:contains("Co-Relation")').addClass('tagsort-active');
+				//jQuery('div.tags-container span:contains("Co-Relation")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Health Classification Tree")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Health")').click();
 				jQuery('div.tags-container span:contains("Health")').click();
@@ -105,7 +106,7 @@ include_once "checkAccess.php";
 			  position: absolute;
 			  text-align: center;
 			  width: 128px;
-			  height: 32px;
+			  height: 25px;
 			  background: #333;
 			  color: #ddd;
 			  padding: 2px;
@@ -113,6 +114,33 @@ include_once "checkAccess.php";
 			  border-radius: 8px;
 			  opacity: 0;
 			}
+            
+            .venntooltip2 {
+			  position: absolute;
+			  text-align: center;
+			  width: 128px;
+			  height: 25px;
+			  background: #333;
+			  color: #ddd;
+			  padding: 2px;
+			  border: 0px;
+			  border-radius: 8px;
+			  opacity: 0;
+			}
+            
+            .venntooltip3 {
+			  position: absolute;
+			  text-align: center;
+			  width: 128px;
+			  height: 25px;
+			  background: #333;
+			  color: #ddd;
+			  padding: 2px;
+			  border: 0px;
+			  border-radius: 8px;
+			  opacity: 0;
+			}
+            
         </style>
         <script src="js/venn.js"></script>
         <!-- END style for Venn -->
@@ -121,8 +149,10 @@ include_once "checkAccess.php";
 			.chart {
 			  display: block;
 			  margin: auto;
-			  margin-top: 60px;
-			  font-size: 15px;
+			  margin-top: 20px;
+              margin-left: 20px;
+              margin-bottom: 20px;
+			  font-size: 11px;
 			}
 			.chart rect {
 			  stroke: #eee;
@@ -310,6 +340,13 @@ include_once "checkAccess.php";
 						</div>
 					</li>
                     <li>
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-nurse-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Nurse Action">
+							<strong>Nurse Action</strong>
+							<a class="reset" href="javascript:nurseRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+                    <li>
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="venn" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, New Cases">
 							<strong>New Cases</strong>
 						</div>
@@ -440,7 +477,11 @@ include_once "checkAccess.php";
             var poorControl_existingBSBP = 0;
             //////////////
 
-			d3.csv("allDataWGeo1.csv", function(data){
+			d3.csv("allDataWGeo1.csv", function(error,data){
+            //d3.json(("js/allUniqueData.php"),function(error, data){
+                if (error){
+                    console.log("error in php");
+                }
 				data.forEach(function(d){
 					if (d.Healthy === "Healthy" && d.Habits === "Positive Habits"){
 						d.healthResult = "Healthy/PosHabits";
@@ -579,13 +620,13 @@ include_once "checkAccess.php";
                  {"sets": [0, 1, 2], "size": n_chol_bs_bp}];
                 
                 var chart = venn.VennDiagram()
-                 .width(250)
-                 .height(250);
+                 .width(220)
+                 .height(200);
 
                 var div = d3.select("#venn")
                 div.datum(sets).call(chart);
                 
-                drawVennDiagram();
+                drawVennDiagram("venntooltip");
 
                 //////////////////////////////////////////////////    
                     
@@ -599,13 +640,13 @@ include_once "checkAccess.php";
                  {"sets": [0, 1, 2], "size": e_chol_bs_bp}];
                 
                 var chart = venn.VennDiagram()
-                 .width(250)
-                 .height(250);
+                 .width(220)
+                 .height(200);
 
                 var div = d3.select("#venn2");
                 div.datum(sets2).call(chart);
                 
-                drawVennDiagram();
+                drawVennDiagram("venntooltip2");
                 
                  var sets3 = [
                  {"sets": [0], "label": "Cholesterol", "size": c_chol+c_chol_bs+c_chol_bp+c_chol_bs_bp},
@@ -617,18 +658,18 @@ include_once "checkAccess.php";
                  {"sets": [0, 1, 2], "size": c_chol_bs_bp}];
                 
                 var chart = venn.VennDiagram()
-                 .width(250)
-                 .height(250);
+                 .width(220)
+                 .height(200);
 
                 var div = d3.select("#venn3");
                 div.datum(sets3).call(chart);
                 
-                drawVennDiagram();
+                drawVennDiagram("venntooltip3");
                 /////////////////////////End Script for Venn
                 
 				/////////////////Health Tree
-                var w = 800,
-				h = 550,
+                var w = 900,
+				h = 400,
 				x = d3.scale.linear().range([0, w]),
 				y = d3.scale.linear().range([0, h]);
 
@@ -763,6 +804,7 @@ var root =
 				moveChart = dc.barChart("#chart-dateMove-bar"),
 				chart = dc.heatMap("#test");
 				eventRowChart  = dc.rowChart("#chart-event-row");
+                nurseRowChart = dc.rowChart("#chart-nurse-row");
 				
 				var dataCount = dc.dataCount("#dc-data-count");
 				var dataTable = dc.dataTable("#dc-table-graph");
@@ -785,7 +827,7 @@ var root =
 				var dateGroup1 = dateDim1.group();
 				var minDate = dateDim1.bottom(1)[0].date;
 				var maxDate = dateDim1.top(1)[0].date;
-				
+				//console.log(minDate);
 				var minDateMonth = parseInt(minDate.getMonth())+1;
 				var maxDateMonth = parseInt(maxDate.getMonth())+1;
 				document.getElementById('DisplayStartDate').innerHTML = minDate.getDate() + "/" + minDateMonth + "/" + minDate.getFullYear();
@@ -826,6 +868,9 @@ var root =
 				
 				var scnZoneDim = ndx.dimension(function(d) {return d.scnZone});
 				var scnZoneGroup = scnZoneDim.group();
+                
+                var nurseDim = ndx.dimension(function(d) {return d.NurseAction});
+				var nurseGroup = nurseDim.group();
 				
 				var runDim = ndx.dimension(function(d) { return [+d.HealthyNum, +d.HabitsNum]; });
 				var runGroup = runDim.group();
@@ -867,8 +912,12 @@ var root =
 					.yAxis()
 					.ticks(2);
 				dateBarChart.on("filtered", function(c, f){
-						updateAllGraph();
-					});
+                    console.log("In date BAr");
+                    var filteredDim = ndx.dimension(function(d) {return d.NRIC});
+                    var allRes = filteredDim.top(Infinity);
+                    updateAllGraph(allRes);
+                });
+                
 					
 				moveChart
 					//.renderArea(true)
@@ -915,44 +964,53 @@ var root =
 							'Healthy-PosHabits: ' + d.value.HP 
 						);
 					});
+                moveChart.on("filtered", function(c, f){
+                    console.log("In date BAr");
+                    var filteredDim = ndx.dimension(function(d) {return d.NRIC});
+                    var allRes = filteredDim.top(Infinity);
+                    updateAllGraph(allRes);
+                    console.log("out date BAr");
+                });
 					
 				chart
-				.width(90 * 2 + 70)
-				.height(90 * 2 + 20)
-				.margins({top: 0, right: 50, bottom: 20, left: 50})
-				.dimension(runDim)
-				.group(runGroup)
-				.keyAccessor(function(d) 
-					{ 
-						if (d.key[0] == 1){
-							return "Healthy";
-						}else{
-							return "Unhealthy";
-						}
-					})
-				.valueAccessor(function(d) 
-					{ 
-						if (d.key[1] == 1){
-							return "PosHabits";
-						}else{
-							return "NegHabits";
-						}
-					}
-				)
-				.colorAccessor(function(d) 
-					{ 
-						return d.key[0]*2 + d.key[1];  
-					}
-				)
-				.colors(d3.scale.ordinal()
-					.domain([3,4,5,6])
-					.range(["#1f77b4","#d62728","#ff7f0e","#2ca02c","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
-				.title(function(d) {
-					return +d.value + " Resident";})        
-				.calculateColorDomain();
-				
+                    .width(90 * 2 + 70)
+                    .height(90 * 2 + 20)
+                    .margins({top: 0, right: 50, bottom: 20, left: 50})
+                    .dimension(runDim)
+                    .group(runGroup)
+                    .keyAccessor(function(d) 
+                        { 
+                            if (d.key[0] == 1){
+                                return "Healthy";
+                            }else{
+                                return "Unhealthy";
+                            }
+                        })
+                    .valueAccessor(function(d) 
+                        { 
+                            if (d.key[1] == 1){
+                                return "PosHabits";
+                            }else{
+                                return "NegHabits";
+                            }
+                        }
+                    )
+                    .colorAccessor(function(d) 
+                        { 
+                            return d.key[0]*2 + d.key[1];  
+                        }
+                    )
+                    .colors(d3.scale.ordinal()
+                        .domain([3,4,5,6])
+                        .range(["#1f77b4","#d62728","#ff7f0e","#2ca02c","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
+                    .title(function(d) {
+                        return +d.value + " Resident";})        
+                    .calculateColorDomain();
 				chart.on("filtered", function(c, f){
-						updateGraph()});
+					var filteredDim = ndx.dimension(function(d) {return d.NRIC});
+                    var allRes = filteredDim.top(Infinity);
+                    updateAllGraph(allRes);
+                });
 				
 				eventRowChart
 					.width(250).height(200)
@@ -963,26 +1021,37 @@ var root =
 					.ordinalColors(["#aec7e8"])
 					.xAxis().ticks(4);
 				eventRowChart.on("filtered", function(c, f){
-						updateAllGraph()});
+					var filteredDim = ndx.dimension(function(d) {return d.NRIC});
+                    var allRes = filteredDim.top(Infinity);
+                    updateAllGraph(allRes);
+                });
+                
+                nurseRowChart
+					.width(250).height(200)
+					.dimension(nurseDim)
+					.group(nurseGroup)
+					.elasticX(true)
+					.renderLabel(true)
+					.ordinalColors(["#aec7e8"])
+					.xAxis().ticks(4);
+				eventRowChart.on("filtered", function(c, f){
+					var filteredDim = ndx.dimension(function(d) {return d.NRIC});
+                    var allRes = filteredDim.top(Infinity);
+                    updateAllGraph(allRes);
+                });
 
 				dc.renderAll();
-				
-				function updateGraph(){
-					d3.selectAll("g.row").attr("style", "fill: " + function(d){
-						return "red";
-					});
-				}
                 
-                function updateAllGraph(){
-                    updateHealthClassNewCases();
-                    updateHealthClassExisting();
-                    updateHealthClassCombine();
-                    updateHealthTree();
+                function updateAllGraph(data){
+                    updateHealthClassNewCases(data);
+                    updateHealthClassExisting(data);
+                    updateHealthClassCombine(data);
+                    updateHealthTree(data);
                 }
                 
-                function drawVennDiagram(){
+                function drawVennDiagram(toolTipChosen){
                     var tooltip = d3.select("body").append("div")
-                    .attr("class", "venntooltip");
+                    .attr("class", toolTipChosen);
 
                 div.selectAll("path")
                     .style("stroke-opacity", 0)
@@ -996,7 +1065,7 @@ var root =
 
                         // Display a tooltip with the current size
                         tooltip.transition().duration(400).style("opacity", .9);
-                        tooltip.text(d.size + " resident");
+                        tooltip.text(d.size + " residents");
 
                         // highlight the current path
                         var selection = d3.select(this).transition("tooltip").duration(400);
@@ -1021,13 +1090,7 @@ var root =
                     });
                 }
 			     
-                function updateHealthClassNewCases(){
-                    var filteredDim = ndx.dimension(function(d) {return d.NRIC});
-                        //print_filter(filteredDim);
-                        var allRes = filteredDim.top(Infinity);
-                        //var allRes = filteredDim.filterAll();
-                        //console.log(allRes.length);
-                        //console.log(allRes[0].SugarHigh);
+                function updateHealthClassNewCases(allRes){
                         
                         /////////////////Venn Variables
                         n_chol = 0;
@@ -1072,22 +1135,19 @@ var root =
                      {"sets": [0, 1, 2], "size": n_chol_bs_bp}];
                     
                     var chart = venn.VennDiagram()
-                     .width(250)
-                     .height(250);
+                     .width(220)
+                     .height(200);
 
                     var div = d3.select("#venn")
                     div.datum(sets).call(chart);
 
-                    drawVennDiagram();
+                    drawVennDiagram("venntooltip");
                     /////////////////////////End Script for Venn
 
                 }
             
-                function updateHealthClassExisting(){
-                    var filteredDim = ndx.dimension(function(d) {return d.NRIC});
-                        var allRes = filteredDim.top(Infinity);
-                        //console.log(allRes.length);
-                        //console.log(allRes[0].SugarHigh);
+                function updateHealthClassExisting(allRes){
+
             /////////////////Venn Variables
             var e_chol = 0;
             var e_bs = 0;
@@ -1126,20 +1186,16 @@ var root =
                  {"sets": [0, 1, 2], "size": e_chol_bs_bp}];
                 
                 var chart = venn.VennDiagram()
-                 .width(250)
-                 .height(250);
+                 .width(220)
+                 .height(200);
 
                 var div = d3.select("#venn2")
                 div.datum(sets2).call(chart);
 
-                drawVennDiagram();
+                drawVennDiagram("venntooltip2");
                 }
                 
-                function updateHealthClassCombine(){
-                    var filteredDim = ndx.dimension(function(d) {return d.NRIC});
-                    var allRes = filteredDim.top(Infinity);
-                    //console.log(allRes.length);
-                    //console.log(allRes[0].SugarHigh);
+                function updateHealthClassCombine(allRes){
                     
                     var c_chol = 0;
                     var c_chol_E_bp = 0;
@@ -1209,23 +1265,20 @@ var root =
                      {"sets": [0, 1, 2], "size": c_chol_bs_bp}];
                     
                     var chart = venn.VennDiagram()
-                     .width(250)
-                     .height(250);
+                     .width(220)
+                     .height(200);
 
                     var div = d3.select("#venn3");
                     div.datum(sets3).call(chart);
                                      
-                    drawVennDiagram();
+                    drawVennDiagram("venntooltip3");
                     
                 }
             
-                function updateHealthTree(){
+                function updateHealthTree(allRes){
                 if (document.getElementById("healthTree")) {
                 document.getElementById("healthTree").innerHTML = "";}
-           // document.getElementById("chartBP").setAttribute("id", "chartH");
-                    
-                var filteredDim = ndx.dimension(function(d) {return d.NRIC});
-                var allRes = filteredDim.top(Infinity);
+
                 ///////////////Healthy Tree variables
                 var t_healthy = 0;
                 var t_unhealthy = 0;
@@ -1269,9 +1322,8 @@ var root =
             if(allRes[i].controlTree == "poorControlExistSugarBP"){poorControl_existingBSBP++;}
             ////////////////////////////////END Healthy Tree
             }//end for
-            console.log(t_healthy);
-            var w = 800,
-				h = 550,
+            var w = 900,
+				h = 400,
 				x = d3.scale.linear().range([0, w]),
 				y = d3.scale.linear().range([0, h]);
 
