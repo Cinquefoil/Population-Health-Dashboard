@@ -449,8 +449,6 @@ include_once "checkAccess.php";
 					</li>
 					<li>
                         <div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="vis" style="background:#f8f7f7;margin:5px;width:1000px" data-item-id="1" data-item-tags="All, Flow Analysis">
-							
-							<strong><H2>Health Screening Data</H2></strong>
 							<!--<button onclick="changeSankeyToStrat()">Analysis Stratification</button>
                             <button onclick="changeSankeyToBP()">Analysis BP</button>
                             <button onclick="changeSankeyToBS()">Analysis BS</button>
@@ -1214,8 +1212,8 @@ function curves() {
 
 //updateParallelSet(dataset);
 
-//d3.csv("allDataWGeo1.csv", function(error, csv) {
-d3.json(("js/trending.php"),function(error, csv){
+d3.csv("allDataWGeo1.csv", function(error, csv) {
+//d3.json(("js/trending.php"),function(error, csv){
   vis.datum(csv).call(chart);
 
   window.icicle = function() {
