@@ -54,7 +54,7 @@ include_once "checkAccess.php";
 				jQuery('div.tags-container span:contains("New Cases")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Existing")').addClass('tagsort-active');
 				//jQuery('div.tags-container span:contains("Co-Relation")').addClass('tagsort-active');
-				jQuery('div.tags-container span:contains("Health Classification Tree")').addClass('tagsort-active');
+				//jQuery('div.tags-container span:contains("Health Classification Tree")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Health")').click();
 				jQuery('div.tags-container span:contains("Health")').click();
 			});
@@ -173,10 +173,8 @@ include_once "checkAccess.php";
     </head>
     
     <body>
-        <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -185,7 +183,6 @@ include_once "checkAccess.php";
                         <span class="icon-bar"></span>
                     </button>
                 </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav" style="font-size:12px">
                         <li>
@@ -216,32 +213,8 @@ include_once "checkAccess.php";
                         </li>
                     </ul>
                 </div>
-                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.container -->
         </nav>
-		
-		<!-- Right Slide Menu -->
-		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="width:310px">
-			<h3 style="text-align:center;font-size:20px;padding:10px">Resident Information</h3>
-			
-			<div id="dc-data-count">
-				<span class="filter-count" style="font-weight:bold"></span> residents selected out of <span class="total-count" style="font-weight:bold"></span> records
-			</div>
-			
-			<div class="chart-wrapper" style="width:100%;height:78%;overflow:auto;font-size:12px">
-				<table class="table table-hover" id="dc-table-graph" style="background:#f8f7f7">
-					<thead>
-						<tr class="header">
-							<th>NRIC</th>
-							<th>Zone</th>
-							<th>Health Status</th>
-							<th>Current Habits</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
-		</nav>
 		
 		<!-- Top Slide Menu -->
 		<nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top" id="cbp-spmenu-s3" style="background-color:#f8f7f7;padding: 0px 10px 0px 20px;height:372px;border-bottom-style:solid;border-bottom-color:#cccccc;border-bottom-width:2px">
@@ -275,9 +248,9 @@ include_once "checkAccess.php";
 								
 								<input id="byYearRadio" type="radio" name="period" onclick="toggleInput();"> By Year <input id ="byYear" type="text" size="2" onchange="byYear(this.value);" disabled="true"/>
 								<br />
-								<input type="radio" name="period" onclick="lastWeek();" disabled="true"> Last Week
+								<input type="radio" name="period" onclick="lastWeek();"/> Last Week
 								<br />
-								<input type="radio" name="period" onclick="lastMonth();" disabled="true"/> Last Month
+								<input type="radio" name="period" onclick="lastMonth();"/> Last Month
 								<br />
 								<input type="radio" name="period" onclick="lastYear();"/> Last Year
 								<br />
@@ -295,7 +268,7 @@ include_once "checkAccess.php";
 					<td>
 						<div class="slideMain">
 							<section>
-								<button id="showTop" style="height:50px;width:90px">&#9650; Show & Hide Date Selector</button>
+								<button id="showTop" style="height:40px;width:60px">&#9650; Date Selector</button>
 							</section>
 						</div>
 					</td>
@@ -312,7 +285,7 @@ include_once "checkAccess.php";
 					<td>
 						<div class="slideMain">
 							<section>
-								<button id="showRight" style="height:50px;width:90px">Show & Hide Resident List &#9654;</button>
+								<button id="showRight" style="height:40px;width:60px">Resident List &#9654;</button>
 							</section>
 						</div>
 					</td>
@@ -320,59 +293,87 @@ include_once "checkAccess.php";
 			</table>
 		</nav>
 		
+		<!-- Right Slide Menu -->
+		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="width:310px">
+			<h3 style="text-align:center;font-size:20px;padding:10px">Resident Information</h3>
+			
+			<div id="dc-data-count">
+				<span class="filter-count" style="font-weight:bold"></span> residents selected out of <span class="total-count" style="font-weight:bold"></span> records
+			</div>
+			
+			<div class="chart-wrapper" style="width:100%;height:78%;overflow:auto;font-size:12px">
+				<table class="table table-hover" id="dc-table-graph" style="background:#f8f7f7">
+					<thead>
+						<tr class="header">
+							<th>NRIC</th>
+							<th>Zone</th>
+							<th>Health Status</th>
+							<th>Current Habits</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</nav>
+		
 		<section id="connected">				
 			<div align="center">
-				</br></br></br>
+				</br>
 			
-				<ul class="list-unstyled connected list no2 sortable grid" style="padding:41px 0px 10px 30px">
+				<ul class="list-unstyled connected list no2 sortable grid" style="padding:105px 0px 10px 30px">
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="test" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Health and Habits">
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="test" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Health and Habits">
 							<strong>Health and Habits</strong>
-							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
 							<div class="clearfix"></div>
 						</div>
 					</li>
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-event-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Event Location">
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-event-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Event Location">
 							<strong>Event Location</strong>
-							<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
 							<div class="clearfix"></div>
 						</div>
 					</li>
                     <li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-nurse-row" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Nurse Action">
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-nurse-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Nurse Action">
 							<strong>Nurse Action</strong>
-							<a class="reset" href="javascript:nurseRowChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+							<a class="reset" href="javascript:nurseRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
 							<div class="clearfix"></div>
 						</div>
 					</li>
                     <li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="venn" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, New Cases">
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="venn" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, New Cases">
 							<strong>New Cases</strong>
 						</div>
 					</li>
                     <li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="venn2" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Existing">
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="venn2" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Existing">
 							<strong>Existing</strong>
 						</div>
 					</li>
                     <li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="venn3" style="background:#f8f7f7;margin:5px" data-item-id="1" data-item-tags="All, Co-Relation">
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="venn3" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Co-Relation">
 							<strong>Co-Relation</strong>
 						</div>
 					</li>
                     <li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="healthTree" style="background:#f8f7f7;margin:5px;width:1000px" data-item-id="1" data-item-tags="All, Health Classification Tree">
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="healthTree" style="background:#f8f7f7;margin:-15px 5px 25px 5px;width:1000px" data-item-id="1" data-item-tags="All, Health Classification Tree">
 							<strong>Health Classification Tree</strong>
 						</div>
 					</li>
 				</ul>
 			</div>
 			
-			<div id="footer">
-				<span id="reset-all">
-					<span onclick="javascript:dc.filterAll();dc.redrawAll();" style="cursor:pointer;font-size:14px;font-weight:bold;color:#1a7bbf">Reset All Filters</span>
-				</span>
+			<div id="footer" style="background-color:#f8f7f7">			
+				<b>
+				Applied Filters
+					<span id="reset-all">
+						<span onclick="javascript:dc.filterAll();dc.redrawAll();" style="cursor:pointer;font-size:12px;font-weight:bold;color:#1a7bbf">[Reset All]</span>:
+					</span> 
+				</b>
+				<span id="healthFilters"></span>
+				<span id="eventFilters"></span>
+				<span id="nurseFilters"></span>
 			</div>
 		</section>
 		
@@ -389,26 +390,11 @@ include_once "checkAccess.php";
 			showRight.onclick = function() {
 				classie.toggle( this, 'active' );
 				classie.toggle( menuRight, 'cbp-spmenu-open' );
-				disableOther( 'showRight' );
 			};
 			showTop.onclick = function() {
 				classie.toggle( this, 'active' );
 				classie.toggle( menuTop, 'cbp-spmenu-open' );
-				disableOther( 'showTop' );
 			};
-			
-			window.onload = function() {
-				//$('#showTop').click();
-			};
-
-			function disableOther( button ) {
-				if( button !== 'showRight' ) {
-					classie.toggle( showRight, 'disabled' );
-				}
-				if( button !== 'showTop' ) {
-					classie.toggle( showTop, 'disabled' );
-				}
-			}
 		</script>
 
 		<script type="text/javascript">
@@ -585,26 +571,26 @@ include_once "checkAccess.php";
                     }
                         //////////////////////Venn End
                         
-            ////////////////////////////////HealthyTree
-            if(d.Healthy == "Healthy"){t_healthy++;}
-            if(d.Healthy == "Unhealthy"){t_unhealthy++;}
-            
-            if(d.New == "Unhealthy, New w/o medicalHist"){t_unhealthy_new++;}
-            if(d.UnhealthyCat == "Unhealthy, w/o medicalHist, New HighCho"){t_new_newChol++;}
-            if(d.controlTree == "NewNewSugarBP"){t_new_newBSBP++;}
-            
-            if(d.New == "Unhealthy, Exisiting"){t_unhealthy_existing++;}
-            if(d.ControlGrp == "Good Control"){t_existing_goodControl++;}
-            if(d.ControlGrp == "Poor Control"){t_existing_poorControl++;}
-            
-            if(d.controlTree == "goodControlCho"){goodControl_chol++;}
-            if(d.controlTree == "goodControlNewSugarBP"){goodControl_newBSBP++;}
-            if(d.controlTree == "goodControlExistSugarBP"){goodControl_existingBSBP++;}
-            
-            if(d.controlTree == "poorControlCho"){poorControl_chol++;}
-            if(d.controlTree == "poorControlNewSugarBP"){poorControl_newBSBP++;}
-            if(d.controlTree == "poorControlExistSugarBP"){poorControl_existingBSBP++;}
-            ////////////////////////////////END Healthy Tree
+					////////////////////////////////HealthyTree
+					if(d.Healthy == "Healthy"){t_healthy++;}
+					if(d.Healthy == "Unhealthy"){t_unhealthy++;}
+					
+					if(d.New == "Unhealthy, New w/o medicalHist"){t_unhealthy_new++;}
+					if(d.UnhealthyCat == "Unhealthy, w/o medicalHist, New HighCho"){t_new_newChol++;}
+					if(d.controlTree == "NewNewSugarBP"){t_new_newBSBP++;}
+					
+					if(d.New == "Unhealthy, Exisiting"){t_unhealthy_existing++;}
+					if(d.ControlGrp == "Good Control"){t_existing_goodControl++;}
+					if(d.ControlGrp == "Poor Control"){t_existing_poorControl++;}
+					
+					if(d.controlTree == "goodControlCho"){goodControl_chol++;}
+					if(d.controlTree == "goodControlNewSugarBP"){goodControl_newBSBP++;}
+					if(d.controlTree == "goodControlExistSugarBP"){goodControl_existingBSBP++;}
+					
+					if(d.controlTree == "poorControlCho"){poorControl_chol++;}
+					if(d.controlTree == "poorControlNewSugarBP"){poorControl_newBSBP++;}
+					if(d.controlTree == "poorControlExistSugarBP"){poorControl_existingBSBP++;}
+					////////////////////////////////END Healthy Tree
 				 
 				});
 				dataset = data;
@@ -673,67 +659,67 @@ include_once "checkAccess.php";
 				x = d3.scale.linear().range([0, w]),
 				y = d3.scale.linear().range([0, h]);
 
-			var vis = d3.select("#healthTree").append("div")
-				.attr("class", "chart")
-				.style("width", w + "px")
-				.style("height", h + "px")
-				.append("svg:svg")
-				.attr("width", w)
-				.attr("height", h);
-				
-			var counting=0; //get total number of resident for percentage calculation
+				var vis = d3.select("#healthTree").append("div")
+					.attr("class", "chart")
+					.style("width", w + "px")
+					.style("height", h + "px")
+					.append("svg:svg")
+					.attr("width", w)
+					.attr("height", h);
+					
+				var counting=0; //get total number of resident for percentage calculation
 
-			var partition = d3.layout.partition()
-				.value(function(d) { 
-				counting += d.size;
-				return d.size; });
+				var partition = d3.layout.partition()
+					.value(function(d) { 
+					counting += d.size;
+					return d.size; });
 
 			//d3.json("flare1.json", function(root) {
-/////////////
-var root = 
-{
- "name": "All Resident",
- "children": [
-  {
-   "name": "Healthy", "size": t_healthy
-   },
-  {
-   "name": "Unhealthy", 
-   "children": [
-    {
-     "name": "New Cases",
-     "children": [
-      {"name": "New Cholesterol", "size": t_new_newChol},
-      {"name": "New BS/BP", "size": t_new_newBSBP}
-      ]
-    },
-    
-    {
-     "name": "Existing",
-     "children": [
-      {
-        "name": "Good Control",
-            "children": [
-            {"name": "Good Control Cholesterol", "size": goodControl_chol},
-            {"name": "Good Control BS/BP", "size": goodControl_existingBSBP},
-            {"name": "New Cases BS/BP", "size": goodControl_newBSBP}
-            ]
-      },
-      {
-        "name": "Poor Control",
-            "children": [
-            {"name": "Poor Control Cholesterol", "size": poorControl_chol},
-            {"name": "Poor Control BS/BP", "size": poorControl_existingBSBP},
-            {"name": "New Cases BS/BP", "size": poorControl_newBSBP }
-            ]
-      }
-      ]
-    }
-    ]
-  }
-  ]
-};
-////////////
+			/////////////
+			var root = 
+			{
+			 "name": "All Resident",
+			 "children": [
+			  {
+			   "name": "Healthy", "size": t_healthy
+			   },
+			  {
+			   "name": "Unhealthy", 
+			   "children": [
+				{
+				 "name": "New Cases",
+				 "children": [
+				  {"name": "New Cholesterol", "size": t_new_newChol},
+				  {"name": "New BS/BP", "size": t_new_newBSBP}
+				  ]
+				},
+				
+				{
+				 "name": "Existing",
+				 "children": [
+				  {
+					"name": "Good Control",
+						"children": [
+						{"name": "Good Control Cholesterol", "size": goodControl_chol},
+						{"name": "Good Control BS/BP", "size": goodControl_existingBSBP},
+						{"name": "New Cases BS/BP", "size": goodControl_newBSBP}
+						]
+				  },
+				  {
+					"name": "Poor Control",
+						"children": [
+						{"name": "Poor Control Cholesterol", "size": poorControl_chol},
+						{"name": "Poor Control BS/BP", "size": poorControl_existingBSBP},
+						{"name": "New Cases BS/BP", "size": poorControl_newBSBP }
+						]
+				  }
+				  ]
+				}
+				]
+			  }
+			  ]
+			};
+			////////////
 				var g = vis.selectAll("g")
 					.data(partition.nodes(root))
 					.enter().append("svg:g")
@@ -1011,6 +997,11 @@ var root =
                     var allRes = filteredDim.top(Infinity);
                     updateAllGraph(allRes);
                 });
+				chart.renderlet(function(chart) {
+					dc.events.trigger(function() {
+						document.getElementById("healthFilters").innerHTML = chart.filters();
+					});
+				});
 				
 				eventRowChart
 					.width(250).height(200)
@@ -1025,6 +1016,11 @@ var root =
                     var allRes = filteredDim.top(Infinity);
                     updateAllGraph(allRes);
                 });
+				eventRowChart.renderlet(function(chart) {
+					dc.events.trigger(function() {
+						document.getElementById("eventFilters").innerText = eventRowChart.filters();
+					});
+				});
                 
                 nurseRowChart
 					.width(250).height(200)
@@ -1034,11 +1030,16 @@ var root =
 					.renderLabel(true)
 					.ordinalColors(["#aec7e8"])
 					.xAxis().ticks(4);
-				eventRowChart.on("filtered", function(c, f){
+				nurseRowChart.on("filtered", function(c, f){
 					var filteredDim = ndx.dimension(function(d) {return d.NRIC});
                     var allRes = filteredDim.top(Infinity);
                     updateAllGraph(allRes);
                 });
+				nurseRowChart.renderlet(function(chart) {
+					dc.events.trigger(function() {
+						document.getElementById("nurseFilters").innerText = nurseRowChart.filters();
+					});
+				});
 
 				dc.renderAll();
                 
@@ -1343,51 +1344,51 @@ var root =
 				return d.size; });
 
 			//d3.json("flare1.json", function(root) {
-/////////////
-var root = 
-{
- "name": "All Resident",
- "children": [
-  {
-   "name": "Healthy", "size": t_healthy
-   },
-  {
-   "name": "Unhealthy", 
-   "children": [
-    {
-     "name": "New Cases",
-     "children": [
-      {"name": "New Cholesterol", "size": t_new_newChol},
-      {"name": "New BS/BP", "size": t_new_newBSBP}
-      ]
-    },
-    
-    {
-     "name": "Existing",
-     "children": [
-      {
-        "name": "Good Control",
-            "children": [
-            {"name": "Good Control Cholesterol", "size": goodControl_chol},
-            {"name": "Good Control BS/BP", "size": goodControl_existingBSBP},
-            {"name": "New Cases BS/BP", "size": goodControl_newBSBP}
-            ]
-      },
-      {
-        "name": "Poor Control",
-            "children": [
-            {"name": "Poor Control Cholesterol", "size": poorControl_chol},
-            {"name": "Poor Control BS/BP", "size": poorControl_existingBSBP},
-            {"name": "New Cases BS/BP", "size": poorControl_newBSBP }
-            ]
-      }
-      ]
-    }
-    ]
-  }
-  ]
-};
-////////////
+				/////////////
+				var root = 
+				{
+				 "name": "All Resident",
+				 "children": [
+				  {
+				   "name": "Healthy", "size": t_healthy
+				   },
+				  {
+				   "name": "Unhealthy", 
+				   "children": [
+					{
+					 "name": "New Cases",
+					 "children": [
+					  {"name": "New Cholesterol", "size": t_new_newChol},
+					  {"name": "New BS/BP", "size": t_new_newBSBP}
+					  ]
+					},
+					
+					{
+					 "name": "Existing",
+					 "children": [
+					  {
+						"name": "Good Control",
+							"children": [
+							{"name": "Good Control Cholesterol", "size": goodControl_chol},
+							{"name": "Good Control BS/BP", "size": goodControl_existingBSBP},
+							{"name": "New Cases BS/BP", "size": goodControl_newBSBP}
+							]
+					  },
+					  {
+						"name": "Poor Control",
+							"children": [
+							{"name": "Poor Control Cholesterol", "size": poorControl_chol},
+							{"name": "Poor Control BS/BP", "size": poorControl_existingBSBP},
+							{"name": "New Cases BS/BP", "size": poorControl_newBSBP }
+							]
+					  }
+					  ]
+					}
+					]
+				  }
+				  ]
+				};
+				////////////
 				var g = vis.selectAll("g")
 					.data(partition.nodes(root))
 					.enter().append("svg:g")
