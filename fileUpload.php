@@ -2,13 +2,14 @@
 
 session_start();
 
-ini_set('memory_limit', '2048M');
-set_time_limit('3600');
-
 include 'PHPExcelLibrary/PHPExcel.php';
 include 'PHPExcelLibrary/PHPExcel/IOFactory.php';
 
-function loadData($tmpName) {
+ini_set('memory_limit', '2048M');
+set_time_limit('3600');
+
+
+function createTable() {
 
     //If KTPHTest.db is not exist
     class MyDB extends SQLite3 {
@@ -23,11 +24,11 @@ function loadData($tmpName) {
 
     if (!$db) {
         $response = $db->lastErrorMsg();
-        echo $response;
         exit;
     }
+    
 
-    echo 'Database created successfully';
+    //echo 'Database created successfully';
 
     $myFile = "C:/wamp/www/FYP1/PDashboard/KTPHTest.db";
 
@@ -36,25 +37,26 @@ function loadData($tmpName) {
 
     if (!copy($myFile, $newfile)) {
         echo "failed to copy the file";
+        exit;
     }
 
     $sqlDelete = <<<EOF
-            
     DROP TABLE IF EXISTS ScreeningRecords;
     DROP TABLE IF EXISTS Demographics;  
     DROP TABLE IF EXISTS SGPostal;    
     DROP TABLE IF EXISTS GeoCode;
-            
 EOF;
 
     $result = $db->exec($sqlDelete);
 
     if (!$result) {
         echo $db->lastErrorMsg();
+        exit;
     }
-    echo 'Table deleted successfully';
+    //echo 'Table deleted successfully';
+    $db->close();
 
-
+    
     $sqlTable = <<<EOF
         CREATE TABLE IF NOT EXISTS Demographics
         (NRIC VARCHAR(10) PRIMARY KEY NOT NULL ,
@@ -96,7 +98,8 @@ EOF;
         PreferredLanguage VARCHAR(10),
         MeasurementAttDate VARCHAR(10),
         action VARCHAR(10),
-        Zone VARCHAR(10)
+        Zone VARCHAR(10),
+        FOREIGN KEY(NRIC) REFERENCES Demographics(NRIC)    
         );
 
         CREATE TABLE IF NOT EXISTS SGPostal
@@ -115,8 +118,14 @@ EOF;
 
     if (!$ret) {
         echo $db->lastErrorMsg();
+        exit;
     }
-    echo 'Table created successfully';
+    //echo 'Table created successfully';
+    $db->close();
+}
+
+function loadData($tmpName) {
+    createTable();
 
     //Read file
     try {
@@ -147,13 +156,13 @@ EOF;
         //Validate: Number of sheets.
         if (sizeof($worksheetNames) != 3) {
             $_SESSION["response"] = 'File must contain 3 worksheets!';
-            header("Location: dataprocessing.php");
+            header("Location: fileUploadUI.php");
             exit;
         } else {
             for ($i = 0; $i <= 2; $i++) {
                 if ($worksheetNames[0] != 'Demographics' || $worksheetNames[1] != 'Screening Records' || $worksheetNames[2] != 'SGPostal') {
                     $_SESSION["response"] = 'File must contain 3 worksheet:Demographics, Screening Records, SGPostal!';
-                    header("Location: dataprocessing.php");
+                    header("Location: fileUploadUI.php");
                     exit;
                 }
             }
@@ -179,8 +188,8 @@ EOF;
                     if ($keyRowNumber == 1) {
                         //Validate: Number of column
                         if (sizeof($valueRowArray) != 11) {
-                            $_SESSION["response"] = 'Demographics worksheet must have 11 columns!';
-                            header("Location: dataprocessing.php");
+                            $_SESSION["FileValidation"] = 'Demographics worksheet must have 11 columns!';
+                            header("Location: fileUploadUI.php");
                             exit;
                         }
                     } else {
@@ -240,8 +249,8 @@ EOF;
                     if ($keyRowNumber == 1) {
                         //Validate: Number of column
                         if (sizeof($valueRowArray) != 25) {
-                            $_SESSION["response"] = 'Screening Records worksheet must have 25 columns!';
-                            header("Location: dataprocessing.php");
+                            $_SESSION["FileValidation"] = 'Screening Records worksheet must have 25 columns!';
+                            header("Location: fileUploadUI.php");
                             exit;
                         }
                     } else {
@@ -296,8 +305,8 @@ EOF;
                         if ($keyRowNumber == 1) {
                             //Validate: Number of column
                             if (sizeof($valueRowArray) != 8) {
-                                $_SESSION["response"] = 'SGPostal worksheet must have 8 columns!';
-                                header("Location: dataprocessing.php");
+                                $_SESSION["FileValidation"] = 'SGPostal worksheet must have 8 columns!';
+                                header("Location: fileUploadUI.php");
                                 exit;
                             }
                         } else {
@@ -353,6 +362,7 @@ EOF;
 
         if (!$geoRet) {
             echo $db->lastErrorMsg();
+            exit;
         }
 
         $sqlGeoCodeRow = <<<EOF
@@ -371,7 +381,6 @@ EOF;
                 $longi = $resp['results'][0]['geometry']['location']['lng'];
                 //$formatted_address = $resp['results'][0]['formatted_address'];
 
-                
                 $GeoCodeSql = <<<EOF
               INSERT INTO GeoCode(latitude,longitude) VALUES('$lati','$longi');
 EOF;
@@ -380,8 +389,10 @@ EOF;
                 if (!$GeoCodeResult) {
                     echo $db->lastErrorMsg();
                 }
-                 
-                 
+            }else{
+                $GeoErrorReport = array();
+                array_push($PostalCodeGoogle, $GeoErrorReport);
+                $_SESSION["GeoErrorReport"] = $GeoErrorReport;
             }
         }
     } catch (Exception $e) {
@@ -401,6 +412,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $size = $_FILES['file']['size'];
     $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
 
+    //#1
+    $StartFileUpload = $_POST["StartFileUpload"];
+    if ($StartFileUpload != null) {
+        $FileUpload = 'File Upload Successful!';
+        $_SESSION['FileUpload'] = $FileUpload;
+        header("Location: fileUploadUI.php");
+    }
+
+
+    //#2
     try {
         switch ($error) {
             case UPLOAD_ERR_OK:
@@ -408,69 +429,71 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //validate file extensions
                 if (!in_array($ext, array('xls', 'xlsx'))) {
                     $valid = false;
-                    $response = 'Invalid file extension!';
-                    throw new RuntimeException($response);
+                    $FileValidation = 'Invalid file extension!';
+                    throw new RuntimeException($FileValidation);
                 }
                 //validate file size
                 /*
                   if ($size / 1024 / 1024 > 5) {
                   $valid = false;
-                  $response = 'File size is exceeding maximum allowed size.';
-                  throw new RuntimeException($response);
+                  $FileValidation = 'File size is exceeding maximum allowed size.';
+                  throw new RuntimeException($FileValidation);
                   }
                  */
                 //upload file
                 if ($valid) {
                     //Call loadData function
+
                     call_user_func('loadData', $tmpName);
                     $targetPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $name;
                     move_uploaded_file($tmpName, $targetPath);
 
+
                     //Redirect 
-                    $_SESSION["response"] = "Successfully loaded to database!";
-                    header("Location: dataprocessing.php");
+                    $_SESSION["FileValidation"] = "File Validation Successful!";
+                    header("Location: fileUploadUI.php");
                     exit;
                 }
                 break;
             /**
               case UPLOAD_ERR_INI_SIZE:
-              $response = 'The uploaded file exceeds the upload_max_filesize directive in php.ini.';
-              throw new RuntimeException($response);
+              $FileValidation = 'The uploaded file exceeds the upload_max_filesize directive in php.ini.';
+              throw new RuntimeException($FileValidation);
               break;
              * */
             case UPLOAD_ERR_FORM_SIZE:
-                $response = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.';
-                throw new RuntimeException($response);
+                $FileValidation = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.';
+                throw new RuntimeException($FileValidation);
                 break;
             case UPLOAD_ERR_PARTIAL:
-                $response = 'The uploaded file was only partially uploaded.';
-                throw new RuntimeException($response);
+                $FileValidation = 'The uploaded file was only partially uploaded.';
+                throw new RuntimeException($FileValidation);
                 break;
             case UPLOAD_ERR_NO_FILE:
-                $response = 'No file was uploaded.';
-                throw new RuntimeException($response);
+                $FileValidation = 'No file was uploaded.';
+                throw new RuntimeException($FileValidation);
                 break;
             case UPLOAD_ERR_NO_TMP_DIR:
-                $response = 'Missing a temporary folder. Introduced in PHP 4.3.10 and PHP 5.0.3.';
-                throw new RuntimeException($response);
+                $FileValidation = 'Missing a temporary folder. Introduced in PHP 4.3.10 and PHP 5.0.3.';
+                throw new RuntimeException($FileValidation);
                 break;
             case UPLOAD_ERR_CANT_WRITE:
-                $response = 'Failed to write file to disk. Introduced in PHP 5.1.0.';
-                throw new RuntimeException($response);
+                $FileValidation = 'Failed to write file to disk. Introduced in PHP 5.1.0.';
+                throw new RuntimeException($FileValidation);
                 break;
             case UPLOAD_ERR_EXTENSION:
-                $response = 'File upload stopped by extension. Introduced in PHP 5.2.0.';
-                throw new RuntimeException($response);
+                $FileValidation = 'File upload stopped by extension. Introduced in PHP 5.2.0.';
+                throw new RuntimeException($FileValidation);
                 break;
             default:
-                $response = 'Unknown error';
-                throw new RuntimeException($response);
+                $FileValidation = 'Unknown error';
+                throw new RuntimeException($FileValidation);
                 break;
         }
     } catch (RuntimeException $e) {
-        $response = $e->getMessage();
-        $_SESSION["response"] = $response;
-        header("Location: dataprocessing.php");
+        $FileValidation = $e->getMessage();
+        $_SESSION["FileValidation"] = $FileValidation;
+        header("Location: fileUploadUI.php");
     }
 }
 ?>
