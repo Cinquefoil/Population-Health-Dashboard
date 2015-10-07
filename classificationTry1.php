@@ -48,13 +48,13 @@ include_once "checkAccess.php";
 		<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 		<script>
 			$(document).ready(function(){
-				jQuery('div.tags-container span:contains("Health")').addClass('tagsort-active');
+				//jQuery('div.tags-container span:contains("Health")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Event Location")').addClass('tagsort-active');
                 jQuery('div.tags-container span:contains("Nurse Action")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("New Cases")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Existing")').addClass('tagsort-active');
 				//jQuery('div.tags-container span:contains("Co-Relation")').addClass('tagsort-active');
-				//jQuery('div.tags-container span:contains("Health Classification Tree")').addClass('tagsort-active');
+				jQuery('div.tags-container span:contains("Health Classification Tree")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Health")').click();
 				jQuery('div.tags-container span:contains("Health")').click();
 			});
@@ -342,6 +342,13 @@ include_once "checkAccess.php";
 						</div>
 					</li>
                     <li>
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-heart-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Nurse Action">
+							<strong>Cardio Risk</strong>
+							<a class="reset" href="javascript:heartRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+                    <li>
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="venn" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, New Cases">
 							<strong>New Cases</strong>
 						</div>
@@ -374,6 +381,7 @@ include_once "checkAccess.php";
 				<span id="healthFilters"></span>
 				<span id="eventFilters"></span>
 				<span id="nurseFilters"></span>
+                <span id="heartFilters"></span>
 			</div>
 		</section>
 		
@@ -791,6 +799,7 @@ include_once "checkAccess.php";
 				chart = dc.heatMap("#test");
 				eventRowChart  = dc.rowChart("#chart-event-row");
                 nurseRowChart = dc.rowChart("#chart-nurse-row");
+                heartRowChart = dc.rowChart("#chart-heart-row");
 				
 				var dataCount = dc.dataCount("#dc-data-count");
 				var dataTable = dc.dataTable("#dc-table-graph");
@@ -858,6 +867,9 @@ include_once "checkAccess.php";
                 var nurseDim = ndx.dimension(function(d) {return d.NurseAction});
 				var nurseGroup = nurseDim.group();
 				
+                var heartDim = ndx.dimension(function(d) {return d.fScoreCat});
+				var heartGroup = heartDim.group();
+                
 				var runDim = ndx.dimension(function(d) { return [+d.HealthyNum, +d.HabitsNum]; });
 				var runGroup = runDim.group();
 				
@@ -1038,6 +1050,25 @@ include_once "checkAccess.php";
 				nurseRowChart.renderlet(function(chart) {
 					dc.events.trigger(function() {
 						document.getElementById("nurseFilters").innerText = nurseRowChart.filters();
+					});
+				});
+                
+                heartRowChart
+					.width(250).height(200)
+					.dimension(heartDim)
+					.group(heartGroup)
+					.elasticX(true)
+					.renderLabel(true)
+					.ordinalColors(["#aec7e8"])
+					.xAxis().ticks(4);
+				heartRowChart.on("filtered", function(c, f){
+					var filteredDim = ndx.dimension(function(d) {return d.NRIC});
+                    var allRes = filteredDim.top(Infinity);
+                    updateAllGraph(allRes);
+                });
+				heartRowChart.renderlet(function(chart) {
+					dc.events.trigger(function() {
+						document.getElementById("heartFilters").innerText = heartRowChart.filters();
 					});
 				});
 
