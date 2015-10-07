@@ -8,18 +8,8 @@ include 'PHPExcelLibrary/PHPExcel/IOFactory.php';
 ini_set('memory_limit', '2048M');
 set_time_limit('3600');
 
-function loadData($tmpName) {
-    $myFile = 'C:/wamp/www/FYP1/PDashboard/KTPHTest.db';
 
-    if (file_exists($myFile)) {
-        $newFileName = 'KTPHBackup.' . date("MdYGi") . '.db';
-        $newfile = 'C:/wamp/www/FYP1/PDashboard/' . $newFileName;
-
-        if (!copy($myFile, $newfile)) {
-            echo "failed to copy the file";
-            exit;
-        }
-    }
+function createTable() {
 
     //If KTPHTest.db is not exist
     class MyDB extends SQLite3 {
@@ -33,16 +23,28 @@ function loadData($tmpName) {
     $db = new MyDB();
 
     if (!$db) {
-        echo $db->lastErrorMsg();
+        $response = $db->lastErrorMsg();
         exit;
     }
+    
 
     //echo 'Database created successfully';
+
+    $myFile = "C:/wamp/www/FYP1/PDashboard/KTPHTest.db";
+
+    $newFileName = 'KTPHBackup.' . date("MdYGi") . '.db';
+    $newfile = 'C:/wamp/www/FYP1/PDashboard/' . $newFileName;
+
+    if (!copy($myFile, $newfile)) {
+        echo "failed to copy the file";
+        exit;
+    }
 
     $sqlDelete = <<<EOF
     DROP TABLE IF EXISTS ScreeningRecords;
     DROP TABLE IF EXISTS Demographics;  
-    DROP TABLE IF EXISTS GeoCode; 
+    DROP TABLE IF EXISTS SGPostal;    
+    DROP TABLE IF EXISTS GeoCode;
 EOF;
 
     $result = $db->exec($sqlDelete);
@@ -52,7 +54,9 @@ EOF;
         exit;
     }
     //echo 'Table deleted successfully';
+    $db->close();
 
+    
     $sqlTable = <<<EOF
         CREATE TABLE IF NOT EXISTS Demographics
         (NRIC VARCHAR(10) PRIMARY KEY NOT NULL ,
@@ -75,8 +79,8 @@ EOF;
         L_Glucose_f FLOAT,
         L_Trig_f FLOAT,
         L_Chol_f FLOAT,
-        L_HDL_f FLOAT,
-        L_LDL_f FLOAT,
+        L_HDL_f	FLOAT,
+        L_LDL_f	FLOAT,
         M_Systolic_1st FLOAT,
         M_Diastolic_1st FLOAT,
         M_Weight FLOAT,
@@ -117,6 +121,12 @@ EOF;
         exit;
     }
     //echo 'Table created successfully';
+    $db->close();
+}
+
+function loadData($tmpName) {
+    createTable();
+
     //Read file
     try {
         //Cache Setting
@@ -145,14 +155,14 @@ EOF;
 
         //Validate: Number of sheets.
         if (sizeof($worksheetNames) != 3) {
-            $_SESSION["FileValidation"] = 'File must contain 3 worksheets!';
-            header("Location: dataprocessing.php");
+            $_SESSION["response"] = 'File must contain 3 worksheets!';
+            header("Location: fileUploadUI.php");
             exit;
         } else {
             for ($i = 0; $i <= 2; $i++) {
                 if ($worksheetNames[0] != 'Demographics' || $worksheetNames[1] != 'Screening Records' || $worksheetNames[2] != 'SGPostal') {
                     $_SESSION["response"] = 'File must contain 3 worksheet:Demographics, Screening Records, SGPostal!';
-                    header("Location: dataprocessing.php");
+                    header("Location: fileUploadUI.php");
                     exit;
                 }
             }
@@ -161,13 +171,14 @@ EOF;
         $_SESSION["worksheets"] = array_values($worksheetNames);
 
         /* Per Worksheet */
-        foreach ($worksheetNames as $sheetName) {
+        foreach ($worksheetNames as $keyWorksheet => $sheetName) {
 
             $objPHPExcel->setActiveSheetIndexByName($sheetName);
             $sheet = $objPHPExcel->getActiveSheet();
             $rowData = $sheet->toArray(null, true, true, true);
 
             /* Per Row */
+
             if ($sheetName == 'Demographics') {
                 $count = 0;
                 $db->exec('begin');
@@ -178,31 +189,25 @@ EOF;
                         //Validate: Number of column
                         if (sizeof($valueRowArray) != 11) {
                             $_SESSION["FileValidation"] = 'Demographics worksheet must have 11 columns!';
-                            header("Location: dataprocessing.php");
+                            header("Location: fileUploadUI.php");
                             exit;
                         }
                     } else {
                         $rowObject = array_values($valueRowArray);
 
-                        $rowObject[2] = preg_replace("/[^0-9a-z]+/i", " ", $rowObject[2]);
+                        $rowObject[2] = preg_replace("/[^0-9a-z]+/i", "", $rowObject[2]);
 
                         //Transform:Address to Postal Code
                         $Postal = substr($rowObject[2], -6);
 
                         if (!ctype_digit($Postal)) {
                             $Postal = str_replace($Postal[0], "0", $Postal);
-
-                            /*
-                              if (!ctype_digit($Postal)) {
-                              $_SESSION["Transformation"] = 'Transformation fail!';
-                              }
-                             */
                         }
 
                         array_push($rowObject, $Postal);
 
-
                         //Load Data: 
+
                         $value = implode("','", $rowObject);
                         $sqlquery = <<<EOF
                         INSERT OR IGNORE INTO Demographics VALUES ( '$value');
@@ -235,7 +240,7 @@ EOF;
             }
 
 
-            if ($sheetName === 'Screening Records') {
+            if ($sheetName == 'Screening Records') {
                 $count = 0;
                 $db->exec('begin');
 
@@ -245,7 +250,7 @@ EOF;
                         //Validate: Number of column
                         if (sizeof($valueRowArray) != 25) {
                             $_SESSION["FileValidation"] = 'Screening Records worksheet must have 25 columns!';
-                            header("Location: dataprocessing.php");
+                            header("Location: fileUploadUI.php");
                             exit;
                         }
                     } else {
@@ -301,11 +306,13 @@ EOF;
                             //Validate: Number of column
                             if (sizeof($valueRowArray) != 8) {
                                 $_SESSION["FileValidation"] = 'SGPostal worksheet must have 8 columns!';
-                                header("Location: dataprocessing.php");
+                                header("Location: fileUploadUI.php");
                                 exit;
                             }
                         } else {
                             $rowObject = array_values($valueRowArray);
+
+
 
                             //Load Data: 
                             $value = implode("','", $rowObject);
@@ -326,31 +333,21 @@ EOF;
                     }
 
                     $db->exec('commit');
-                }
 
-                $sqlSGPostalRowNew = <<<EOF
+                    $sqlSGPostalRow = <<<EOF
                 SELECT Count(*) as count FROM SGPostal;        
 EOF;
-                $rowsNew = $db->query($sqlSGPostalRowNew);
-                $rowNew = $rowsNew->fetchArray();
-                $loadRecordNew = $rowNew['count'];
+                    $rows = $db->query($sqlSGPostalRow);
+                    $row = $rows->fetchArray();
+                    $loadRecord = $row['count'];
 
-                $_SESSION['Postal'] = $loadRecordNew;
+
+                    $_SESSION["Postal"] = $loadRecord;
+                }
             }
         }
 
         //Geo Coding
-        $filename = 'C:/wamp/www/FYP1/PDashboard/GeoCodeError.txt';
-
-        if (file_exists($filename)) {
-            unlink($filename);
-            $GeoCodeError = fopen("C:/wamp/www/FYP1/PDashboard/GeoCodeError.txt", "w");
-        } else {
-            $GeoCodeError = fopen("C:/wamp/www/FYP1/PDashboard/GeoCodeError.txt", "w");
-        }
-
-        $GeoErrorReport = array();
-
         $sqlquery = <<<EOF
         CREATE TABLE GeoCode as
         SELECT 
@@ -369,20 +366,17 @@ EOF;
         }
 
         $sqlGeoCodeRow = <<<EOF
-        SELECT NRIC,Address,PostalCode FROM GeoCode WHERE latitude IS NULL;        
+        SELECT PostalCode FROM GeoCode;        
 EOF;
         $returned_set = $db->query($sqlGeoCodeRow);
 
         while ($result = $returned_set->fetchArray()) {
             $PostalCodeGoogle = $result['PostalCode'];
-            $Address = $result['Address'];
-            $NRIC = $result['NRIC'];
-
-            $url = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&components=country:SG&address=Singapore" . urlencode($PostalCodeGoogle);
+            $url = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=" . urlencode($PostalCodeGoogle);
             $resp_json = file_get_contents($url);
             $resp = json_decode($resp_json, true);
 
-            if ($resp['status'] === 'OK') {
+            if ($resp['status'] == 'OK') {
                 $lati = $resp['results'][0]['geometry']['location']['lat'];
                 $longi = $resp['results'][0]['geometry']['location']['lng'];
                 //$formatted_address = $resp['results'][0]['formatted_address'];
@@ -395,40 +389,12 @@ EOF;
                 if (!$GeoCodeResult) {
                     echo $db->lastErrorMsg();
                 }
-            } else {
-                $url = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&components=country:SG&key=AIzaSyCGcZmwlKDt4XipECzUQJP31C1Mp9906h0&address=Singapore" . urlencode($Address);
-                $resp_json = file_get_contents($url);
-                $resp = json_decode($resp_json, true);
-
-                if ($resp['status'] === 'OK') {
-                    $lati = $resp['results'][0]['geometry']['location']['lat'];
-                    $longi = $resp['results'][0]['geometry']['location']['lng'];
-                    //$formatted_address = $resp['results'][0]['formatted_address'];
-
-                    $GeoCodeSql = <<<EOF
-              INSERT INTO GeoCode(latitude,longitude) VALUES('$lati','$longi');
-EOF;
-                    $GeoCodeResult = $db->exec($GeoCodeSql);
-
-                    if (!$GeoCodeResult) {
-                        echo $db->lastErrorMsg();
-                    }
-                } else {
-                    fwrite($GeoCodeError, $NRIC);
-                    fwrite($GeoCodeError, " ");
-                    fwrite($GeoCodeError, $Address);
-                    fwrite($GeoCodeError, "\r\n");
-                    array_push($GeoErrorReport, $Address);
-                }
+            }else{
+                $GeoErrorReport = array();
+                array_push($PostalCodeGoogle, $GeoErrorReport);
+                $_SESSION["GeoErrorReport"] = $GeoErrorReport;
             }
         }
-
-        if (!empty($GeoErrorReport)) {
-            $_SESSION["GeoErrorReport"] = $GeoErrorReport;
-        }
-
-
-        $db->close();
     } catch (Exception $e) {
         die('Error loading file "' . pathinfo($tmpName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
     }
@@ -451,6 +417,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($StartFileUpload != null) {
         $FileUpload = 'File Upload Successful!';
         $_SESSION['FileUpload'] = $FileUpload;
+        header("Location: fileUploadUI.php");
     }
 
 
@@ -476,13 +443,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //upload file
                 if ($valid) {
                     //Call loadData function
+
                     call_user_func('loadData', $tmpName);
                     $targetPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $name;
                     move_uploaded_file($tmpName, $targetPath);
 
+
                     //Redirect 
                     $_SESSION["FileValidation"] = "File Validation Successful!";
-                    header("Location: dataprocessing.php");
+                    header("Location: fileUploadUI.php");
                     exit;
                 }
                 break;
@@ -524,7 +493,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (RuntimeException $e) {
         $FileValidation = $e->getMessage();
         $_SESSION["FileValidation"] = $FileValidation;
-        header("Location: dataprocessing.php");
+        header("Location: fileUploadUI.php");
     }
 }
 ?>
