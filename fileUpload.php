@@ -9,11 +9,11 @@ ini_set('memory_limit', '2048M');
 set_time_limit('3600');
 
 function loadData($tmpName) {
-    $myFile = 'C:/wamp/www/FYP1/PDashboard/KTPHTest.db';
+    $myFile = 'C:/wamp/www/PDashboard/KTPHTest.db';
 
     if (file_exists($myFile)) {
         $newFileName = 'KTPHBackup.' . date("MdYGi") . '.db';
-        $newfile = 'C:/wamp/www/FYP1/PDashboard/' . $newFileName;
+        $newfile = 'C:/wamp/www/PDashboard/' . $newFileName;
 
         if (!copy($myFile, $newfile)) {
             echo "failed to copy the file";
@@ -340,13 +340,13 @@ EOF;
         }
 
         //Geo Coding
-        $filename = 'C:/wamp/www/FYP1/PDashboard/GeoCodeError.txt';
+        $filename = 'C:/wamp/www/PDashboard/GeoCodeError.txt';
 
         if (file_exists($filename)) {
             unlink($filename);
-            $GeoCodeError = fopen("C:/wamp/www/FYP1/PDashboard/GeoCodeError.txt", "w");
+            $GeoCodeError = fopen("C:/wamp/www/PDashboard/GeoCodeError.txt", "w");
         } else {
-            $GeoCodeError = fopen("C:/wamp/www/FYP1/PDashboard/GeoCodeError.txt", "w");
+            $GeoCodeError = fopen("C:/wamp/www/PDashboard/GeoCodeError.txt", "w");
         }
 
         $GeoErrorReport = array();
