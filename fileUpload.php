@@ -192,11 +192,9 @@ EOF;
                         if (!ctype_digit($Postal)) {
                             $Postal = str_replace($Postal[0], "0", $Postal);
 
-                            /*
-                              if (!ctype_digit($Postal)) {
-                              $_SESSION["Transformation"] = 'Transformation fail!';
-                              }
-                             */
+                            if (!ctype_digit($Postal)) {
+                                $Postal = 'Address';
+                            }
                         }
 
                         array_push($rowObject, $Postal);
@@ -326,16 +324,16 @@ EOF;
                     }
 
                     $db->exec('commit');
-                }
 
-                $sqlSGPostalRowNew = <<<EOF
+                    $sqlSGPostalRow = <<<EOF
                 SELECT Count(*) as count FROM SGPostal;        
 EOF;
-                $rowsNew = $db->query($sqlSGPostalRowNew);
-                $rowNew = $rowsNew->fetchArray();
-                $loadRecordNew = $rowNew['count'];
+                    $rows = $db->query($sqlSGPostalRow);
+                    $row = $rows->fetchArray();
+                    $loadRecord = $row['count'];
+                }
 
-                $_SESSION['Postal'] = $loadRecordNew;
+                $_SESSION['Postal'] = $loadRecord;
             }
         }
 
@@ -378,6 +376,10 @@ EOF;
             $Address = $result['Address'];
             $NRIC = $result['NRIC'];
 
+            if ($PostalCodeGoogle === 'Address') {
+                $PostalCodeGoogle = $Address;
+            }
+
             $url = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&components=country:SG&address=Singapore" . urlencode($PostalCodeGoogle);
             $resp_json = file_get_contents($url);
             $resp = json_decode($resp_json, true);
@@ -396,7 +398,7 @@ EOF;
                     echo $db->lastErrorMsg();
                 }
             } else {
-                $url = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&components=country:SG&key=AIzaSyCGcZmwlKDt4XipECzUQJP31C1Mp9906h0&address=Singapore" . urlencode($Address);
+                $url = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&components=country:SG&key=AIzaSyCGcZmwlKDt4XipECzUQJP31C1Mp9906h0&address=Singapore" . urlencode($PostalCodeGoogle);
                 $resp_json = file_get_contents($url);
                 $resp = json_decode($resp_json, true);
 
@@ -477,9 +479,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($valid) {
                     //Call loadData function
                     call_user_func('loadData', $tmpName);
-                    $targetPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $name;
-                    move_uploaded_file($tmpName, $targetPath);
-
+                    //$targetPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $name;
+                    //move_uploaded_file($tmpName, $targetPath);
                     //Redirect 
                     $_SESSION["FileValidation"] = "File Validation Successful!";
                     header("Location: dataprocessing.php");

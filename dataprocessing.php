@@ -582,7 +582,7 @@ session_start();
                 });
 
                 $(".submit").click(function () {
-                    window.location.href = 'home.html';
+                    window.location.href = 'home.php';
                 })
 
 
