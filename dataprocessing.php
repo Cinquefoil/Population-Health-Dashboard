@@ -6,7 +6,8 @@ and open the template in the editor.
 -->
 
 <?php
-session_start();
+include_once "checkSession.php";
+include_once "checkAccess.php";
 ?>
 
 <html>
@@ -135,7 +136,6 @@ session_start();
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -143,37 +143,39 @@ session_start();
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <!-- <a class='navbar-brand' href='#'><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>-->
                 </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" style="font-size:12px">
                         <li>
-                            <a href="home.html"><span class="glyphicon glyphicon-th-large" style="padding:0px" aria-hidden="true"></span> Screening Result</a>
+                            <a href="home.php"><span class="glyphicon glyphicon-th-large" style="padding:0px" aria-hidden="true"></span> Screening Result</a>
                         </li>
                         <li>
-                            <a href="classificationTry1.html"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
+                            <a href="classificationTry1.php"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Patient Journey</a>
+                            <a href="patientjourney.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Patient Journey</a>
                         </li>
                         <li>
-                            <a href="analysis.html"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repeat Analysis</a>
+                            <a href="analysis.php"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repeat Analysis</a>
                         </li>
                         <li>
-                            <a href="geospatial.html"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Geospatial Intelligence</a>
+                            <a href="geospatial.php"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Geospatial Intelligence</a>
                         </li>
-                        <li>                        
-                            <a href="dataprocessing.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-upload" style="padding:0px" aria-hidden="true"></span>Data Processing</a>
-                        </li>
+                        <?php
+                        if ($_SESSION['access'] == "admin") {
+                            echo '
+                            <li>
+                                <a href="dataprocessing.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Data Processing</a>
+                            </li>
+                            ';
+                        }
+                        ?>
                         <li>
-                            <!-- <a href="#">Logout</a>-->
+                            <a href="logout.php"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout</a>
                         </li>
                     </ul>
                 </div>
-                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.container -->
         </nav>
 
         <br/>
@@ -301,7 +303,7 @@ session_start();
                                     ?>
                                     <h4>Click To Download Error Report:</h4>
                                 </div>
-                                <?php unset($_SESSION['GeoErrorReport']); ?>
+        <?php unset($_SESSION['GeoErrorReport']); ?>
                                 <a href="GeoCodeError.txt" download>
                                     <img border="0" src="images/download.jpg" width="100" height="100">
                                 </a>
