@@ -168,20 +168,85 @@ dc_leaflet.markerChart = function(parent, chartGroup) {
     var _location = function(d) {
         return _chart.keyAccessor()(d);
     };
-
+//Customise for KTPH
     var _marker = function(d,map) {
-        var marker = new L.Marker(_chart.toLocArray(_chart.locationAccessor()(d)),{
+        var ratio = parseInt(d.value.ratio);
+        var calRatio = d.value.count/ratio * 100;
+        if (calRatio < 30 ){
+            var marker = new L.Marker(_chart.toLocArray(_chart.locationAccessor()(d)),{
             title: _chart.renderTitle() ? _chart.title()(d) : '',
+            //title: "haha",
             alt: _chart.renderTitle() ? _chart.title()(d) : '',
-            icon: _icon(),
+            icon: _icon1(),
             clickable: _chart.renderPopup() || (_chart.brushOn() && !_filterByArea),
             draggable: false
-        });
+            });
+        } else if (calRatio < 70 ){
+            var marker = new L.Marker(_chart.toLocArray(_chart.locationAccessor()(d)),{
+            title: _chart.renderTitle() ? _chart.title()(d) : '',
+            alt: _chart.renderTitle() ? _chart.title()(d) : '',
+            icon: _icon2(),
+            clickable: _chart.renderPopup() || (_chart.brushOn() && !_filterByArea),
+            draggable: false
+            });
+        } else {
+            var marker = new L.Marker(_chart.toLocArray(_chart.locationAccessor()(d)),{
+            title: _chart.renderTitle() ? _chart.title()(d) : '',
+            alt: _chart.renderTitle() ? _chart.title()(d) : '',
+            icon: _icon3(),
+            clickable: _chart.renderPopup() || (_chart.brushOn() && !_filterByArea),
+            draggable: false
+            });
+        }
         return marker;
     };
+    
+    var peopleIcon1 = L.icon({
+    iconUrl: 'images/people1.svg',
+    shadowUrl: 'images/marker-shadow.png',
 
-    var _icon = function(d,map) {
-        return new L.Icon.Default();
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    
+    var peopleIcon2 = L.icon({
+    iconUrl: 'images/people2.svg',
+    shadowUrl: 'images/marker-shadow.png',
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    
+    var peopleIcon3 = L.icon({
+    iconUrl: 'images/people3.svg',
+    shadowUrl: 'images/marker-shadow.png',
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    var _icon1 = function(d,map) {
+        //return new L.Icon.Default();
+        return peopleIcon1;
+    };
+    
+    var _icon2 = function(d,map) {
+        //return new L.Icon.Default();
+        return peopleIcon2;
+    };
+    
+    var _icon3 = function(d,map) {
+        //return new L.Icon.Default();
+        return peopleIcon3;
     };
 
     var _popup = function(d,marker) {
@@ -226,6 +291,7 @@ dc_leaflet.markerChart = function(parent, chartGroup) {
         var addList=[];
         groups.forEach(function(v,i) {
             var key = _chart.keyAccessor()(v);
+            //console.log(v.value);
             var marker = null;
             if (!_rebuildMarkers && key in _markerList) {
                 marker = _markerList[key];

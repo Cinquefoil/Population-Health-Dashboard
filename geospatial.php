@@ -26,7 +26,7 @@ include_once "checkAccess.php";
         
         <!-- Leaflet JavaScript -->
         <script type="text/javascript" src="js/leaflet.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.js"></script>
+        <script type="text/javascript" src="js/d3-tip.js"></script>
 
         <script type="text/javascript" src="js/leaflet.markercluster.js"></script>
         <script type="text/javascript" src="js/dc.leaflet.js"></script>
@@ -112,10 +112,7 @@ include_once "checkAccess.php";
 				box-shadow: 2px 2px 2px #cccccc;
 				-moz-box-shadow: 2px 2px 2px #cccccc;
 			}
-            <!--Leaflet style-->
 
-            
-            <!--end Leaflet style-->
         </style>
     </head>
     
@@ -133,7 +130,7 @@ include_once "checkAccess.php";
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav" style="font-size:12px">
                         <li>
-                            <a href="home.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-th-large" style="padding:0px" aria-hidden="true"></span> Screening Result</a>
+                            <a href="home.php"><span class="glyphicon glyphicon-th-large" style="padding:0px" aria-hidden="true"></span> Screening Result</a>
                         </li>
                         <li>
                             <a href="classificationTry1.php"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
@@ -145,7 +142,7 @@ include_once "checkAccess.php";
                             <a href="analysis.php"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repeat Analysis</a>
                         </li>
                         <li>
-                            <a href="geospatial.php"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Geospatial Intelligence</a>
+                            <a href="geospatial.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Geospatial Intelligence</a>
                         </li>
 						<?php
 						if($_SESSION['access'] == "admin"){
@@ -344,7 +341,7 @@ include_once "checkAccess.php";
 							<div class="clearfix"></div>
 						</div>
 					</li>
-					<li>  
+					<!--<li>  
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-foot-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Diabetes Foot">
 							<strong>Diabetes Foot</strong>
 							<a class="reset" href="javascript:footChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
@@ -357,7 +354,7 @@ include_once "checkAccess.php";
 							<a class="reset" href="javascript:livingRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
 							<div class="clearfix"></div>
 						</div>
-					</li>
+					</li>-->
 					<li>  
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-smoking-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Smoking">
 							<strong>Smoking</strong>
@@ -365,7 +362,7 @@ include_once "checkAccess.php";
 							<div class="clearfix"></div>
 						</div>
 					</li>
-					<li>  
+					<!--<li>  
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-backache-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Backache">
 							<strong>Backache (Taxi)</strong>
 							<a class="reset" href="javascript:backacheChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
@@ -385,16 +382,26 @@ include_once "checkAccess.php";
 							<a class="reset" href="javascript:sleepRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
 							<div class="clearfix"></div>
 						</div>
+					</li>-->
+                    <li>
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="demo1" style="background:#f8f7f7;margin:-15px 5px 25px 5px;width:630px" data-item-id="1" data-item-tags="All, Public Health Screening Penetration Rate">
+							<strong>Public Health Screening Penetration Rate</strong>
+						</div>
+					</li>
+                    <li>
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="demo2" style="background:#f8f7f7;margin:-15px 5px 25px 5px;width:630px" data-item-id="1" data-item-tags="All, Public Health Status Ratio">
+							<strong>Public Health Status Ratio</strong>
+						</div>
 					</li>
        
 				</ul>
 			</div>			
 		</section>
-        
+        <!--
           <div id="demo1">
             <strong>GeoMap</strong>
 
-          </div>
+          </div>-->
         
 		<div id="footer" style="background-color:#f8f7f7">			
 			<b>
@@ -507,6 +514,7 @@ include_once "checkAccess.php";
 				sleepRowChart = dc.rowChart("#chart-sleep-row");
                 
                 marker = dc_leaflet.markerChart("#demo1");
+                marker2 = dc_leaflet.markerChart("#demo2");
 
 				var dataCount = dc.dataCount("#dc-data-count");
 				var dataTable = dc.dataTable("#dc-table-graph");
@@ -624,7 +632,61 @@ include_once "checkAccess.php";
                 
                 //Leaflet Dim//
                 var facilities = ndx.dimension(function(d) { return d.Geo; });
-                var facilitiesGroup = facilities.group().reduceCount();
+                //var facilitiesGroup = facilities.group().reduceCount();
+                var facilitiesGroup = facilities.group().reduce(
+					function (p, v) {
+						++p.count;
+                        p.ratio = v.age40plus;
+                        p.postalCode = v['Addr_Postal.Code'];
+						return p;
+					},
+					function (p, v) {
+						--p.count;
+                        p.ratio = v.age40plus;
+                        p.postalCode = v['Addr_Postal.Code'];
+						return p;
+					},
+					function () {
+                        return {count: 0, ratio: 0, postalCode: 0};
+					}
+				);
+                
+                var facilities2 = ndx.dimension(function(d) { return d.Geo; });
+                var facilities2Group = facilities2.group().reduce(
+					function (p, v) {
+						++p.count;
+                        p.ratio = v.age40plus;
+                        p.postalCode = v['Addr_Postal.Code'];
+						if (v.healthResult === "Healthy/PosHabits"){
+							p.HP++;
+						}else if (v.healthResult === "Healthy/NegHabits"){
+							p.HN++;
+						}else if (v.healthResult === "Unhealthy/PosHabits"){
+							p.UP++;
+						}else {
+							p.UN++;
+						}
+						return p;
+					},
+					function (p, v) {
+						--p.count;
+                        p.ratio = v.age40plus;
+                        p.postalCode = v['Addr_Postal.Code'];
+						if (v.healthResult === "Healthy/PosHabits"){
+							p.HP--;
+						}else if (v.healthResult === "Healthy/NegHabits"){
+							p.HN--;
+						}else if (v.healthResult === "Unhealthy/PosHabits"){
+							p.UP--;
+						}else {
+							p.UN--;
+						}
+						return p;
+					},
+					function () {
+						return {count: 0, HP: 0, HN: 0, UP: 0, UN: 0, ratio: 0, postalCode: 0};
+					}
+				);
 				//END Leaflet Dim//
                 
 				/********************************************************
@@ -1014,11 +1076,28 @@ include_once "checkAccess.php";
                 marker
                   .dimension(facilities)
                   .group(facilitiesGroup)
+                  .valueAccessor(function (p){
+                      var numberFormat = d3.format('.2f');
+                      return d3.format("%")(p.value.count / p.value.ratio);
+                  })
                   .width(600)
                   .height(400)
                   .center([1.342860,103.837361]) 
                   .zoom(11)
-                  .cluster(true);
+                  .cluster(true);  
+
+                marker2
+                  .dimension(facilities2)
+                  .group(facilities2Group)
+                  .valueAccessor(function (p){
+                      var numberFormat = d3.format('.2f');
+                      return d3.format("%")(p.value.UN / p.value.ratio);
+                  })
+                  .width(600)
+                  .height(400)
+                  .center([1.342860,103.837361]) 
+                  .zoom(11)
+                  .cluster(false);
                 //END Leaflet chart//
 
 				dc.renderAll();

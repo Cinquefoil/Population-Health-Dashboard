@@ -199,7 +199,7 @@ include_once "checkAccess.php";
                     </ul>
                     <fieldset>
                         <h2 class="fs-title">File Upload</h2>
-                        <h3 class="fs-subtitle">Please upload excel file.</h3>
+                        <h3 class="fs-subtitle">Please upload data file.</h3>
 
                         <br/>
                         <form id="uploadForm" action="fileUpload.php" method="post" enctype="multipart/form-data">
@@ -236,7 +236,7 @@ include_once "checkAccess.php";
                         } else {
                             ?>
                             <h2 class="fs-title">File Validation</h2>
-                            <div class="alert alert-success" role="alert"><h3>You have uploaded an excel file!</h3></div>
+                            <div class="alert alert-success" role="alert"><h3>You have uploaded an data file!</h3></div>
                             <input type="button" class="next action-button" value="Previous" id="FreshPage" />
                             <input type="button" name="next" class="next action-button" value="Next" id="Next" />
                             <?php
@@ -247,14 +247,29 @@ include_once "checkAccess.php";
                     <fieldset>
                         <h2 class="fs-title">File Validation</h2>
                         <div class="alert alert-success" role="alert">
-                            <div align="left">
-                                <h3>
-                                    You have uploaded the following 3 worksheets:<br/>
-                                    Demographics : 11 Columns;<br/>
-                                    Screening Records : 25 Columns;<br/>
-                                    SGPostal :  8 Columns;
-                                </h3>
-                            </div>
+                            <?php
+                            if (empty($_SESSION['CSV'])) {
+                                ?>
+                                <div align="left">
+                                    <h3>
+                                        You have uploaded the following 3 worksheets:<br/>
+                                        Demographics : 11 Columns;<br/>
+                                        Screening Records : 25 Columns;<br/>
+                                        SGPostal :  8 Columns;
+                                    </h3>
+                                </div>
+                                <?php
+                            } else {
+                                ?>
+                                <div align="left">
+                                    <h3>
+                                        You have uploaded the following worksheet:<br/>
+                                        KTPH ALL DATA : 80 Columns;
+                                    </h3>
+                                </div>
+                                <?php
+                            }
+                            ?>      
                         </div>
                         <input type="button" name="previous" class="previous action-button" value="Previous" />
                         <input type="button" name="next" class="next action-button" value="Next" id="FileValidationNext" />
@@ -291,19 +306,17 @@ include_once "checkAccess.php";
                                 <div align="left">
                                     <h4>Warning:Fail to find the following location:</h4>
                                     <?php
-                                    foreach ($GeoErrorReport as $Address) {
-                                        ?>
-                                        <h5>
-                                            <?php
-                                            echo $Address;
-                                            ?>
-                                        </h5>
-                                        <?php
+                                    $file = fopen("GeoCodeError.txt", "r");
+
+                                    while (!feof($file)) {
+                                        echo fgets($file) . "<br />";
                                     }
+
+                                    fclose($file);
                                     ?>
                                     <h4>Click To Download Error Report:</h4>
                                 </div>
-        <?php unset($_SESSION['GeoErrorReport']); ?>
+
                                 <a href="GeoCodeError.txt" download>
                                     <img border="0" src="images/download.jpg" width="100" height="100">
                                 </a>
@@ -312,6 +325,7 @@ include_once "checkAccess.php";
                             <input type="button" name="previous" class="previous action-button" value="Previous" />
                             <input type="button" name="next" class="next action-button" value="Next" id="GeoCodeNext" />
                             <?php
+                            unset($_SESSION['GeoErrorReport']);
                         } else {
                             ?>
                             <div class="alert alert-success" role="alert"><h3>Geo Code has been generated successfully!</h3></div>
@@ -324,14 +338,29 @@ include_once "checkAccess.php";
                     <fieldset>
                         <h2 class="fs-title">Complete</h2>
                         <div class="alert alert-success" role="alert">
-                            <div align="left">
-                                <h3>
-                                    Your data has been successfully loaded to database:<br/>
-                                    Demographics : <?php echo $_SESSION['Demographic']; ?> Records;<br/>
-                                    Screening Records : <?php echo $_SESSION['Screening']; ?> Records;<br/>
-                                    SGPostal :  <?php echo $_SESSION['Postal']; ?> Records;
-                                </h3>
-                            </div>
+                            <?php
+                            if (empty($_SESSION["CSV"])) {
+                                ?>
+                                <div align="left">
+                                    <h4>Your data has been successfully loaded to database:</h4>
+                                    <h3>
+                                        Demographics : <?php echo $_SESSION['Demographic']; ?> Records out of <?php echo $_SESSION['DemographicCount']; ?> Records;<br/>
+                                        Screening Records : <?php echo $_SESSION['Screening']; ?> Records out of <?php echo $_SESSION['ScreeningCount']; ?> Records;<br/>
+                                        SGPostal :  <?php echo $_SESSION['Postal']; ?> Records out of <?php echo $_SESSION['PostalCount']; ?> Records;
+                                    </h3>
+                                </div>
+                                <?php
+                            } else {
+                                ?>
+                                <div align="left">
+                                    <h4>Your data has been successfully loaded to database:</h4>
+                                    <h3>
+                                        KTPH ALL DATA : 6744 Records;
+                                    </h3>
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </div>
 
                         <input type="button" name="previous" class="previous action-button" value="Previous" />
@@ -342,6 +371,7 @@ include_once "checkAccess.php";
 
                 <?php
                 unset($_SESSION['FileUpload']);
+                unset($_SESSION['CSV']);
             }
             ?>
 
