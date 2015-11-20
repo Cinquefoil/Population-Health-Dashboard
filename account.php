@@ -45,29 +45,7 @@ include_once "checkSession.php";
 			}
         </style>
 		
-		<script>
-			$(document).ready(function(){
-				$(".js-ajax-php-json").click(function(){
-				var data = {
-				"action": "test"
-				};
-				data = $(this).serialize() + "&" + $.param(data);
-				$.ajax({
-				type: "POST",
-				dataType: "json",
-				url: "response.php", //Relative or absolute path to response.php file
-				data: data,
-				success: function(data) {
-				$(".the-return").html(
-				"Favorite beverage: " + data["favorite_beverage"] + "<br />Favorite restaurant: " + data["favorite_restaurant"] + "<br />Gender: " + data["gender"] + "<br />JSON: " + data["json"]
-				);
-				alert("Form submitted successfully.\nReturned json: " + data["json"]);
-				}
-				});
-				return false;
-				});
-			});
-			
+		<script>		
 			function getDetails(value){
 				$.ajax({
 					url: "accountgetdetails.php",
@@ -78,9 +56,6 @@ include_once "checkSession.php";
 						document.getElementById("RetrievedName").value = json.name;
 						document.getElementById("RetrievedEmail").value = json.email;
 						document.getElementById("RetrievedRole").value = json.role;
-					},
-					error: function(){
-						alert("hey");
 					}
 				});
 			}
@@ -140,116 +115,120 @@ include_once "checkSession.php";
 			<div class="gradientBoxesWithOuterShadows" align="center" style="float:left;height:280px;width:800px;margin:0px 10px 0px 0px">
 				<br />
 
-				<table style="font-weight:bold">
-					<tr>
-						<th>
-							<div style="text-align:center">Existing Users</div>
-							<br />
-						</th>
-						<th colspan="2">
-							<div style="text-align:center">User Details</div>
-							<br />
-						</th>
-					</tr>
-					<tr>
-						<td rowspan="4" width="350px">
-							<select id="listbox" name="listbox" class="form-control" multiple="multiple" size="10" style="width:280px" onChange="getDetails(this.value)">
-								<?php
-									$query = 'SELECT name FROM account';
-									$result = mysqli_query($mysqli, $query);
-									
-									while($row = mysqli_fetch_assoc($result)){
-										echo '<option value="' . $row['name'] . '">' . $row['name'] . '</option>';
-									}
-								?>
-							</select>
-						</td>
-						<td width="50px" >Name</td>
-						<td width="350px">
-							<div class="col-md-12">
-								<input id="RetrievedName" name="Name" type="text" class="form-control">
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Email</td>
-						<td>
-							<div class="col-md-12">
-								<input id="RetrievedEmail" name="Email" type="text" class="form-control">
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Role</td>
-						<td>
-							<div class="col-md-8">
-								<select id="RetrievedRole" name="Role" class="form-control">
-								<option value="Admin">Admin</option>
-								<option value="Senior Management">Senior Management</option>
-								<option value="Operation">Operation</option>
-							</select>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<div align="center">
-								<button id="Update" name="Update" class="btn btn-primary">Update</button>
-								<button id="Delete" name="Delete" class="btn btn-primary">Delete</button>
-							</div>
-						</td>
-					</tr>
-				</table>
+				<form action="accountupdatedelete.php" method="post">
+					<table style="font-weight:bold">
+						<tr>
+							<th>
+								<div style="text-align:center">Existing Users</div>
+								<br />
+							</th>
+							<th colspan="2">
+								<div style="text-align:center">User Details</div>
+								<br />
+							</th>
+						</tr>
+						<tr>
+							<td rowspan="4" width="350px">
+								<select id="listbox" name="listbox" class="form-control" multiple="multiple" size="10" style="width:280px" onChange="getDetails(this.value)">
+									<?php
+										$query = 'SELECT name FROM account';
+										$result = mysqli_query($mysqli, $query);
+										
+										while($row = mysqli_fetch_assoc($result)){
+											echo '<option value="' . $row['name'] . '">' . $row['name'] . '</option>';
+										}
+									?>
+								</select>
+							</td>
+							<td width="50px" >Name</td>
+							<td width="350px">
+								<div class="col-md-12">
+									<input id="RetrievedName" name="RetrievedName" type="text" class="form-control">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td>
+								<div class="col-md-12">
+									<input id="RetrievedEmail" name="RetrievedEmail" type="text" class="form-control" readonly>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Role</td>
+							<td>
+								<div class="col-md-8">
+									<select id="RetrievedRole" name="RetrievedRole" class="form-control">
+									<option value="Admin">Admin</option>
+									<option value="Senior Management">Senior Management</option>
+									<option value="Operation">Operation</option>
+								</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div align="center">
+									<input type="submit" id="Update" name="Update" class="btn btn-primary" value="Update"/>
+									<input type="submit" id="Delete" name="Delete" class="btn btn-primary" value="Delete"/>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
 				
 				<br />
 			</div>
 			
 			<div class="gradientBoxesWithOuterShadows" align="center" style="float:right;height:280px;width:500px;margin:0px 15px 0px 10px">
 				<br />
-
-				<table style="font-weight:bold">
-					<tr>
-						<th colspan="2">
-							<div style="text-align:center">Create New User</div>
-							<br />
-						</th>
-					</tr>
-					<tr>
-						<td width="50px" style="padding:11px 0px 11px 0px">Name</td>
-						<td width="350px">
-							<div class="col-md-12">
-								<input id="Name" name="Name" type="text" class="form-control">
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td style="padding:10px 0px 10px 0px">Email</td>
-						<td>
-							<div class="col-md-12">
-								<input id="Email" name="Email" type="text" class="form-control">
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td style="padding:11px 0px 11px 0px">Role</td>
-						<td>
-							<div class="col-md-8">
-								<select id="Role" name="Role" class="form-control">
-								<option value="Admin">Admin</option>
-								<option value="Senior Management">Senior Management</option>
-								<option value="Operation">Operation</option>
-							</select>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2" style="padding:13px 0px 13px 0px">
-							<div align="center">
-								<button id="Create" name="Create" class="btn btn-primary">Create</button>
-							</div>
-						</td>
-					</tr>
-				</table>
+				
+				<form action="accountcreate.php" method="post">
+					<table style="font-weight:bold">
+						<tr>
+							<th colspan="2">
+								<div style="text-align:center">Create New User</div>
+								<br />
+							</th>
+						</tr>
+						<tr>
+							<td width="50px" style="padding:13px 0px 13px 0px">Name</td>
+							<td width="350px">
+								<div class="col-md-12">
+									<input id="Name" name="Name" type="text" class="form-control">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding:13px 0px 13px 0px">Email</td>
+							<td>
+								<div class="col-md-12">
+									<input id="Email" name="Email" type="text" class="form-control">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding:13px 0px 13px 0px">Role</td>
+							<td>
+								<div class="col-md-8">
+									<select id="Role" name="Role" class="form-control">
+									<option value="Admin">Admin</option>
+									<option value="Senior Management">Senior Management</option>
+									<option value="Operation">Operation</option>
+								</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="padding:6px 0px 6px 0px">
+								<div align="center">
+									<input type="submit" id="Create" name="Create" class="btn btn-primary" value="Create"/>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
 				
 				<br />
 			</div>
