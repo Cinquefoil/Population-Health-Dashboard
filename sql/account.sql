@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2015 at 01:21 PM
+-- Generation Time: Nov 20, 2015 at 04:37 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -27,19 +27,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `account` (
-  `username` varchar(10) NOT NULL,
-  `password` varchar(10) NOT NULL,
-  `role` varchar(10) NOT NULL
+  `name` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `role` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`username`, `password`, `role`) VALUES
-('ktph', 'pass', 'admin'),
-('bastari', 'pass', 'senior'),
-('nurse', 'pass', 'operation');
+INSERT INTO `account` (`name`, `email`, `role`, `password`) VALUES
+('Bastari Irwan', 'irwan.bastari@alexandrahealth.com.sg', 'Senior Management', 'ktph'),
+('Justin Tan Lien Zhen', 'tan.justin.lz@alexandrahealth.com.sg', 'Admin', 'ktph'),
+('Ken Tham Runjie', 'tham.ken.r@alexandrahealth.com.sg', 'Admin', 'ktph'),
+('Eric Tan', 'tan.eric.pl@alexandrahealth.com.sg', 'Admin', 'ktph'),
+('Admin', 'admin@email.com', 'Admin', 'ktph'),
+('Nurse', 'nurse@email.com', 'Operation', 'ktph');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

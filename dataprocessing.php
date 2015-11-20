@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
 <?php
 include_once "checkSession.php";
 include_once "checkAccess.php";
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,9 +25,6 @@ include_once "checkAccess.php";
         <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
-
-
-
 
         <!--File Upload-->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -70,70 +61,8 @@ include_once "checkAccess.php";
                 border-bottom:2px #FFF solid;
             }
         </style>
-        <!-- style for Heat-Box -->
-        <style>
-            .heat-box {
-                stroke: #E6E6E6;
-                stroke-width: 2px;
-            }
-        </style>
-        <!-- END style for Heat-Box -->
-        <!-- style for Map -->
-        <style type="text/css">
-            svg text {
-                fill: black;
-            }
-
-            #map{
-                width: 550px;
-                height: 400px;
-                margin: 0;
-                padding: 0;
-            }
-        </style>
-        <!-- END style for Map -->
-        <!-- style for Stratification Number Display -->        
-        <style>
-            #tableNumDisplay1 td{
-                border: 5px solid #98bf21;
-            }
-            #numboxHP{
-                background: #1f77b4;
-                width: 80px;
-                font-size: 18px;
-                text-align: center;
-                padding-bottom: 20px;
-                height: 25px;
-            }
-            #numboxUP{
-                background: #2ca02c;
-                width: 80px;
-                font-size: 18px;
-                text-align: center;
-                padding-bottom: 20px;
-                height: 30px;
-            }
-            #numboxHN{
-                background: #ff7f0e;
-                width: 80px;
-                font-size: 18px;
-                text-align: center;
-                padding-bottom: 20px;
-                height: 40px;
-            }
-            #numboxUN{
-                background: #d62728;
-                width: 80px;
-                font-size: 18px;
-                text-align: center;
-                padding-bottom: 20px;
-                height: 86px;
-            }
-            <!-- END style for Stratification Number Display -->
-        </style>
     </head>
     <body>
-        <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -162,11 +91,14 @@ include_once "checkAccess.php";
                             <a href="geospatial.php"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Geospatial Intelligence</a>
                         </li>
                         <?php
-                        if ($_SESSION['access'] == "admin") {
+                        if ($_SESSION['role'] == "Admin") {
                             echo '
                             <li>
                                 <a href="dataprocessing.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Data Processing</a>
                             </li>
+							<li>
+								<a href="account.php"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> User Account</a>
+							</li>
                             ';
                         }
                         ?>
@@ -177,7 +109,6 @@ include_once "checkAccess.php";
                 </div>
             </div>
         </nav>
-
         <br/>
         <br/>
         <br/>
@@ -368,20 +299,16 @@ include_once "checkAccess.php";
                     </fieldset>
                 </div>
 
-
                 <?php
                 unset($_SESSION['FileUpload']);
                 unset($_SESSION['CSV']);
             }
             ?>
 
-
-
             <!-- jQuery -->
             <script src="http://thecodeplayer.com/uploads/js/jquery-1.9.1.min.js" type="text/javascript"></script>
             <!-- jQuery easing plugin -->
             <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
-
             <script>
                 $("#inputFile").fileinput({
                     showUpload: true,
@@ -401,13 +328,10 @@ include_once "checkAccess.php";
             </script>
 
             <script>
-
                 //jQuery time
                 var current_fs, next_fs, previous_fs; //fieldsets
                 var left, opacity, scale; //fieldset properties which we will animate
                 var animating; //flag to prevent quick multi-click glitches
-
-
 
                 $("#Next").click(function () {
                     if (animating)
@@ -416,7 +340,6 @@ include_once "checkAccess.php";
 
                     current_fs = $(this).parent();
                     next_fs = $(this).parent().next();
-
 
                     //activate next step on progressbar using the index of next_fs
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -454,7 +377,6 @@ include_once "checkAccess.php";
                     current_fs = $(this).parent();
                     next_fs = $(this).parent().next();
 
-
                     //activate next step on progressbar using the index of next_fs
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
@@ -482,10 +404,6 @@ include_once "checkAccess.php";
                         easing: 'easeInOutBack'
                     });
                 });
-
-
-
-
 
                 $("#TransformationNext").click(function () {
                     if (animating)
@@ -495,7 +413,6 @@ include_once "checkAccess.php";
                     current_fs = $(this).parent();
                     next_fs = $(this).parent().next();
 
-
                     //activate next step on progressbar using the index of next_fs
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
@@ -523,7 +440,6 @@ include_once "checkAccess.php";
                         easing: 'easeInOutBack'
                     });
                 });
-
 
                 $("#GeoCodeNext").click(function () {
                     if (animating)
@@ -571,8 +487,6 @@ include_once "checkAccess.php";
                     });
                 });
 
-
-
                 $(".previous").click(function () {
                     if (animating)
                         return false;
@@ -616,15 +530,7 @@ include_once "checkAccess.php";
                 $(".submit").click(function () {
                     window.location.href = 'home.php';
                 })
-
-
-
             </script>
         </div>
-
-
-
-
-
     </body>
 </html>

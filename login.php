@@ -4,17 +4,17 @@ session_start();
 $error = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-	$inputUsername = $_POST['username'];
+	$inputEmail = $_POST['email'];
 	$inputPassword = $_POST['password'];
 	
-	if($inputUsername == null || $inputPassword == null){
-		$error = "Please enter username and password.";
+	if($inputEmail == null || $inputPassword == null){
+		$error = "Please enter email and password.";
 	}
-	else if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $inputUsername) || preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $inputPassword)){
+	else if (preg_match('/[\'^£$%&*()}{#~?><>,|=_+¬-]/', $inputEmail) || preg_match('/[\'^£$%&*()}{#~?><>,|=_+¬-]/', $inputPassword)){
 		$error = "No special character is allowed.";
 	}
 	else{
-		$sql = "SELECT * FROM account WHERE username = '$inputUsername' and password = '$inputPassword'";
+		$sql = "SELECT * FROM account WHERE email = '$inputEmail' and password = '$inputPassword'";
 	
 		$result = $mysqli->query($sql);
 		if ($mysqli->errno){
@@ -23,15 +23,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		$row = $result->fetch_row();
 		
-		$retrievedUsername = $row[0];
-		$retrievedPassword = $row[1];
-		$access = $row[2];
+		$retrievedName = $row[0];
+		$retrievedEmail = $row[1];
+		$role = $row[2];
+		$retrievedPassword = $row[3];
 		
-		if($retrievedUsername == $inputUsername && $retrievedPassword == $inputPassword){
-			$_SESSION['user'] = $inputUsername;
-			$_SESSION['access'] = $access;
+		if(strtolower($retrievedEmail) == strtolower($inputEmail) && $retrievedPassword == $inputPassword){
+			$_SESSION['user'] = $inputEmail;
+			$_SESSION['role'] = $role;
 
-			if($access == "operation"){
+			if($role == "operation"){
 				header("location: patientjourney.php");
 			}
 			else{
@@ -39,7 +40,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			}
 		}
 		else{
-			$error = "Your username or password is invalid.";
+			$error = "Your email or password is invalid.";
 		}
 	}
 }
@@ -73,7 +74,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <div class="modal-body">
                         <form class="form col-md-12 center-block" action="" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control input-lg" name="username" placeholder="Username">
+                                <input type="text" class="form-control input-lg" name="email" placeholder="Email">
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control input-lg" name="password" placeholder="Password">

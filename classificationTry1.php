@@ -201,10 +201,13 @@ include_once "checkAccess.php";
                             <a href="geospatial.php"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Geospatial Intelligence</a>
                         </li>
 						<?php
-						if($_SESSION['access'] == "admin"){
+						if($_SESSION['role'] == "Admin"){
 							echo '
 							<li>
 								<a href="dataprocessing.php"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Data Processing</a>
+							</li>
+							<li>
+								<a href="account.php"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> User Account</a>
 							</li>
 							';
 						}?>

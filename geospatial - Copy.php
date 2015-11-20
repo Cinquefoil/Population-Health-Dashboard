@@ -12,7 +12,7 @@ include_once "checkAccess.php";
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Screening Result</title>
+        <title>Geospatial Intelligence</title>
 
         <!-- JavaScript -->
 		<script src="js/jquery-2.1.1.min.js"></script>
@@ -145,10 +145,13 @@ include_once "checkAccess.php";
                             <a href="geospatial.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Geospatial Intelligence</a>
                         </li>
 						<?php
-						if($_SESSION['access'] == "admin"){
+						if($_SESSION['role'] == "Admin"){
 							echo '
 							<li>
 								<a href="dataprocessing.php"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Data Processing</a>
+							</li>
+							<li>
+								<a href="account.php"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> User Account</a>
 							</li>
 							';
 						}?>

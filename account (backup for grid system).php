@@ -11,7 +11,7 @@ include_once "checkSession.php";
 		<meta name="description" content="">
 		<meta name="author" content="">
     
-		<title>Patient Journey</title>
+		<title>Account</title>
   
 		<!-- Javascript -->
 		<script src="js/d3.js"></script>
@@ -57,11 +57,13 @@ include_once "checkSession.php";
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
+					<!-- <a class='navbar-brand' href='#'><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>-->
 				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav" style="font-size:12px">
+					<ul class="nav navbar-nav" style="font-size:11px">
 						<?php
-							if($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Senior"){
+							if($_SESSION['access'] == "admin" || $_SESSION['access'] == "senior"){
 						?>
 							<li>
 								<a href="home.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Screening Result</a>
@@ -76,7 +78,7 @@ include_once "checkSession.php";
 							<a href="patientjourney.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Patient Journey</a>
 						</li>
 						<?php
-							if($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Senior"){
+							if($_SESSION['access'] == "admin" || $_SESSION['access'] == "senior"){
 						?>
 							<li>
 								<a href="analysis.php"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repeat Analysis</a>
@@ -88,13 +90,10 @@ include_once "checkSession.php";
 							}
 						?>
 						<?php
-						if($_SESSION['role'] == "Admin"){
+						if($_SESSION['access'] == "admin"){
 							echo '
 							<li>
 								<a href="dataprocessing.php"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Data Processing</a>
-							</li>
-							<li>
-								<a href="account.php"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> User Account</a>
 							</li>
 							';
 						}?>
@@ -110,9 +109,91 @@ include_once "checkSession.php";
 		
 		</br></br>
 
-		<div>
+		<div class="row">
 			<br />
-			Individual and Temporal will be here.
+
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label class="col-md-2 control-label" for="listbox">Listbox</label>
+					<div class="col-md-3">
+						<select id="listbox" name="listbox" class="form-control" multiple="multiple" size="10">
+							<option value="1">Option one</option>
+							<option value="2">Option two</option>
+						</select>
+					</div>
+				
+					<label class="col-md-2 control-label" for="Name">Name</label>  
+					<div class="col-md-3">
+						<input id="Name" name="Name" type="text" class="form-control input-md" required="">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-4">
+						
+					</div>
+				
+					<label class="col-md-4 control-label" for="Email">Email</label>  
+					<div class="col-md-3">
+						<input id="Email" name="Email" type="text" class="form-control input-md" required="">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="Role">Role</label>
+					<div class="col-md-2">
+						<select id="Role" name="Role" class="form-control">
+							<option value="admin">Admin</option>
+							<option value="senior">Senior Management</option>
+							<option value="operation">Operation</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="Photo">Photo</label>
+					<div class="col-md-3">
+						<input id="Photo" name="Photo" class="input-file" type="file">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="Submit"></label>
+					<div class="col-md-4">
+						<button id="Submit" name="Submit" class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+			</form>
+			
+			<br /><br />
+			
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="listbox"></label>
+					<div class="col-md-4">
+						<select id="listbox" name="listbox" class="form-control" multiple="multiple">
+							<option value="1">Option one</option>
+							<option value="2">Option two</option>
+						</select>
+					</div>
+				</div>
+			</form>
+			
+			<table>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
 		</div>
 	</body>
 </html>

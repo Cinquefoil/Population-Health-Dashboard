@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['access'] != "admin" && $_SESSION['access'] != "senior"){
+if($_SESSION['role'] != "Admin" && $_SESSION['role'] != "Senior Management"){
 	header("location: patientjourney.php");
 }
 ?>
