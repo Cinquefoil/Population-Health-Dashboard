@@ -51,6 +51,7 @@ include_once "checkAccess.php";
 				//jQuery('div.tags-container span:contains("Health")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Event Location")').addClass('tagsort-active');
                 jQuery('div.tags-container span:contains("Nurse Action")').addClass('tagsort-active');
+				jQuery('div.tags-container span:contains("Cardio Risk")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("New Cases")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Existing")').addClass('tagsort-active');
 				//jQuery('div.tags-container span:contains("Co-Relation")').addClass('tagsort-active');
@@ -345,7 +346,7 @@ include_once "checkAccess.php";
 						</div>
 					</li>
                     <li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-heart-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Nurse Action">
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-heart-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Cardio Risk">
 							<strong>Cardio Risk</strong>
 							<a class="reset" href="javascript:heartRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
 							<div class="clearfix"></div>

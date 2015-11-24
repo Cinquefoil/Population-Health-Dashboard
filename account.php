@@ -131,7 +131,7 @@ include_once "checkSession.php";
 							<td rowspan="4" width="350px">
 								<select id="listbox" name="listbox" class="form-control" multiple="multiple" size="10" style="width:280px" onChange="getDetails(this.value)">
 									<?php
-										$query = 'SELECT name FROM account';
+										$query = 'SELECT name FROM account ORDER BY name';
 										$result = mysqli_query($mysqli, $query);
 										
 										while($row = mysqli_fetch_assoc($result)){
