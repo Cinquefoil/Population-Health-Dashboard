@@ -297,7 +297,7 @@ EOF;
         'latitude' FLOAT,
         'longitude' FLOAT,
         'ResidentialNum'INT(5),
-         PRIMARY KEY ('NRIC', 'Measurement.Att.Date')
+        PRIMARY KEY ('NRIC', 'Measurement.Att.Date')
         );
             
        CREATE TABLE IF NOT EXISTS NRICReference(
@@ -305,7 +305,7 @@ EOF;
        );    
 
        CREATE TABLE IF NOT EXISTS CallLogData(
-        'NRIC' VARCHAR(15) PRIMARY KEY NOT NULL,
+        'NRIC' VARCHAR(15) NOT NULL,
         'Date' VARCHAR(15) NOT NULL,
         'Time' VARCHAR(15) NOT NULL,
         'Outcome' VARCHAR(15) NOT NULL,
@@ -317,11 +317,11 @@ EOF;
         'Last Updated' VARCHAR(15) NOT NULL,
         'Created Date' VARCHAR(15) NOT NULL,
         'ID' VARCHAR(15) NOT NULL,
-        FOREIGN KEY('NRIC') REFERENCES NRICReference ('NRIC')
+        PRIMARY KEY ('NRIC', 'Date', 'Time')
         );
             
         CREATE TABLE IF NOT EXISTS AssessmentData(
-        'Basic Info_NRIC' VARCHAR(15) PRIMARY KEY NOT NULL,
+        'Basic Info_NRIC' VARCHAR(15) NOT NULL,
         'Basic Info_Date of Visit' VARCHAR(15) NOT NULL,
         'Basic Info_Time of Visit' VARCHAR(15) NOT NULL,
         'Health Status_Primary Health Care Provider (Chronic)' VARCHAR(15) NOT NULL,
@@ -361,16 +361,16 @@ EOF;
         'Future Follow Up_Last updated Date' VARCHAR(15) NOT NULL,
         'Future Follow Up_Created Date' VARCHAR(15) NOT NULL,
         'Future Follow Up_ID' VARCHAR(15) NOT NULL,
-        FOREIGN KEY('Basic Info_NRIC') REFERENCES NRICReference ('NRIC')
+        PRIMARY KEY ('Basic Info_NRIC', 'Basic Info_Date of Visit', 'Basic Info_Time of Visit')
         );
             
         CREATE TABLE IF NOT EXISTS ReportCollectionData(
-        'NRIC' VARCHAR(15) PRIMARY KEY NOT NULL,
+        'NRIC' VARCHAR(15) NOT NULL,
         'Screening Date' VARCHAR(15) NOT NULL,
         'Type' VARCHAR(15) NOT NULL,
         'Collection Date' VARCHAR(15) NOT NULL,
         'Update Time' VARCHAR(15) NOT NULL,
-        FOREIGN KEY('NRIC') REFERENCES NRICReference ('NRIC')
+        PRIMARY KEY ('NRIC', 'Screening Date')
         );
 EOF;
 

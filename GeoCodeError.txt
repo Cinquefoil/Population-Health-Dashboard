@@ -1,4 +1,0 @@
-NRIC Address ErrorType
-7777 77FF7 Invalid Address!
-8888 77FF7 Invalid Address!
-9999 77FF7 Invalid Address!
