@@ -35,15 +35,112 @@ include_once "checkSession.php";
 		<script src="timeglider/TG_Mediator.js" type="text/javascript"></script> 
 		<script src="timeglider/timeglider.timeline.widget.js" type="text/javascript"></script>
 		<script src="timeglider/timeglider.datepicker.js" type="text/javascript"></script>
+		<script>
+			$(function() {
+				$("#nameA").autocomplete({
+					source: 'search.php'
+				});
+			});
+		</script>
+		<script>
+			$(function() {
+				$("#nameB").autocomplete({
+					source: 'search.php'
+				});
+			});
+		</script>
+		<script src="js/jquery-ui.js"></script>
+		<script type='text/javascript'>
+			function compareP(){
+				var patient1 = document.getElementById("nameA").value;
+				var patient2 = document.getElementById("nameB").value;
+				
+				$.ajax({
+					url: "patientjourneysqlmulti.php",
+					type: "post",
+					data: {"patient1name": patient1, "patient2name": patient2}, 
+					success: function(data) {
+						var json = JSON.parse(data);
+						
+						var tg1 = window.tg1 = "";
+		   
+						$(function () { 
+							var tg_instance = {};
+
+							tg1 = $("#p1").timeline({			
+								"min_zoom":1, 
+								"max_zoom":40,
+								"icon_folder":"timeglider/icons/",
+								//"data_source": "presentation.json",
+								//"data_source": "patientjourneysqlmulti.php",
+								"data_source": json,
+								"show_footer":true,
+								"display_zoom_level":false,
+								"mousewheel":"zoom", // zoom | pan | none
+								"constrain_to_data":true,
+								"image_lane_height":100,
+								"legend":{type:"checkboxes"}, // default | checkboxes
+								"loaded":function () { 
+									// loaded callback function
+								 }
+							});
+						});
+					}
+				});
+			}
+			
+			function compareG(){
+				var groupAage = document.getElementById("ageA").value;
+				var groupArace = document.getElementById("raceA").value;
+				var groupAgender = document.getElementById("genderA").value;
+				var groupAsmoking = document.getElementById("smokingA").value;
+				var groupBage = document.getElementById("ageB").value;
+				var groupBrace = document.getElementById("raceB").value;
+				var groupBgender = document.getElementById("genderB").value;
+				var groupBsmoking = document.getElementById("smokingB").value;
+				
+				$.ajax({
+					url: "patientjourneysqlmultigroup.php",
+					type: "post",
+					data: {"groupAage": groupAage, "groupArace": groupArace, "groupAgender": groupAgender, "groupAsmoking": groupAsmoking, "groupBage": groupBage, "groupBrace": groupBrace, "groupBgender": groupBgender, "groupBsmoking": groupBsmoking}, 
+					success: function(data) {
+						var json = JSON.parse(data);
+						
+						var tg1 = window.tg1 = "";
+		   
+						$(function () { 
+							var tg_instance = {};
+
+							tg1 = $("#p1").timeline({			
+								"min_zoom":1, 
+								"max_zoom":40,
+								"icon_folder":"timeglider/icons/",
+								//"data_source": "presentation.json",
+								//"data_source": "patientjourneysqlmulti.php",
+								"data_source": json,
+								"show_footer":true,
+								"display_zoom_level":false,
+								"mousewheel":"zoom", // zoom | pan | none
+								"constrain_to_data":true,
+								"image_lane_height":100,
+								"legend":{type:"checkboxes"}, // default | checkboxes
+								"loaded":function () { 
+									// loaded callback function
+								 }
+							});
+						});
+					}
+				});
+			}
+		</script>
 
 		<!-- CSS -->
 		<link href="css/bootstrap.min.css" rel="stylesheet"/>
 		<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet">
-		<!-- UNCOMMENT FOR CHECKBOX-STYLE LEGEND ITEMS
 		<link href="css/tg_legend_checkboxes.css" rel="stylesheet">
-		 -->
 		<link href="timeglider/Timeglider.css" rel="stylesheet">
 		<link href="timeglider/timeglider.datepicker.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/jquery-ui.css">
     
 		<!-- Custom CSS -->
 		<style>
@@ -55,6 +152,14 @@ include_once "checkSession.php";
 			
 			#bs-example-navbar-collapse-1 ul li a:hover {
 				border-bottom:2px #FFF solid;
+			}
+			
+			.gradientBoxesWithOuterShadows { 
+				border-style: outset;
+				border-radius: 20px;
+				-moz-border-radius: 10px;
+				box-shadow: 2px 2px 2px #cccccc;
+				-moz-box-shadow: 2px 2px 2px #cccccc;
 			}
 			
 			.header {
@@ -165,177 +270,204 @@ include_once "checkSession.php";
 			<!-- /.container -->
 		</nav>
 		
-		</br></br>
-
+		</br></br></br>
+		
+		<div class="gradientBoxesWithOuterShadows" align="center" style="float:left;height:520px;width:350px;margin:00px 10px 0px 0px">
+			<br />
+		
+			<span style="text-align:center;font-weight:bold">Search Patients to Compare</span>
+			
+			<br /><br />
+		
+			<table style="font-weight:bold">
+				<tr>
+					<td>
+						<div class="ui-widget" align="center">
+							<label for="nameA">Patient 1: </label> <input id="nameA">
+							<br />
+							<label for="nameB">Patient 2: </label> <input id="nameB">
+							<br /><br />
+							<input type="submit" id="comparePatients" name="comparePatients" class="btn btn-primary" value="Compare Patients" style="color:#cfe5f2" onclick="compareP();"/>
+							<hr />
+						</div>
+					</td>
+				</tr>
+			</table>
+			<span style="text-align:center;font-weight:bold">Select Demographic Groups to Compare</span>
+			
+			<br /><br />
+			
+			<u style="text-align:center;font-weight:bold">Group A</u>		
+			<table style="font-weight:bold">
+				<tr>
+					<td>
+						Age
+					</td>
+					<td>
+						<select id="ageA" style="width:80px">
+							<option value="All">All</option>
+							<?php
+								$query = "SELECT DISTINCT AgeGrp FROM ktphalldata ORDER BY AgeGrp";
+								$result = mysqli_query($mysqli, $query);
+								
+								while($row = mysqli_fetch_assoc($result)){
+									echo '<option value="' . $row['AgeGrp'] . '">' . $row['AgeGrp'] . '</option>';
+								}
+							?>
+						</select>
+					</td>
+					<td>
+						&nbsp;&nbsp;&nbsp;
+					</td>
+					<td>
+						Race
+					</td>
+					<td>
+						<select id="raceA" style="width:80px">
+							<option value="All">All</option>
+							<?php
+								$query = "SELECT DISTINCT `Race.Full.Text` as race FROM ktphalldata ORDER BY `Race.Full.Text`";
+								$result = mysqli_query($mysqli, $query);
+								
+								while($row = mysqli_fetch_assoc($result)){
+									echo '<option value="' . $row['race'] . '">' . $row['race'] . '</option>';
+								}
+							?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Gender
+					</td>
+					<td>
+						<select id="genderA" style="width:80px">
+							<option value="All">All</option>
+							<?php
+								$query = "SELECT DISTINCT `Gender.Full.Text` as gender FROM ktphalldata ORDER BY `Gender.Full.Text`";
+								$result = mysqli_query($mysqli, $query);
+								
+								while($row = mysqli_fetch_assoc($result)){
+									echo '<option value="' . $row['gender'] . '">' . $row['gender'] . '</option>';
+								}
+								
+							?>
+						</select>
+					</td>
+					<td>
+						&nbsp;&nbsp;&nbsp;
+					</td>
+					<td>
+						Smoking
+					</td>
+					<td>
+						<select id="smokingA" style="width:80px">
+							<option value="All">All</option>
+							<?php
+								$query = "SELECT DISTINCT `X8Q_LS_Smoking` as smoking FROM ktphalldata ORDER BY `X8Q_LS_Smoking`";
+								$result = mysqli_query($mysqli, $query);
+								
+								while($row = mysqli_fetch_assoc($result)){
+									echo '<option value="' . $row['smoking'] . '">' . $row['smoking'] . '</option>';
+								}
+							?>
+						</select>
+					</td>
+				</tr>
+			</table>
+			
+			<br />
+			
+			<u style="text-align:center;font-weight:bold">Group B</u>		
+			<table style="font-weight:bold">
+				<tr>
+					<td>
+						Age
+					</td>
+					<td>
+						<select id="ageB" style="width:80px">
+							<option value="All">All</option>
+							<?php
+								$query = "SELECT DISTINCT AgeGrp FROM ktphalldata ORDER BY AgeGrp";
+								$result = mysqli_query($mysqli, $query);
+								
+								while($row = mysqli_fetch_assoc($result)){
+									echo '<option value="' . $row['AgeGrp'] . '">' . $row['AgeGrp'] . '</option>';
+								}
+							?>
+						</select>
+					</td>
+					<td>
+						&nbsp;&nbsp;&nbsp;
+					</td>
+					<td>
+						Race
+					</td>
+					<td>
+						<select id="raceB" style="width:80px">
+							<option value="All">All</option>
+							<?php
+								$query = "SELECT DISTINCT `Race.Full.Text` as race FROM ktphalldata ORDER BY `Race.Full.Text`";
+								$result = mysqli_query($mysqli, $query);
+								
+								while($row = mysqli_fetch_assoc($result)){
+									echo '<option value="' . $row['race'] . '">' . $row['race'] . '</option>';
+								}
+							?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Gender
+					</td>
+					<td>
+						<select id="genderB" style="width:80px">
+							<option value="All">All</option>
+							<?php
+								$query = "SELECT DISTINCT `Gender.Full.Text` as gender FROM ktphalldata ORDER BY `Gender.Full.Text`";
+								$result = mysqli_query($mysqli, $query);
+								
+								while($row = mysqli_fetch_assoc($result)){
+									echo '<option value="' . $row['gender'] . '">' . $row['gender'] . '</option>';
+								}
+								
+							?>
+						</select>
+					</td>
+					<td>
+						&nbsp;&nbsp;&nbsp;
+					</td>
+					<td>
+						Smoking
+					</td>
+					<td>
+						<select id="smokingB" style="width:80px">
+							<option value="All">All</option>
+							<?php
+								$query = "SELECT DISTINCT `X8Q_LS_Smoking` as smoking FROM ktphalldata ORDER BY `X8Q_LS_Smoking`";
+								$result = mysqli_query($mysqli, $query);
+								
+								while($row = mysqli_fetch_assoc($result)){
+									echo '<option value="' . $row['smoking'] . '">' . $row['smoking'] . '</option>';
+								}
+							?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<div align="center">
+							<br />
+							<input type="submit" id="compareGroups" name="compareGroups" class="btn btn-primary" value="Compare Groups" style="color:#cfe5f2" onclick="compareG();"/>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
 		<div id='p1'></div>
-
-		<script type='text/javascript'>
-			var ico = window.ico;
-			
-			window.pizzaShack = {
-				clicker: function(tg_event) {
-					alert("you clicked on " + tg_event.title);
-				}
-			};
-		  
-			var tg1 = window.tg1 = "";
-		   
-			$(function () { 
-				var tg_instance = {};
-
-				tg1 = $("#p1").timeline({
-							
-							/*
-							// custom hover & click callbacks
-							// returning false prevents default
-			
-							eventHover: function($ev, ev) {
-								debug.log("ev hover, no follow:", ev);
-								return false;
-							},
-							
-							eventClick: function($ev, ev) {
-								debug.log("eventClick, no follow:", ev);
-								return false;
-							},
-							*/
-			
-							"min_zoom":1, 
-							"max_zoom":50, 
-							"timezone":"-06:00",
-							"icon_folder":"timeglider/icons/",
-							//"data_source": "json/new_history.json",
-							"data_source": "journeysqlNoicon.php",
-							"show_footer":true,
-							"display_zoom_level":true,
-							"mousewheel":"zoom", // zoom | pan | none
-							"constrain_to_data":true,
-							"image_lane_height":100,
-							"legend":{type:"default"}, // default | checkboxes
-							"loaded":function () { 
-								// loaded callback function
-							 }
-			
-					}).resizable({
-						stop:function(){ 
-							// $(this).data("timeline").resize();
-						}
-					});
-					
-				tg_instance = tg1.data("timeline");
-			
-				$(".goto").click(function() {
-					var d = $(this).attr("date");
-					var z = $(this).attr("zoom");
-					tg_instance.goTo(d,z);
-				});
-				
-				$(".zoom").click(function() {
-					var z = Number($(this).attr("z"));
-					tg_instance.zoom(z);
-				});
-				
-				tg_instance.panButton($(".pan-left"), "left");
-				tg_instance.panButton($(".pan-right"), "right");
-			
-				$("#getScope").click(function() {
-					var so = tg_instance.getScope();	
-					var ml = "RETURNS: <br><br>container (jquery dom object): " + so.container.toString()
-					+ "<br>focusDateSec (tg sec):" + so.focusDateSec
-					+ "<br>focusMS (js timestamp): " + so.focusMS
-					+ "<br>leftMS (js timestamp): " + so.leftMS
-					+ "<br>left_sec (tg sec): " + so.left_sec
-					+ "<br>rightMS (js timestamp): " + so.rightMS
-					+ "<br>right_sec (tg sec): " + so.right_sec
-					+ "<br>spp (seconds per pixel): " + so.spp
-					+ "<br>timelineBounds (object, left- & right-most in tg sec): " + JSON.stringify(so.timelineBounds)
-					+ "<br>timelines (array of ids): " + JSON.stringify(so.timelines);
-					
-					var d = new Date(so.focusMS)
-					
-					ml += "<br><br>Date using focusMS:" + d.toString('yyyy-MM-dd');
-					
-					$(".scope-view").html(ml);
-				});
-			
-				$("#loadData").click(function() {
-					var src = $("#loadDataSrc").val();
-					var cb_fn = function(args, timeline) {
-						// called after parsing data, after load
-						debug.log("args", args, "timeline", timeline[0].id);
-					};
-					
-					var cb_args = {}; // {display:true};
-					tg_instance.getMediator().emptyData();
-					tg_instance.loadTimeline(src, function(){debug.log("cb!");}, true);
-					
-					$("#reloadDataDiv").hide();
-				});
-				
-				$("#reloadTimeline").click(function() {
-					tg_instance.reloadTimeline("js_history", "json/new_history.json");
-				});
-				
-				$("#refresh").click(function() {
-					debug.log("timeline refreshed!");
-					tg_instance.refresh();
-				});
-
-				$("#scrolldown").bind("click", function() {
-					$(".timeglider-timeline-event").animate({top:"+=100"})
-				})
-				
-				$("#scrollup").bind("click", function() {
-					$(".timeglider-timeline-event").animate({top:"-=100"})
-				})
-
-				timeglider.eventActions = {
-					nagavigateTo:function(obj) {
-						// event object must have a "navigateTo"
-						// element with zoom, then ISO date delimited
-						// with a pipe | 
-						// one can use
-						var nav = obj.navigateTo;
-						tg_instance.goTo(nav.focus_date,nav.zoom_level);
-						
-						setTimeout(function () {
-							$el = $(".timeglider-timeline-event#" + obj.id);
-							$el.find(".timeglider-event-spanner").css({"border":"1px solid green"}); // 
-						}, 50);
-					}
-				}
-
-				$("#adjustNow").click(function() {
-					tg_instance.adjustNowEvents();
-				});	
-				
-				$("#addEvent").click(function() {
-				
-					var rando = Math.floor((Math.random()*1000)+1); 
-					var impo = Math.floor((Math.random()*50)+20); 
-					
-					var obj = {
-						id:"new_" + rando,
-						title:"New Event!",
-						startdate:"today",
-						importance:impo,
-						icon:"star_red.png",
-						timelines:["js_history"]
-					}
-					
-					tg_instance.addEvent(obj, true);
-				});	
-
-				
-				$("#updateEvent").click(function() {
-					
-					var updatedEventModel = {
-						id:"deathofflash",
-						title: "Flash struggles to survive in the age of HTML5."
-					}
-					tg_instance.updateEvent(updatedEventModel);
-				});
-			}); // end document-ready
-		</script>
+		
+		<div style="clear:both"></div>
 	</body>
 </html>

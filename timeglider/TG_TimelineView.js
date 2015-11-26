@@ -203,7 +203,7 @@ tg.TG_TimelinePlayer = function (widget, mediator) {
       	timeline_list_modal : $.template( null,
           "<div class='tg-modal timeglider-timeline-menu'>"+
           "<div class='tg-close-button'></div>"+
-          "<h3>timelines</h3>"+
+          "<h3>Timelines</h3>"+
           "<div class='timeglider-menu-modal-content'><ul></ul></div>"+
           "<div class='tg-modal-corner tg-modal-corner-south'>"+
           "</div>"),
@@ -264,7 +264,7 @@ tg.TG_TimelinePlayer = function (widget, mediator) {
 			return "<h4>${title}</h4>"
 			+ "<div class='tg-close tg-close-button'></div>"
 			+ "<div class='tg-timeline-description jscroll'>{{html description}}</div>"
-			+ "<ul>" + tags1 + "<li data-timeline_id='" + this.model.get("id") + "' class='tg-timeline-start'>start</li></ul>" + tags2
+			+ "<ul>" + tags1 + "<li data-timeline_id='" + this.model.get("id") + "' class='tg-timeline-start'>Start</li></ul>" + tags2
 			+ "<div class='tg-modal-corner tg-modal-corner-north'></div>";
 			
 			},
@@ -318,7 +318,7 @@ tg.TG_TimelinePlayer = function (widget, mediator) {
 		template: function () {
 			
 			return "<div class='tg-timeline-description jscroll'>{{html description}}</div>"
-			+ "<ul><li class='tg-close'>close</li><li class='tg-pres-start'>start</li></ul>"
+			+ "<ul><li class='tg-close'>close</li><li class='tg-pres-start'>Start</li></ul>"
 			+ "<div class='tg-modal-corner tg-modal-corner-north'></div>";
 			
 			},
@@ -1746,13 +1746,13 @@ tg.TG_TimelinePlayer.prototype = {
 					
 		var title = "<h2 id='pres_title' class='no-select' data-timeline_id='primary'>" + pres.title + "</h2>",
 
-			inf = (pres.description) ? "<li id='info' class='pres-info-bt'>info</li>":"",
+			inf = (pres.description) ? "<li id='info' class='pres-info-bt'>Info</li>":"",
 			
-			leg = (pres.legend) ? "<li id='legend' data-timeline_id='pres' class='tg-legend-bt'>legend</li>":"",
+			leg = (pres.legend) ? "<li id='legend' data-timeline_id='pres' class='tg-legend-bt'>Legend</li>":"",
 			
 			tools = "", // "<a id='tools' class='tools-bt noselect'>tools</a>",
 			
-			tmpl = "<div class='tg-widget-header tg-pres-header'>" + title + "<ul>" + inf + leg + "<li class='tg-pres-start'>start</li></ul>" + tools + "</div>",
+			tmpl = "<div class='tg-widget-header tg-pres-header'>" + title + "<ul>" + inf + leg + "<li class='tg-pres-start'>Start</li></ul>" + tools + "</div>",
 				
 			$st = $(tmpl).appendTo(CONTAINER);
 			
