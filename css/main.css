@@ -1,0 +1,1149 @@
+@import url("http://polymaps.org/style.css");
+@import url("http://fonts.googleapis.com/css?family=Roboto");
+
+/*
+Color Scheme
+http://www.colourlovers.com/business/trends/branding/7880/Papeterie_Haute-Ville_Logo
+
+Monochromatic Blue: #059FEB / #6accfc / #10acfa (alt.)
+Mono Complementary Red: #eb052c
+Mono Complementary Orange: #ebc405
+Tetradic Green: #05eb51
+Tetradic Purple: #eb059f;
+
+KTPH Blue: #047DB9
+KTPH Green: #52B553
+KTPH Purple: #914D9E
+KTPH Red: #E02253
+KTPH Orange: #FEC20F
+
+Background color / inner divider: #E6E6E6
+Border color: #BFD7D8
+
+Box-Grey: #E6E6E6 / #F0F0F0 / 
+CCD5D6 / D6D6D6;
+Border-Grey: #BFC7C8;
+
+Blue-grey: #B5C6C0;
+Lighter blue-grey: #BFD7D8;
+Dark grey: #6F7D7E;
+*/
+
+/*
+Top-nav: #3CA5C5
+
+To use:
+Able Blue: #037EB9
+Able Red: #E02252
+Able Green: #449d45
+Able Darker Green: #449d45;
+Able Yellow: #FDC20E
+KTPH Purple: #4A3191
+
+Not used:
+KTPH Blue: #1276BD;
+KTPH Green: #7AC042;
+*/
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: #E6E6E6;
+  font-size: 13px;
+  padding-top: 232px;
+  height: 60%;
+  overflow-x: hidden;
+}
+
+
+/****************************/
+/*******Navigation Bar*******/
+.navbar .brand {
+  padding: 5px 20px;
+}
+
+.brand img {
+  width: 70px;
+  height: auto;
+}
+
+.navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner {
+  border: 0;
+  box-shadow: none;
+  min-height: 30px;
+}
+
+.nav li {
+  line-height: 18px;
+}
+.navbar-inner {
+  background-color: #3CA5C5;
+  background-image: none;
+}
+
+.navbar .nav > li > a {
+  color: #FFFFFF;
+  text-shadow: none;
+}
+
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover {
+  background-color: #037EB9;
+  color: #FFFFFF;
+}
+
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+  background-color: #037EB9;
+  box-shadow: none;
+  color: #FFFFFF;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background-color: #037EB9;
+  color: #FFFFFF;
+}
+
+.navbar .nav li.dropdown > .dropdown-toggle .caret {
+  border-bottom-color: #FFFFFF;
+  border-top-color: #FFFFFF;
+}
+
+.navbar .nav li.dropdown > a:hover .caret {
+  border-bottom-color: #FFFFFF;
+  border-top-color: #FFFFFF;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle .caret, .navbar .nav li.dropdown.active > .dropdown-toggle .caret, .navbar .nav li.dropdown.open.active > .dropdown-toggle .caret {
+  border-bottom-color: #FFFFFF;
+  border-top-color: #FFFFFF;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  background:none;
+}
+/****************************/
+
+
+/****************************/
+/*********Extra Bars*********/
+.filterbar {
+  padding: 8px 0px;
+  border-top: 2px solid #037EB9;
+  background-color: #BFC7C8;
+}
+
+.datebar, .datebarM {
+  padding: 5px 0px;
+  background-color: #FFFFFF;
+  -moz-box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+  box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+}
+
+.btm-shadow {
+  -moz-box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+  box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+}
+
+.filters {
+  display: inline-block;
+}
+
+.alert.alert-info.filterBtn-s {
+  background-color: #449d45;
+}
+
+.alert.alert-info.filterBtn-s.filterBtn-all {
+  background-color: #E02252;
+}
+
+.navbar .datebar .nav > li > a {
+    padding: 5px 10px;
+}
+
+.navbar .datebarM .nav > li > a {
+    padding: 5px 10px;
+}
+
+.navbar .datebar.kpi {
+  padding: 0px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.navbar .datebarM.kpi {
+  padding: 0px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.navbar.kpi {
+  margin-bottom: 0px;
+}
+
+
+.nav-pills > li > a {
+    background-color: #BFC7C8;
+}
+
+.nav-pills > li > a:hover {
+    padding: 5px 10px;
+    background-color: #BFC7C8;
+}
+/****************************/
+
+
+/****************************/
+/************Tabs************/
+.tabs-left > .nav-tabs {
+  border-right: 1px solid #BFC7C8;
+  margin-right: 0px;
+}
+
+.tabs-left > .nav-tabs .active > a, .tabs-left > .nav-tabs .active > a:hover {
+  border-color: transparent;
+  background-color: #FFFFFF;
+  font-weight: bold;
+}
+
+.tabs-left > .nav-tabs > li > a:hover {
+  border-color: transparent;
+  background-color: #FFFFFF;
+}
+
+.tabs-left > .nav-tabs > li > a {
+  border-color: transparent;
+  border-radius: 0;
+  background-color: #BFC7C8;
+  color: #000000;
+  margin-bottom: 0px;
+  min-width: 100px;
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+  border-color: transparent;
+  color: #000000;
+}
+/****************************/
+
+/****************************/
+/************Content*********/
+#myModal .icon-spinner {
+  color: #E02252;
+  margin-bottom: 30px;
+}
+
+#myModal {
+  padding: 100px 0px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.chart-content {
+  min-height: 110px;
+  background-color: #FFFFFF;
+  border-bottom: 3px solid rgba(0,0,0,0.2);
+  margin-bottom: 15px;
+}
+
+.card-title {
+  padding: 10px 20px 0px 20px;
+}
+
+.card-content {
+  padding: 0px 20px 0px 20px;
+}
+
+.card-bottom {
+  padding: 0px 20px 10px 20px;
+}
+
+.mcard-title {
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.mcard-content {
+  padding: 0px 0px 10px 20px;
+}
+
+.card {
+  padding: 10px 20px;
+  background-color: #FFFFFF;
+  margin-bottom: 15px;
+  -moz-box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+  box-shadow: 0.5px 2px 1px rgba(0,0,0,0.2);
+}
+
+.card-min {
+  padding: 10px 20px;
+  background-color: #FFFFFF;
+}
+
+.card-np {
+  background-color: #FFFFFF;
+  border-bottom: 3px solid rgba(0,0,0,0.2);
+  margin-bottom: 15px;
+}
+
+.toggle {
+  margin-bottom: 10px;
+}
+
+.btn-primary.flap:hover, .btn-primary.flap:focus, .btn-primary.flap:active, .btn-primary.flap.active, .btn-primary.flap.disabled, .btn-primary.flap[disabled] {
+    background-color: #9f1639;
+}
+
+.btn-primary.flap {
+  background-color: #E02252;
+}
+
+.btn.btn-primary.flap {
+  border-radius: 8px 8px 8px 8px;
+  padding-top: 10px;
+  padding-bottom: 2px;
+  font-size: 12px;
+}
+
+.showHide {
+  position: fixed;
+  top: 214px;
+  right: -10px;
+}
+
+#shBtn {
+  margin-right: 145px;
+}
+.rotate {
+  /* Safari */
+  -webkit-transform: rotate(-90deg);
+
+  /* Firefox */
+  -moz-transform: rotate(-90deg);
+
+  /* IE */
+  -ms-transform: rotate(-90deg);
+
+  /* Opera */
+  -o-transform: rotate(-90deg);
+
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.aRotate {
+  /* Safari */
+  -webkit-transform: rotate(90deg);
+
+  /* Firefox */
+  -moz-transform: rotate(90deg);
+
+  /* IE */
+  -ms-transform: rotate(90deg);
+
+  /* Opera */
+  -o-transform: rotate(90deg);
+
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
+
+.viewDiag {
+  margin-top: 50px;
+  left: -50px;
+  z-index: 999;
+  position: fixed;
+}
+
+.viewPatients {
+  margin-top: 45px;
+  right: -44px;
+  z-index: 999;
+  position: fixed;
+}
+
+/****************************/
+
+
+
+/****************************/
+/**********Summary***********/
+.summary {
+  position: absolute;
+  right: 1%;
+  top: 30%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#patients .label-warning {
+  background-color: #449d45;
+}
+
+.totals {
+  font-size: 16px;
+  padding-bottom: 5px;
+}
+
+#active {
+  font-size: 24px;
+  font-weight: bold;
+}
+/****************************/
+
+.sidr {
+  font: 13px 'Roboto';
+  overflow: hidden;
+}
+
+.sidr.left {
+    width: 290px;
+    left: -290px;
+    right: auto;
+}
+
+.sidr.right {
+    width: 320px;
+    left: -320px;
+    left: auto;
+}
+
+
+.sidr input[type="text"], .sidr input[type="password"], .sidr input[type="date"], .sidr input[type="datetime"], .sidr input[type="email"], .sidr input[type="number"], .sidr input[type="search"], .sidr input[type="tel"], .sidr input[type="time"], .sidr input[type="url"], .sidr textarea, .sidr select {
+    -moz-box-sizing: border-box;
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 0 0 4px;
+    clear: both;
+    color: #555555;
+    margin: 0 0px 0 10px;
+    padding: 4px 6px;
+    width: 65%;
+    font-size: 14px;
+    height: 30px;
+    line-height: 20px;
+    display: inline;
+}
+
+/****************************/
+/*****Overall Layout*********/
+.title {
+  min-height: 22px;
+  font-weight: medium;
+  font-size: 13px;
+}
+
+.datebar .title {
+  font-size: 11px;
+  color: #809092;
+}
+
+.datebarM .title {
+  font-size: 11px;
+  color: #809092;
+}
+
+.btm-spacer {
+  border-bottom: 1px solid #E6E6E6;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+
+.center {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.plain {
+  position: relative;
+  margin-left: 0px;
+}
+
+.no-left {
+  margin-left:0px;
+  padding-left: 0px;
+}
+
+.pull-down {
+  position: absolute;
+  bottom: 2px;
+  right: 0;
+}
+
+.relative {
+  position: relative;
+}
+
+.span11-5 {
+  width: 900px;
+}
+
+.span10-5 {
+  width: 820px;
+}
+
+.span10-25 {
+  width: 800px;
+}
+
+.span9-5 {
+  width: 740px;
+}
+
+.span8-5 {
+  width: 660px;
+}
+
+.span7-5 {
+  width: 580px;
+}
+
+.span6-75 {
+  width: 520px;
+}
+
+.span6-5 {
+  width: 500px;
+}
+
+.span5-85 {
+  width: 450px;
+}
+
+.span5-5 {
+  width: 420px;
+}
+
+.span4-5 {
+  width: 340px;
+}
+
+.span4-25 {
+  width: 315px;
+}
+
+.span3-75 {
+  width: 285px;
+}
+
+.span3-5 {
+  width: 260px;
+}
+
+.span3-25 {
+  width: 240px;
+}
+
+.span2-5 {
+  width: 180px;
+}
+
+.span1-5 {
+  width: 100px;
+}
+
+.span1-25 {
+  width: 90px;
+}
+
+.span0-5 {
+  width: 40px;
+}
+
+.span0-25 {
+  width: 20px;
+}
+/****************************/
+
+.map {
+  width: 450px;
+  height: 300px;
+}
+
+.legend td {
+  font: 12px 'Roboto';
+  width: 2.5%;
+  color: #809092;
+}
+
+.legend {
+  font: 12px 'Roboto';
+  color: #809092;
+}
+
+.legend text {
+  fill: #809092;
+}
+
+.legend circle {
+  stroke: #FDC20E;
+  stroke-width: 1px;
+}
+
+.Reds .q2-8{background-color:rgb(252,187,161)}
+.Reds .q3-8{background-color:rgb(252,146,114)}
+.Reds .q4-8{background-color:rgb(251,106,74)}
+.Reds .q5-8{background-color:rgb(239,59,44)}
+.Reds .q6-8{background-color:rgb(203,24,29)}
+.Reds .q7-8{background-color:rgb(153,0,13)}
+
+.label-warning, .badge-warning {
+  font-size: 13px;
+  text-shadow: none;
+  color: #FFFFFF;
+  background-color: #FDC20E;
+}
+
+.alert .close {
+  line-height: 6px;
+  right: 0px;
+  top: 0px;
+  opacity: 0.7;
+  text-shadow: none;
+  padding: 5px 3px;
+  font-size: 13px;
+}
+
+.alert a:link, .alert a:visited {
+    color: #FFFFFF;
+}
+
+.alert a:hover {
+    color: #000000;
+    opacity: 1;
+}
+
+.alert-info {
+  background-color: #037EB9;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px 5px 5px 5px;
+  padding: 0px 5px;
+  margin-top: 0px;
+  margin-right: 5px;
+  margin-bottom: 2px;
+  text-shadow: none;
+  width: auto;
+  display: inline-block;
+  font-size: 11px;
+}
+
+.btn-xss {
+  padding: 0px 6px 2px 6px;
+  font-size: 11px;
+  line-height: 140%;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+}
+
+.btn-danger:link {
+  color: white;
+}
+
+.btn-danger {
+  background-color: #E02252;
+  background-image: none;
+  background-repeat: no-repeat;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.btn-primary:link {
+  color: white;
+}
+
+.btn-primary {
+  background-color: #037EB9;
+  background-image: none;
+  background-repeat: no-repeat;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  background-color: #02496c;
+}
+
+/****************************/
+/*******Network Flow********/
+#networkInfo {
+  height: 341px;
+  margin-left: 20px;
+  color: #809092;
+}
+
+#networkInfo #dept, #networkInfo #unique, #networkInfo #episodes  {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: black;
+  /*margin-bottom: 10px;*/
+}
+
+#networkLegendDiv div, #kpiLegendDiv div {
+  display: inline-block;
+}
+
+.legendCell text{
+  font: 12px 'Roboto';
+  fill: #809092;
+}
+
+#networkInfo a {
+  color: white;
+}
+
+.graphSVG{
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAdCAMAAACKeiw+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF////9fb3h/JDwQAAABtJREFUeNpiYMQLGBgZ8IJR6VHpUWnKpAECDACcGgA72QxfPgAAAABJRU5ErkJggg==);
+}
+
+.graphSVG .circle {
+  stroke: white;
+  stroke-width: 3;
+}
+
+.graphSVG circle:hover, .graphSVG path:hover{
+  stroke: black;
+  cursor: pointer;
+}
+
+.graphSVG circle.active{
+  stroke: black;
+}
+
+.graphSVG .link_line {
+  stroke: rgba(255,255,255,.5);
+  stroke-width: 2;
+}​
+/****************************/
+
+.dummy{}
+
+/*Selected bars*/
+.foreground.bar {
+  fill: #037EB9;
+}
+
+/*Not selected bars*/
+.background.bar {
+  fill: #BFC7C8;
+}
+
+.hover.bar {
+  fill: #E02252;
+}
+
+.xAxis path, .yAxis path {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+  display: none;
+}
+
+#kpi .xAxis path {
+  stroke: #BFC7C8;
+  display: inline;
+}
+
+.line {
+  fill: none;
+}
+
+.xAxis line, .yAxis line {
+  fill: none;
+  stroke-width: 1.5;
+  stroke: #BFC7C8;
+  shape-rendering: crispEdges;
+}
+
+.yAxis line {
+  stroke-width: 1;
+  stroke-dasharray: 4,2;
+}
+
+.xAxis text, .yAxis text {
+  font: 10px 'Roboto';
+  fill: #809092;
+}
+
+/*Highlight color*/
+.brush rect.extent {
+  fill: #F18D05;
+  fill-opacity: .125;
+}
+
+/*Handle color*/
+.brush .resize path {
+  fill: #eee;
+  stroke: #666;
+}
+
+/*Highlight color*/
+.brush rect.extent {
+  fill: #01A4A4;
+  fill-opacity: .125;
+}
+
+/*Handle color*/
+.brush .resize path {
+  fill: #01A4A4;
+  stroke: #113F8C;
+}
+
+.diag-table {
+  max-height: 100%;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 13px;
+  padding: 5px 0px 0px 2px;
+}
+
+.diag-table #lists {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#diag-list .diag {
+  width: 100%;
+  padding: 5px 0px;
+  border-bottom: 1px solid #E6E6E6;
+}
+
+#diag-list .selected, #diag-list .hover {
+  background-color: #E6E6E6;
+}
+
+#diag-list .selected div.name, #diag-list .hover div.name {
+  color: black;
+}
+
+#diag-list .diag div {
+  display: inline-block;
+}
+
+#diag-list div.name {
+  padding-left: 2%;
+  width: 83%;
+  text-align: left;
+}
+
+#diag-list div.value {
+  width: 15%;
+  text-align: center;
+  color: #059FEB;
+  font-weight: bold;
+}
+
+.patient-table #lists {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#patient-list .patient {
+  width: 100%;
+  padding: 5px 0px;
+  border-bottom: 1px solid #E6E6E6;
+}
+
+#patient-list .selected, #patient-list .hover {
+  background-color: #E6E6E6;
+}
+
+#patient-list .selected div.name, #patient-list .hover div.name, #patient-list .selected div.demo, #patient-list .hover div.demo {
+  color: black;
+}
+
+#patient-listHd .patientHd {
+  width: 100%;
+  padding: 5px 0px;
+  border-bottom: 1px solid #E6E6E6;
+  font-weight: bold;
+}
+
+#patient-listHd .patientHd div {
+  display: inline-block;
+}
+
+#patient-list .patient div {
+  display: inline-block;
+}
+
+#patient-listHd div.name {
+  padding-left: 3%;
+  width: 25%;
+  text-align: left;
+}
+
+#patient-listHd div.age {
+  width: 12%;
+  text-align: left;
+}
+
+#patient-listHd div.gender {
+  width: 12%;
+  text-align: left;
+}
+
+#patient-listHd div.race {
+  width: 40%;
+  text-align: left;
+}
+
+#patient-list div.name {
+  padding-left: 3%;
+  width: 25%;
+  text-align: left;
+}
+
+#patient-list div.age {
+  padding-left: 2%;
+  width: 12%;
+  text-align: left;
+}
+
+#patient-list div.gender {
+  padding-left: 2%;
+  width: 12%;
+  text-align: left;
+}
+
+#patient-list div.race {
+  padding-left: 2%;
+  width: 40%;
+  text-align: left;
+}
+
+#patient-list .values {
+  color: #059FEB;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+#patient-list div.dept {
+  padding-left: 3%;
+  width: 25%;
+  text-align: left;
+}
+
+#patient-list div.time {
+  padding-left: 2%;
+  width: 70%;
+  text-align: center;
+}
+
+#focusMap circle {
+  fill: #000000;
+  stroke: #FDC20E;
+  stroke-width: 1px;
+}
+
+#focusMap circle:hover {
+  stroke-width: 3px;
+  cursor: pointer;
+}
+
+#overviewMap polygon:hover{
+  stroke: #000000;
+  stroke-width: 2px;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Image replacement
+ */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   Theses examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

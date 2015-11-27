@@ -45,7 +45,7 @@ include_once "checkAccess.php";
 			});
 		</script>
 		<script type="text/javascript" src="js/moment.js"></script>
-		<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+		<script type="text/javascript" src="js/daterangepicker.js"></script>
 		<script>
 			$(document).ready(function(){
 				jQuery('div.tags-container span:contains("Health")').addClass('tagsort-active');
@@ -58,6 +58,12 @@ include_once "checkAccess.php";
 				jQuery('div.tags-container span:contains("Health")').click();
 			});
 		</script>
+		<script type="text/javascript" src="js/html2canvas.js"></script>
+		<script type="text/javascript" src="js/jquery.base64.js"></script>
+		<script type="text/javascript" src="js/tableExport.js"></script>
+		<script type="text/javascript" src="js/jspdf/libs/sprintf.js"></script>
+		<script type="text/javascript" src="js/jspdf/jspdf.js"></script>
+		<script type="text/javascript" src="js/jspdf/libs/base64.js"></script>
 
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
@@ -66,7 +72,7 @@ include_once "checkAccess.php";
 		<link href="css/slideMenus.css" rel="stylesheet" />
 		<link href="css/jquery.jscrollpane.css" rel="stylesheet" />
 		<link href="css/tagsort.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+		<link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
 
         <!-- Custom CSS -->
         <style>
@@ -97,6 +103,67 @@ include_once "checkAccess.php";
 				-moz-border-radius: 10px;
 				box-shadow: 2px 2px 2px #cccccc;
 				-moz-box-shadow: 2px 2px 2px #cccccc;
+			}
+			
+			a.reset {
+				color: #FFF;
+				background-color: #1AACBF;
+				font-weight:bold;
+				border: 1px solid #259FE0;
+				border-radius: 25px;
+				padding: 2px 8px;
+				text-decoration: none;
+			}
+			
+			#resetAll {
+				color: #FFF;
+				background-color: #1AACBF;
+				font-weight:bold;
+				border: 1px solid #259FE0;
+				border-radius: 25px;
+				padding: 2px 8px;
+				text-decoration: none;
+			}
+			
+			#showRight {
+				margin-top: 250px;
+				right: 51px;
+				z-index: 999;
+				position: relative;
+				
+				/* Safari */
+				-webkit-transform: rotate(90deg);
+				/* Firefox */
+				-moz-transform: rotate(90deg);
+				/* IE */
+				-ms-transform: rotate(90deg);
+				/* Opera */
+				-o-transform: rotate(90deg);
+				/* Internet Explorer */
+				filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+				
+				border-radius: 0px 0px 8px 8px;
+				padding: 5px 10px 2px 10px;
+				font-size: 12px;
+			}
+			
+			#showRight:hover {
+				background-color: #1AACBF;
+			}
+			
+			#showTop:hover {
+				background-color: #1AACBF;
+			}
+			
+			#exportExcel {
+				color: #FFF;
+				background-color: #1A7BBF;
+				font-weight: bold;
+				font-size: 16px;
+				border: 1px solid #259FE0;
+				border-radius: 10px;
+				padding: 4px 12px;
+				margin: 2px 0px 0px 0px;
 			}
         </style>
     </head>
@@ -214,26 +281,24 @@ include_once "checkAccess.php";
 							<div data-item-tags="All"></div>
 						</div>
 					</td>
-					<td>
-						<div class="slideMain">
-							<section>
-								<button id="showRight" style="height:40px;width:60px">Resident List &#9654;</button>
-							</section>
-						</div>
-					</td>
 				</tr>
 			</table>
 		</nav>
 		
 		<!-- Right Slide Menu -->
-		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="width:310px">
-			<h3 style="text-align:center;font-size:20px;padding:10px">Resident Information</h3>
+		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="width:310px;border-left:1px solid #47a3da">
+			<div class="slideMain">
+				<section>
+					<button id="showRight">Patient List</button>
+				</section>
+			</div>
+			<h3 style="text-align:center;font-size:20px;margin:-280px 0px 0px 0px;padding:10px">Patient Information</h3>
 			
 			<div id="dc-data-count">
-				<span class="filter-count" style="font-weight:bold"></span> residents selected out of <span class="total-count" style="font-weight:bold"></span> records
+				<span class="filter-count" style="font-weight:bold"></span> patients selected out of <span class="total-count" style="font-weight:bold"></span> records
 			</div>
 			
-			<div class="chart-wrapper" style="width:100%;height:78%;overflow:auto;font-size:12px">
+			<div class="chart-wrapper" style="width:100%;height:75%;overflow:auto;font-size:12px">
 				<table class="table table-hover" id="dc-table-graph" style="background:#f8f7f7">
 					<thead>
 						<tr class="header">
@@ -244,6 +309,9 @@ include_once "checkAccess.php";
 						</tr>
 					</thead>
 				</table>
+			</div>
+			<div align="center">
+				<button id="exportExcel" onclick="javascript:$('#dc-table-graph').tableExport({type:'excel',escape:'false'});"><img src="images/xls.png" width="24px"> Export to Excel (.xls)</button>
 			</div>
 		</nav>
 		
@@ -376,29 +444,31 @@ include_once "checkAccess.php";
 		</section>
 			
 		<div id="footer" style="background-color:#f8f7f7">			
-			<b>
-			Applied Filters
+			<b style="font-size:16px">
+				Applied Filters
 				<span id="reset-all">
-					<span onclick="javascript:dc.filterAll();dc.redrawAll();" style="cursor:pointer;font-size:12px;font-weight:bold;color:#1a7bbf">[Reset All]</span>:
+					<span id="resetAll" onclick="javascript:dc.filterAll();dc.redrawAll();" style="cursor:pointer;font-weight:bold;font-size:14px;color:#FFF">Reset All</span>:
 				</span> 
 			</b>
-			<span id="healthFilters"></span>
-			<span id="eventFilters"></span>
-			<span id="genderFilters"></span>
-			<span id="ageFilters"></span>
-			<span id="raceFilters"></span>
-			<span id="educationFilters"></span>
-			<span id="bmiFilters"></span>
-			<span id="sugarFilters"></span>
-			<span id="bpFilters"></span>
-			<span id="occupationFilters"></span>
-			<span id="exerciseFilters"></span>
-			<span id="diabetesFilters"></span>
-			<span id="livingFilters"></span>
-			<span id="smokingFilters"></span>
-			<span id="backacheFilters"></span>
-			<span id="lengthbackacheFilters"></span>
-			<span id="lengthsleepFilters"></span>
+			<span style="font-size:16px">
+				<span id="healthFilters"></span>
+				<span id="eventFilters"></span>
+				<span id="genderFilters"></span>
+				<span id="ageFilters"></span>
+				<span id="raceFilters"></span>
+				<span id="educationFilters"></span>
+				<span id="bmiFilters"></span>
+				<span id="sugarFilters"></span>
+				<span id="bpFilters"></span>
+				<span id="occupationFilters"></span>
+				<span id="exerciseFilters"></span>
+				<span id="diabetesFilters"></span>
+				<span id="livingFilters"></span>
+				<span id="smokingFilters"></span>
+				<span id="backacheFilters"></span>
+				<span id="lengthbackacheFilters"></span>
+				<span id="lengthsleepFilters"></span>
+			</span>
 		</div>
 		
 		<!-- SlideMenu JavaScript Function -->

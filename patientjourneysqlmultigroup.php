@@ -23,12 +23,12 @@ include_once "mysqli.connect.php";
 	$header2 = array("id" => "timeline2", "title" => "Group B", "focus_date" => "2014-04-00 12:00:00", "initial_zoom" => "30", "bottom" => "225");
 	
 	$legend = array();
-	$legend[] = array("title" => "Health Screening (Healthy)", "icon" => "square_green.png");
-	$legend[] = array("title" => "Health Screening (Unhealthy)", "icon" => "square_red.png");
-	$legend[] = array("title" => "Visited Polyclinic", "icon" => "plus_blue.png");
-	$legend[] = array("title" => "Teleconsult", "icon" => "star_purple.png");
-	$legend[] = array("title" => "House Visit", "icon" => "star_orange.png");
-	$legend[] = array("title" => "Intervention Programmes", "icon" => "star_yellow.png");
+	$legend[] = array("title" => "Health Screening (Healthy)", "icon" => "healthy.png");
+	$legend[] = array("title" => "Health Screening (Unhealthy)", "icon" => "unhealthy.png");
+	$legend[] = array("title" => "Visited Polyclinic", "icon" => "polyclinic.png");
+	$legend[] = array("title" => "Teleconsult", "icon" => "teleconsult.png");
+	$legend[] = array("title" => "House Visit", "icon" => "house.png");
+	$legend[] = array("title" => "Intervention Programmes", "icon" => "intervention.png");
 	$groupAnodes = array();
 	$groupBnodes = array();
 
@@ -40,7 +40,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
     }
     while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "square_green.png";
+		$node['icon'] = "healthy.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('Y-m-d', $node['startdate'])->format('Y-m-d H:i:s');
@@ -55,7 +55,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
     }
     while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "square_red.png";
+		$node['icon'] = "unhealthy.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('Y-m-d', $node['startdate'])->format('Y-m-d H:i:s');
@@ -70,7 +70,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
 	}
 	while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "plus_blue.png";
+		$node['icon'] = "polyclinic.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('d/m/Y', $node['startdate'])->format('Y-m-d H:i:s');
@@ -85,7 +85,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
 	}
 	while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "star_purple.png";
+		$node['icon'] = "teleconsult.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('d/m/Y', $node['startdate'])->format('Y-m-d H:i:s');
@@ -100,7 +100,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
 	}
 	while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "star_orange.png";
+		$node['icon'] = "house.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('d/m/Y', $node['startdate'])->format('Y-m-d H:i:s');
@@ -117,7 +117,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
     }
     while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "square_green.png";
+		$node['icon'] = "healthy.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('Y-m-d', $node['startdate'])->format('Y-m-d H:i:s');
@@ -132,7 +132,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
     }
     while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "square_red.png";
+		$node['icon'] = "unhealthy.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('Y-m-d', $node['startdate'])->format('Y-m-d H:i:s');
@@ -147,7 +147,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
 	}
 	while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "plus_blue.png";
+		$node['icon'] = "polyclinic.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('d/m/Y', $node['startdate'])->format('Y-m-d H:i:s');
@@ -162,7 +162,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
 	}
 	while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "star_purple.png";
+		$node['icon'] = "teleconsult.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('d/m/Y', $node['startdate'])->format('Y-m-d H:i:s');
@@ -177,7 +177,7 @@ include_once "mysqli.connect.php";
         die("Connection failed: ");
 	}
 	while($node = mysqli_fetch_assoc($query)){
-		$node['icon'] = "star_orange.png";
+		$node['icon'] = "house.png";
 		$node['title'] = "";
 		$node['importance'] = "50";
 		$node['startdate'] = DateTime::createFromFormat('d/m/Y', $node['startdate'])->format('Y-m-d H:i:s');
