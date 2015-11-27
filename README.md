@@ -1,4 +1,4 @@
-# Population Health Dashboard
+﻿# KTPH Population Health Dashboard
 
 Firstly, to automate and visually present the stratification of patient population with chronic diseases in the northern part of Singapore. Users of the system will be able to interact with the dash board to drill down into specific strata of each patient group of interest.
 
