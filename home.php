@@ -497,9 +497,11 @@ include_once "checkAccess.php";
 			********************************************************/
 
 			var dataset;
-			var parseDate = d3.time.format("%d/%m/%Y").parse;
+			////var parseDate = d3.time.format("%d/%m/%Y").parse;
+            var parseDate = d3.time.format("%Y-%m-%d").parse;
 
-			d3.csv("allDataWGeo1.csv", function(data){
+			////d3.csv("allDataWGeo1.csv", function(data){
+            d3.json(("js/ReturnResultScreening.php"),function(error, data){
 				data.forEach(function(d){
 					if (d.Healthy === "Healthy" && d.Habits === "Positive Habits"){
 						d.healthResult = "Healthy/PosHabits";
@@ -523,9 +525,73 @@ include_once "checkAccess.php";
 					monthString = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 					d.yearMonth = d.year + " " + monthString[d.month];
 					
-					if (d.OccupationType === null || d.OccupationType === ""){
-						d.OccupationType = "Nil";
+                    if (d.AgeGrp == "<40"){
+                        d.AgeGrp = " <40";
+                    }
+                    
+                    if (d['Race.Full.Text'] == "Chinese"){
+                        d['Race.Full.Text'] = "1.Chinese";
+                    }else if (d['Race.Full.Text'] == "Malay"){
+                        d['Race.Full.Text'] = "2.Malay";
+                    }else if (d['Race.Full.Text'] == "Indian"){
+                        d['Race.Full.Text'] = "3.Indian";
+                    }else if (d['Race.Full.Text'] == "Others"){
+                        d['Race.Full.Text'] = "4.Others";
+                    }
+                    
+                    if (d.BMIGrp == "<=22.9"){
+                        d.BMIGrp = " <=22.9";
+                    }
+                    
+                    if (d.SugarHigh == "Normal"){
+                        d.SugarHigh = "1.Normal";
+                    }else if (d.SugarHigh == "GdCtrlSugar"){
+                        d.SugarHigh = "2.GdCtrlSugar";
+                    }else if (d.SugarHigh == "ModHighSugar"){
+                        d.SugarHigh = "3.ModHighSugar";
+                    }else if (d.SugarHigh == "HighSugar"){
+                        d.SugarHigh = "4.HighSugar";
+                    }else if (d.SugarHigh == "CritHighSugar"){
+                        d.SugarHigh = "5.CritHighSugar";
+                    }
+                    
+                    if (d.BPHigh == "Normal"){
+                        d.BPHigh = "1.Normal";
+                    }else if (d.BPHigh == "GdCtrlBP"){
+                        d.BPHigh = "2.GdCtrlBP";
+                    }else if (d.BPHigh == "ModHighBP"){
+                        d.BPHigh = "3.ModHighBP";
+                    }else if (d.BPHigh == "HighBP"){
+                        d.BPHigh = "4.HighBP";
+                    }else if (d.BPHigh == "CritHighBP"){
+                        d.BPHigh = "5.CritHighBP";
+                    }
+                    
+					if (d.OccupationType == "White-collar Job"){
+						d.OccupationType = "1.White-collar Job";
+					}else if (d.OccupationType == "Blue-collar Job"){
+						d.OccupationType = "2.Blue-collar Job";
+					}else if (d.OccupationType == "Others"){
+						d.OccupationType = "3.Others";
+					}else if (d.OccupationType == "Unemployed"){
+						d.OccupationType = "4.Unemployed";
 					}
+                    
+                    if (d.X8Q_LS_Exercise == "-30"){
+                        d.X8Q_LS_Exercise = " -30";
+                    }else if (d.X8Q_LS_Exercise == "30"){
+                        d.X8Q_LS_Exercise = " 30";
+                    }else if (d.X8Q_LS_Exercise == "60"){
+                        d.X8Q_LS_Exercise = " 60";
+                    }else if (d.X8Q_LS_Exercise == "90"){
+                        d.X8Q_LS_Exercise = " 90";
+                    }
+                    
+                    if (d.X8Q_MH_DiabetesFoot == "No"){
+                        d.X8Q_MH_DiabetesFoot = " No";
+                    }else if (d.X8Q_MH_DiabetesFoot == "Yes"){
+                        d.X8Q_MH_DiabetesFoot = " Yes";
+                    }
 				 
 				});
 				dataset = data;
@@ -680,7 +746,7 @@ include_once "checkAccess.php";
 					.dimension(icDim)
 					.group(function(d) { return "";
 					 })
-					.size(10000)	// number of rows to return
+					.size(20000)	// number of rows to return
 					.columns([
 					  function(d) { return d.NRIC; },
 					  function(d) { return d.Zone; },
@@ -734,12 +800,13 @@ include_once "checkAccess.php";
 					})
 					// stack additional layers with `.stack`. The first paramenter is a new group.
 					// The second parameter is the series name. The third is a value accessor.
-					.stack(healthStatusGroup, 'HealthyNegHabits', function (d) {
-						return d.value.HN;
-					})
 					.stack(healthStatusGroup, 'UnhealthyPosHabits', function (d) {
 						return d.value.UP;
 					})
+                    .stack(healthStatusGroup, 'HealthyNegHabits', function (d) {
+						return d.value.HN;
+					})
+					
 					.stack(healthStatusGroup, 'UnhealthyNegHabits', function (d) {
 						return d.value.UN;
 					})
@@ -747,8 +814,9 @@ include_once "checkAccess.php";
 						return (
 							'Total: ' + d.value.count + '\n' +
 							'Unhealthy-NegHabits: ' + d.value.UN + '\n' + 
-							'Unhealthy-PosHabits: ' + d.value.UP + '\n' + 
-							'Healthy-NegHabits: ' + d.value.HN + '\n' + 
+							'Healthy-NegHabits: ' + d.value.HN + '\n' +
+                            'Unhealthy-PosHabits: ' + d.value.UP + '\n' + 
+							 
 							'Healthy-PosHabits: ' + d.value.HP 
 						);
 					});
@@ -783,7 +851,8 @@ include_once "checkAccess.php";
 				)
 				.colors(d3.scale.ordinal()
 					.domain([3,4,5,6])
-					.range(["#1f77b4","#d62728","#ff7f0e","#2ca02c","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
+					////.range(["#1f77b4"blue,"#d62728"red,"#ff7f0e"orange,"#2ca02c"green,"#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
+                    .range(["#1f77b4","#d62728","#2ca02c","#ff7f0e","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
 				.title(function(d) {
 					return +d.value + " Resident";})        
 				.calculateColorDomain();
@@ -797,7 +866,7 @@ include_once "checkAccess.php";
 				});
 				
 				eventRowChart
-					.width(250).height(200)
+					.width(250).height(441)
 					.dimension(scnZoneDim)
 					.group(scnZoneGroup)
 					.elasticX(true)
