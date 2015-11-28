@@ -321,19 +321,20 @@ include_once "checkAccess.php";
 			
 				<ul class="list-unstyled connected list no2 sortable grid" style="padding:105px 0px 10px 30px">
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="test" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Health and Habits">
-							<strong>Health and Habits</strong>
-							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
-							<div class="clearfix"></div>
-						</div>
-					</li>
-					<li>
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-event-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Event Location">
 							<strong>Event Location</strong>
 							<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
 							<div class="clearfix"></div>
 						</div>
 					</li>
+                    <li>
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="test" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Health and Habits">
+							<strong>Health and Habits</strong>
+							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+					
 					<li>
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-gender-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Gender">
 							<strong>Gender</strong>
