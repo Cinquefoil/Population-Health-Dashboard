@@ -393,19 +393,20 @@ include_once "checkAccess.php";
 			
 				<ul class="list-unstyled connected list no2 sortable grid" style="padding:105px 0px 10px 30px">
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="test" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Health and Habits">
-							<strong>Health and Habits</strong>
-							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
-							<div class="clearfix"></div>
-						</div>
-					</li>
-					<li>
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-event-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Event Location">
 							<strong>Event Location</strong>
 							<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
 							<div class="clearfix"></div>
 						</div>
 					</li>
+                    <li>
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="test" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Health and Habits">
+							<strong>Health and Habits</strong>
+							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+					
                     <li>
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-nurse-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Nurse Action">
 							<strong>Nurse Action</strong>
@@ -487,7 +488,8 @@ include_once "checkAccess.php";
 			********************************************************/
 
 			var dataset;
-			var parseDate = d3.time.format("%d/%m/%Y").parse;
+			//var parseDate = d3.time.format("%d/%m/%Y").parse;
+            var parseDate = d3.time.format("%Y-%m-%d").parse;
             
             /////////////////Venn Variables
             var n_chol = 0;
@@ -545,8 +547,8 @@ include_once "checkAccess.php";
             var poorControl_existingBSBP = 0;
             //////////////
 
-			d3.csv("allDataWGeo1.csv", function(error,data){
-            //d3.json(("js/allUniqueData.php"),function(error, data){
+			//d3.csv("allDataWGeo1.csv", function(error,data){
+            d3.json(("js/ReturnResult.php"),function(error, data){
                 if (error){
                     console.log("error in php");
                 }
@@ -673,6 +675,24 @@ include_once "checkAccess.php";
 					if(d.controlTree == "poorControlNewSugarBP"){poorControl_newBSBP++;}
 					if(d.controlTree == "poorControlExistSugarBP"){poorControl_existingBSBP++;}
 					////////////////////////////////END Healthy Tree
+                    
+                    if (d.NurseAction == "NA"){
+                        
+                    }else if (d.NurseAction == "Y"){
+                        d.NurseAction = "1.HomeVisit";
+                    }else if (d.NurseAction == "Teleconsult"){
+                        d.NurseAction = "2.Teleconsult";
+                    }else if (d.NurseAction == "uncontactable"){
+                        d.NurseAction = "3.Uncontactable";
+                    }
+                    
+                    if (d.fScoreCat == "Low"){
+                        d.fScoreCat = "3.Low";
+                    }else if (d.fScoreCat == "Medium"){
+                        d.fScoreCat = "2.Medium";
+                    }else if (d.fScoreCat == "High"){
+                        d.fScoreCat = "1.High";
+                    }
 				 
 				});
 				dataset = data;
@@ -1018,12 +1038,13 @@ include_once "checkAccess.php";
 					})
 					// stack additional layers with `.stack`. The first paramenter is a new group.
 					// The second parameter is the series name. The third is a value accessor.
-					.stack(healthStatusGroup, 'HealthyNegHabits', function (d) {
-						return d.value.HN;
-					})
 					.stack(healthStatusGroup, 'UnhealthyPosHabits', function (d) {
 						return d.value.UP;
 					})
+                    .stack(healthStatusGroup, 'HealthyNegHabits', function (d) {
+						return d.value.HN;
+					})
+					
 					.stack(healthStatusGroup, 'UnhealthyNegHabits', function (d) {
 						return d.value.UN;
 					})
@@ -1031,8 +1052,9 @@ include_once "checkAccess.php";
 						return (
 							'Total: ' + d.value.count + '\n' +
 							'Unhealthy-NegHabits: ' + d.value.UN + '\n' + 
+                            'Healthy-NegHabits: ' + d.value.HN + '\n' +
 							'Unhealthy-PosHabits: ' + d.value.UP + '\n' + 
-							'Healthy-NegHabits: ' + d.value.HN + '\n' + 
+							 
 							'Healthy-PosHabits: ' + d.value.HP 
 						);
 					});
@@ -1074,7 +1096,8 @@ include_once "checkAccess.php";
                     )
                     .colors(d3.scale.ordinal()
                         .domain([3,4,5,6])
-                        .range(["#1f77b4","#d62728","#ff7f0e","#2ca02c","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
+                        //.range(["#1f77b4","#d62728","#ff7f0e","#2ca02c","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
+                        .range(["#1f77b4","#d62728","#2ca02c","#ff7f0e","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
                     .title(function(d) {
                         return +d.value + " Resident";})        
                     .calculateColorDomain();
@@ -1090,7 +1113,7 @@ include_once "checkAccess.php";
 				});
 				
 				eventRowChart
-					.width(250).height(200)
+					.width(250).height(441)
 					.dimension(scnZoneDim)
 					.group(scnZoneGroup)
 					.elasticX(true)
@@ -1383,7 +1406,7 @@ include_once "checkAccess.php";
             
                 function updateHealthTree(allRes){
                 if (document.getElementById("healthTree")) {
-                document.getElementById("healthTree").innerHTML = "";}
+                document.getElementById("healthTree").innerHTML = "<strong>Health Classification Tree</strong>";}
 
                 ///////////////Healthy Tree variables
                 var t_healthy = 0;
