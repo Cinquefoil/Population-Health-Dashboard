@@ -189,7 +189,7 @@ include_once "checkAccess.php";
             #chart-ldl-bar1 g.stack._0 > rect.bar,
             #chart-trig-bar1 g.stack._0 > rect.bar{
                 stroke: none;
-                fill: red;
+                fill: #d62728;
             }
             
             #chart-bmi-bar1 g.stack._1 > rect.bar,
@@ -201,7 +201,7 @@ include_once "checkAccess.php";
             #chart-ldl-bar1 g.stack._1 > rect.bar,
             #chart-trig-bar1 g.stack._1 > rect.bar{
                 stroke: none;
-                fill: blue;
+                fill: #1f77b4;
             }
             
             #chart-bmi-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1),
@@ -213,7 +213,7 @@ include_once "checkAccess.php";
             #chart-ldl-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1),
             #chart-trig-bar1 g.dc-legend-item:nth-child(1) > rect:nth-child(1){
                 stroke: none;
-                fill: red;
+                fill: #d62728;
             }
             
             #chart-bmi-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1),
@@ -225,7 +225,7 @@ include_once "checkAccess.php";
             #chart-ldl-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1),
             #chart-trig-bar1 g.dc-legend-item:nth-child(2) > rect:nth-child(1){
                 stroke: none;
-                fill: blue;
+                fill: #1f77b4;
             }
             
         </style>
@@ -577,7 +577,8 @@ include_once "checkAccess.php";
 			var endDate1 = "FY2014";
 			///////END Testing code
 
-			d3.json(("js/trending.php"),function(error, data){
+			//d3.json(("js/trending.php"),function(error, data){
+            d3.json(("js/ReturnRepeatResult.php"),function(error, data){
 				if (error){
 					console.log("error in php");
 						}
@@ -823,7 +824,7 @@ include_once "checkAccess.php";
 				///////END Testing code
     
 				eventRowChart
-					.width(200).height(200)
+					.width(200).height(441)
 					.dimension(scnZoneDim)
 					.group(scnZoneGroup)
 					.elasticX(true)
@@ -851,8 +852,8 @@ include_once "checkAccess.php";
 					.columns([
 					  function(d) { return d.NRIC; },
 					  function(d) { return d.Zone; },//d['Measurement.Att.Date']
-					  function(d) { return d['Measurement.Att.Date']; },
-					  function(d) { return d['Gender.Full.Text']; },
+					  //function(d) { return d['Measurement.Att.Date']; },
+					  //function(d) { return d['Gender.Full.Text']; },
 					  function(d) { return d.Healthy; },
 					  function(d) { return d.Habits; }
 					])
@@ -1321,8 +1322,9 @@ include_once "checkAccess.php";
 
 		//updateParallelSet(dataset);
 
-		d3.csv("allDataWGeo1.csv", function(error, csv) {
+		//d3.csv("allDataWGeo1.csv", function(error, csv) {
 		//d3.json(("js/trending.php"),function(error, csv){
+        d3.json(("js/ReturnRepeatResult.php"),function(error, csv){
 		  vis.datum(csv).call(chart);
 
 		  window.icicle = function() {
