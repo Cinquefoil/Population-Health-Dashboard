@@ -335,19 +335,20 @@ include_once "checkAccess.php";
 			
 				<ul class="list-unstyled connected list no2 sortable grid" style="padding:105px 0px 10px 30px">
 					<li>
-						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="test" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Health and Habits">
-							<strong>Health and Habits</strong>
-							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
-							<div class="clearfix"></div>
-						</div>
-					</li>
-					<li>
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-event-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Event Location">
 							<strong>Event Location</strong>
 							<a class="reset" href="javascript:eventRowChart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
 							<div class="clearfix"></div>
 						</div>
 					</li>
+                    <li>
+						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="test" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Health and Habits">
+							<strong>Health and Habits</strong>
+							<a class="reset" href="javascript:chart.filterAll();dc.redrawAll();" style="display:none;font-size:11px">Reset</a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+
 					<li>
 						<div class="chart-wrapper item col-md-1 gradientBoxesWithOuterShadows" id="chart-gender-row" style="background:#f8f7f7;margin:-15px 5px 25px 5px" data-item-id="1" data-item-tags="All, Gender">
 							<strong>Gender</strong>
@@ -522,9 +523,11 @@ include_once "checkAccess.php";
 			********************************************************/
 
 			var dataset;
-			var parseDate = d3.time.format("%d/%m/%Y").parse;
+			//var parseDate = d3.time.format("%d/%m/%Y").parse;
+            var parseDate = d3.time.format("%Y-%m-%d").parse;
 
-			d3.csv("allDataWGeo1.csv", function(data){
+			//d3.csv("allDataWGeo1.csv", function(data){
+            d3.json(("js/ReturnResult.php"),function(error, data){
 				data.forEach(function(d){
 					if (d.Healthy === "Healthy" && d.Habits === "Positive Habits"){
 						d.healthResult = "Healthy/PosHabits";
@@ -551,6 +554,9 @@ include_once "checkAccess.php";
 					if (d.OccupationType === null || d.OccupationType === ""){
 						d.OccupationType = "Nil";
 					}
+                    
+                    d.Geo = d.latitude + "," + d.longitude;
+                    
 				 
 				});
 				dataset = data;
@@ -703,13 +709,13 @@ include_once "checkAccess.php";
                 var facilitiesGroup = facilities.group().reduce(
 					function (p, v) {
 						++p.count;
-                        p.ratio = v.age40plus;
+                        p.ratio = v.ResidentialNum;
                         p.postalCode = v['Addr_Postal.Code'];
 						return p;
 					},
 					function (p, v) {
 						--p.count;
-                        p.ratio = v.age40plus;
+                        p.ratio = v.ResidentialNum;
                         p.postalCode = v['Addr_Postal.Code'];
 						return p;
 					},
@@ -722,7 +728,7 @@ include_once "checkAccess.php";
                 var facilities2Group = facilities2.group().reduce(
 					function (p, v) {
 						++p.count;
-                        p.ratio = v.age40plus;
+                        p.ratio = v.ResidentialNum;
                         p.postalCode = v['Addr_Postal.Code'];
 						if (v.healthResult === "Healthy/PosHabits"){
 							p.HP++;
@@ -737,7 +743,7 @@ include_once "checkAccess.php";
 					},
 					function (p, v) {
 						--p.count;
-                        p.ratio = v.age40plus;
+                        p.ratio = v.ResidentialNum;
                         p.postalCode = v['Addr_Postal.Code'];
 						if (v.healthResult === "Healthy/PosHabits"){
 							p.HP--;
@@ -821,12 +827,13 @@ include_once "checkAccess.php";
 					})
 					// stack additional layers with `.stack`. The first paramenter is a new group.
 					// The second parameter is the series name. The third is a value accessor.
-					.stack(healthStatusGroup, 'HealthyNegHabits', function (d) {
-						return d.value.HN;
-					})
 					.stack(healthStatusGroup, 'UnhealthyPosHabits', function (d) {
 						return d.value.UP;
 					})
+                    .stack(healthStatusGroup, 'HealthyNegHabits', function (d) {
+						return d.value.HN;
+					})
+					
 					.stack(healthStatusGroup, 'UnhealthyNegHabits', function (d) {
 						return d.value.UN;
 					})
@@ -834,8 +841,9 @@ include_once "checkAccess.php";
 						return (
 							'Total: ' + d.value.count + '\n' +
 							'Unhealthy-NegHabits: ' + d.value.UN + '\n' + 
+                            'Healthy-NegHabits: ' + d.value.HN + '\n' + 
 							'Unhealthy-PosHabits: ' + d.value.UP + '\n' + 
-							'Healthy-NegHabits: ' + d.value.HN + '\n' + 
+
 							'Healthy-PosHabits: ' + d.value.HP 
 						);
 					});
@@ -870,7 +878,8 @@ include_once "checkAccess.php";
 				)
 				.colors(d3.scale.ordinal()
 					.domain([3,4,5,6])
-					.range(["#1f77b4","#d62728","#ff7f0e","#2ca02c","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
+					//.range(["#1f77b4","#d62728","#ff7f0e","#2ca02c","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
+                    .range(["#1f77b4","#d62728","#2ca02c","#ff7f0e","#ffbb78","#252525","#252525","#252525","#252525","#252525","#252525"]))
 				.title(function(d) {
 					return +d.value + " Resident";})        
 				.calculateColorDomain();
@@ -884,7 +893,7 @@ include_once "checkAccess.php";
 				});
 				
 				eventRowChart
-					.width(250).height(200)
+					.width(250).height(441)
 					.dimension(scnZoneDim)
 					.group(scnZoneGroup)
 					.elasticX(true)
@@ -1145,7 +1154,7 @@ include_once "checkAccess.php";
                   .group(facilitiesGroup)
                   .valueAccessor(function (p){
                       var numberFormat = d3.format('.2f');
-                      return d3.format("%")(p.value.count / p.value.ratio);
+                      return " Screened: "+p.value.count+", "+d3.format("%")(p.value.count / p.value.ratio);
                   })
                   .width(600)
                   .height(400)
@@ -1158,13 +1167,14 @@ include_once "checkAccess.php";
                   .group(facilities2Group)
                   .valueAccessor(function (p){
                       var numberFormat = d3.format('.2f');
-                      return d3.format("%")(p.value.UN / p.value.ratio);
+                      //return d3.format("%")(p.value.UN / p.value.ratio);
+                      return " Unhealthy: "+p.value.UN+", "+d3.format("%")(p.value.UN / p.value.ratio);
                   })
                   .width(600)
                   .height(400)
                   .center([1.342860,103.837361]) 
                   .zoom(11)
-                  .cluster(false);
+                  .cluster(true);
                 //END Leaflet chart//
 
 				dc.renderAll();

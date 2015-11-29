@@ -174,25 +174,28 @@ dc_leaflet.markerChart = function(parent, chartGroup) {
         var calRatio = d.value.count/ratio * 100;
         if (calRatio < 30 ){
             var marker = new L.Marker(_chart.toLocArray(_chart.locationAccessor()(d)),{
-            title: _chart.renderTitle() ? _chart.title()(d) : '',
-            //title: "haha",
-            alt: _chart.renderTitle() ? _chart.title()(d) : '',
+            //title: _chart.renderTitle() ? _chart.title()(d) : '',
+            //title: ("Screened: " + d.value.count),
+            title: ("Postal Code: "+d.value.postalCode+", Screened "+d.value.count+" out of "+d.value.ratio+", "+d3.format("%")(d.value.count / d.value.ratio)),
+            //alt: _chart.renderTitle() ? _chart.title()(d) : '',
             icon: _icon1(),
             clickable: _chart.renderPopup() || (_chart.brushOn() && !_filterByArea),
             draggable: false
             });
         } else if (calRatio < 70 ){
             var marker = new L.Marker(_chart.toLocArray(_chart.locationAccessor()(d)),{
-            title: _chart.renderTitle() ? _chart.title()(d) : '',
-            alt: _chart.renderTitle() ? _chart.title()(d) : '',
+            //title: _chart.renderTitle() ? _chart.title()(d) : '',
+            //alt: _chart.renderTitle() ? _chart.title()(d) : '',
+            title: ("Postal Code: "+d.value.postalCode+", Screened "+d.value.count+" out of "+d.value.ratio+", "+d3.format("%")(d.value.count / d.value.ratio)),
             icon: _icon2(),
             clickable: _chart.renderPopup() || (_chart.brushOn() && !_filterByArea),
             draggable: false
             });
         } else {
             var marker = new L.Marker(_chart.toLocArray(_chart.locationAccessor()(d)),{
-            title: _chart.renderTitle() ? _chart.title()(d) : '',
-            alt: _chart.renderTitle() ? _chart.title()(d) : '',
+            //title: _chart.renderTitle() ? _chart.title()(d) : '',
+            //alt: _chart.renderTitle() ? _chart.title()(d) : '',
+            title: ("Postal Code: "+d.value.postalCode+", Screened "+d.value.count+" out of "+d.value.ratio+", "+d3.format("%")(d.value.count / d.value.ratio)),
             icon: _icon3(),
             clickable: _chart.renderPopup() || (_chart.brushOn() && !_filterByArea),
             draggable: false
@@ -205,33 +208,38 @@ dc_leaflet.markerChart = function(parent, chartGroup) {
     iconUrl: 'images/people1.svg',
     shadowUrl: 'images/marker-shadow.png',
 
-    iconSize:     [38, 95], // size of the icon
-    shadowSize:   [50, 64], // size of the shadow
+    //iconSize:     [38, 95], // size of the icon
+    /*shadowSize:   [50, 64], // size of the shadow
     iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
     shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor*/
+    iconSize:     [19, 45],
+    //shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [19, 45], // point of the icon which will correspond to marker's location
+    //shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-6, -45] // point from which the popup should open relative to the iconAnchor
     });
     
     var peopleIcon2 = L.icon({
     iconUrl: 'images/people2.svg',
     shadowUrl: 'images/marker-shadow.png',
 
-    iconSize:     [38, 95], // size of the icon
-    shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    iconSize:     [19, 45], // size of the icon
+    //shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [19, 45], // point of the icon which will correspond to marker's location
+    //shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-6, -45] // point from which the popup should open relative to the iconAnchor
     });
     
     var peopleIcon3 = L.icon({
     iconUrl: 'images/people3.svg',
     shadowUrl: 'images/marker-shadow.png',
 
-    iconSize:     [38, 95], // size of the icon
-    shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    iconSize:     [19, 45], // size of the icon
+    //shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [19, 45], // point of the icon which will correspond to marker's location
+    //shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-6, -45] // point from which the popup should open relative to the iconAnchor
     });
 
     var _icon1 = function(d,map) {
