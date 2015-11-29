@@ -768,6 +768,36 @@ include_once "checkAccess.php";
 					.append("svg:svg")
 					.attr("width", w)
 					.attr("height", h);
+                    
+                var circleData = [
+                    { "cx": 750, "cy": 330, "radius": 10, "color" : "#d62728", "action" : "Home Visit or Teleconsult" },
+                    { "cx": 750, "cy": 360, "radius": 10, "color" : "#ff7f0e", "action" : "Teleconsult" },
+                    { "cx": 750, "cy": 390, "radius": 10, "color" : "#2ca02c", "action" : "Introduce Health Programme" }];
+                    
+                var circles = vis.selectAll("circle")
+                    .data(circleData)
+                    .enter()
+                    .append("circle");
+                    
+                var text = vis.selectAll("text")
+                    .data(circleData)
+                    .enter()
+                    .append("text");
+                    
+                var circleAttributes = circles
+                    .attr("cx", function (d) { return d.cx; })
+                    .attr("cy", function (d) { return d.cy; })
+                    .attr("r", function (d) { return d.radius; })
+                    .style("fill", function (d) { return d.color; });
+
+                var textLabels = text
+                 .attr("x", function(d) { return d.cx + 15; })
+                 .attr("y", function(d) { return d.cy + 5; })
+                 //.text( function (d) { return "( " + d.cx + ", " + d.cy +" )"; })
+                 .text( function (d) { return d.action; })
+                 .attr("font-family", "sans-serif")
+                 .attr("font-size", "10px")
+                 .attr("fill", "black");
 					
 				var counting=0; //get total number of resident for percentage calculation
 
@@ -1463,6 +1493,36 @@ include_once "checkAccess.php";
 				.append("svg:svg")
 				.attr("width", w)
 				.attr("height", h);
+                
+            var circleData = [
+                    { "cx": 750, "cy": 330, "radius": 10, "color" : "#d62728", "action" : "Home Visit or Teleconsult" },
+                    { "cx": 750, "cy": 360, "radius": 10, "color" : "#ff7f0e", "action" : "Teleconsult" },
+                    { "cx": 750, "cy": 390, "radius": 10, "color" : "#2ca02c", "action" : "Introduce Health Programme" }];
+                    
+                var circles = vis.selectAll("circle")
+                    .data(circleData)
+                    .enter()
+                    .append("circle");
+                    
+                var text = vis.selectAll("text")
+                    .data(circleData)
+                    .enter()
+                    .append("text");
+                    
+                var circleAttributes = circles
+                    .attr("cx", function (d) { return d.cx; })
+                    .attr("cy", function (d) { return d.cy; })
+                    .attr("r", function (d) { return d.radius; })
+                    .style("fill", function (d) { return d.color; });
+
+                var textLabels = text
+                 .attr("x", function(d) { return d.cx + 15; })
+                 .attr("y", function(d) { return d.cy + 5; })
+                 //.text( function (d) { return "( " + d.cx + ", " + d.cy +" )"; })
+                 .text( function (d) { return d.action; })
+                 .attr("font-family", "sans-serif")
+                 .attr("font-size", "10px")
+                 .attr("fill", "black");
 				
 			var counting=0; //get total number of resident for percentage calculation
 
@@ -1683,7 +1743,7 @@ include_once "checkAccess.php";
 							"Sep",
 							"Oct",
 							"Nov",
-							"Dec"
+							"Dec" 
 						],
 						"firstDay": 1
 					},
