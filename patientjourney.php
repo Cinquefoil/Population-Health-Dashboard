@@ -52,13 +52,12 @@ include_once "checkSession.php";
 		<script src="js/jquery-ui.js"></script>
 		<script type='text/javascript'>
 			function compareP(){
-				var patient1 = document.getElementById("nameA").value;
-				var patient2 = document.getElementById("nameB").value;
+				var patient = document.getElementById("nameA").value;
 				
 				$.ajax({
-					url: "patientjourneysqlmulti.php",
+					url: "patientjourneysql.php",
 					type: "post",
-					data: {"patient1name": patient1, "patient2name": patient2}, 
+					data: {"patient": patient}, 
 					success: function(data) {
 						var json = JSON.parse(data);
 						
@@ -275,7 +274,7 @@ include_once "checkSession.php";
 		<div class="gradientBoxesWithOuterShadows" align="center" style="float:left;height:520px;width:350px;margin:00px 10px 0px 0px">
 			<br />
 		
-			<span style="text-align:center;font-weight:bold">Search Patients to Compare</span>
+			<span style="text-align:center;font-weight:bold">Individual Patient Journey</span>
 			
 			<br /><br />
 		
@@ -283,17 +282,16 @@ include_once "checkSession.php";
 				<tr>
 					<td>
 						<div class="ui-widget" align="center">
-							<label for="nameA">Patient 1: </label> <input id="nameA">
-							<br />
-							<label for="nameB">Patient 2: </label> <input id="nameB">
+							<label for="nameA">Patient: </label> <input id="nameA">
 							<br /><br />
-							<input type="submit" id="comparePatients" name="comparePatients" class="btn btn-primary" value="Compare Patients" style="color:#cfe5f2" onclick="compareP();"/>
+							<input type="submit" id="comparePatients" name="comparePatients" class="btn btn-primary" value="View Patient Journey" style="color:#cfe5f2" onclick="compareP();"/>
+							<br /><br />
 							<hr />
 						</div>
 					</td>
 				</tr>
 			</table>
-			<span style="text-align:center;font-weight:bold">Select Demographic Groups to Compare</span>
+			<span style="text-align:center;font-weight:bold">Temporal Event Sequence</span>
 			
 			<br /><br />
 			
@@ -459,7 +457,7 @@ include_once "checkSession.php";
 					<td colspan="5">
 						<div align="center">
 							<br />
-							<input type="submit" id="compareGroups" name="compareGroups" class="btn btn-primary" value="Compare Groups" style="color:#cfe5f2" onclick="compareG();"/>
+							<input type="submit" id="compareGroups" name="compareGroups" class="btn btn-primary" value="Compare Demographic Groups" style="color:#cfe5f2" onclick="compareG();"/>
 						</div>
 					</td>
 				</tr>

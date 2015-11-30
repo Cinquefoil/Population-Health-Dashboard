@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2015 at 03:34 AM
+-- Generation Time: Dec 01, 2015 at 12:44 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `mockdata` (
   `HouseVisitDate` varchar(30) NOT NULL,
   `TeleconsultDate` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `mockdata`
@@ -47,11 +47,12 @@ INSERT INTO `mockdata` (`id`, `NRIC`, `Name`, `ScreeningDate`, `HealthStatus`, `
 (2, '1', 'Justin', '2014-05-24', 'Healthy', 'NA', 'NA', 'NA'),
 (3, '2', 'Ken', '2013-10-24', 'Unhealthy', 'NA', '2014-01-24', '2013-11-28'),
 (4, '2', 'Ken', '2014-06-24', 'Unhealthy', 'NA', 'NA', '2014-07-24'),
-(5, '3', 'Jasmine', '2014-05-24', 'Unhealthy', 'NA', 'NA', 'NA'),
+(5, '3', 'Jie Kai', '2014-05-24', 'Unhealthy', 'NA', 'NA', 'NA'),
 (6, '3', 'Kenji', '2014-05-24', 'Unhealthy', 'NA', 'NA', 'NA'),
 (7, '3', 'Bastari', '2014-05-24', 'Unhealthy', 'NA', 'NA', 'NA'),
 (8, '3', 'Yee Boon', '2014-05-24', 'Unhealthy', 'NA', 'NA', 'NA'),
-(9, '3', 'Eric', '2014-05-24', 'Unhealthy', 'NA', 'NA', 'NA');
+(9, '3', 'Eric', '2014-05-24', 'Unhealthy', 'NA', 'NA', 'NA'),
+(10, '2', 'Ken', '2014-01-24', 'Unhealthy', 'NA', 'NA', 'NA');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
