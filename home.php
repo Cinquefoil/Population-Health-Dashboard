@@ -54,6 +54,9 @@ include_once "checkAccess.php";
 				jQuery('div.tags-container span:contains("Age")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Race")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Education")').addClass('tagsort-active');
+                jQuery('div.tags-container span:contains("BMI")').addClass('tagsort-active');
+                jQuery('div.tags-container span:contains("Sugar")').addClass('tagsort-active');
+                jQuery('div.tags-container span:contains("BP")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Health")').click();
 				jQuery('div.tags-container span:contains("Health")').click();
 			});
@@ -185,7 +188,7 @@ include_once "checkAccess.php";
                             <a href="home.php" style="background-color:#1AACBF;color:#FFF;border-bottom:2px #1AACBF solid"><span class="glyphicon glyphicon-th-large" style="padding:0px" aria-hidden="true"></span> Screening Result</a>
                         </li>
                         <li>
-                            <a href="classificationTry1.php"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
+                            <a href="classification.php"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
                         </li>
 						<li>
                             <a href="patientjourney.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Patient Journey</a>

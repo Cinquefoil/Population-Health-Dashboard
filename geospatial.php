@@ -58,7 +58,7 @@ include_once "checkAccess.php";
 		<script>
 			$(document).ready(function(){
 				jQuery('div.tags-container span:contains("Health")').addClass('tagsort-active');
-				jQuery('div.tags-container span:contains("Event Location")').addClass('tagsort-active');
+				//jQuery('div.tags-container span:contains("Event Location")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Gender")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Age")').addClass('tagsort-active');
 				jQuery('div.tags-container span:contains("Race")').addClass('tagsort-active');
@@ -199,7 +199,7 @@ include_once "checkAccess.php";
                             <a href="home.php"><span class="glyphicon glyphicon-th-large" style="padding:0px" aria-hidden="true"></span> Screening Result</a>
                         </li>
                         <li>
-                            <a href="classificationTry1.php"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
+                            <a href="classification.php"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
                         </li>
 						<li>
                             <a href="patientjourney.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Patient Journey</a>
