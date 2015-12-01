@@ -1497,7 +1497,7 @@ include_once "checkAccess.php";
             var circleData = [
                     { "cx": 750, "cy": 330, "radius": 10, "color" : "#d62728", "action" : "Home Visit or Teleconsult" },
                     { "cx": 750, "cy": 360, "radius": 10, "color" : "#ff7f0e", "action" : "Teleconsult" },
-                    { "cx": 750, "cy": 390, "radius": 10, "color" : "#2ca02c", "action" : "Introduce Health Programme" }];
+                    { "cx": 750, "cy": 390, "radius": 10, "color" : "#2ca02c", "action" : "Intervention Programme" }];
                     
                 var circles = vis.selectAll("circle")
                     .data(circleData)
