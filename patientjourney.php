@@ -228,7 +228,7 @@ include_once "checkSession.php";
 								<a href="home.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Screening Result</a>
 							</li>
 							<li>
-								<a href="classificationTry1.php"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
+								<a href="classification.php"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Health Classification</a>
 							</li>
 						<?php
 							}
